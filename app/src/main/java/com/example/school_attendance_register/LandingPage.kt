@@ -81,7 +81,7 @@ fun LandingPage(){
             }
         Spacer(modifier = Modifier.height(10.dp))
 
-        Button(onClick = {}) {
+        Button(onClick = {  }) {
             Text(text = "Register Student     >>")
         }
 
