@@ -64,7 +64,7 @@ fun AdminDashboard(
         }
     }
 }
-//shows on screen
+//shows on screen as a preview
 @Preview(showBackground = true)
 @Composable
 fun PreviewAdminDashboard() {
