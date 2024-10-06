@@ -16,9 +16,9 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun AdminDashboard(
-    onCreateTeacherAccount: () -> Unit,
-    onCreateStudentAccount: () -> Unit,
-    onViewRecords: () -> Unit
+    onCreateStaffAccount: () -> Unit,
+    onCreateEnrollStudent: () -> Unit,
+    onViewAttendance: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -35,33 +35,34 @@ fun AdminDashboard(
 
         // Button to create a teacher account
         Button(
-            onClick = onCreateTeacherAccount,
+            onClick = onCreateStaffAccount,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 8.dp) // Vertical padding for space between buttons
         ) {
-            Text(text = "Create Teacher Account")
+            Text(text = "Register Staff")
         }
 
         // Button to create student account
         Button(
-            onClick = onCreateStudentAccount,
+            onClick = onCreateEnrollStudent,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 8.dp) // Vertical padding for space between buttons
         ) {
-            Text(text = "Create Student Account")
+            Text(text = "Enroll Student")
         }
 
         // Button to view records
         Button(
-            onClick = onViewRecords,
+            onClick = onViewAttendance,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 8.dp) // Vertical padding for space between buttons
         ) {
-            Text(text = "View Records")
+            Text(text = "View Attendance")
         }
+
     }
 }
 //shows on screen as a preview
@@ -69,8 +70,8 @@ fun AdminDashboard(
 @Composable
 fun PreviewAdminDashboard() {
     AdminDashboard(
-        onCreateTeacherAccount = {},
-        onCreateStudentAccount = {},
-        onViewRecords = {}
+        onCreateStaffAccount = {},
+        onCreateEnrollStudent = {},
+        onViewAttendance = {}
     )
 }
