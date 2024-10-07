@@ -30,10 +30,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 @Composable
 @Preview(showBackground = true)
-fun CreateAccount(){
+fun CreateAccount(navController: NavController){
 
     var adminFname by remember { mutableStateOf("") }
     var adminSname by remember { mutableStateOf("") }
@@ -164,7 +165,9 @@ fun CreateAccount(){
             .padding(start = 40.dp, end = 30.dp)
             .align(Alignment.CenterHorizontally)
         ) {
-            Button(onClick = {},
+            Button(onClick = {
+                navController.navigate("Login_Page")
+            },
 //                modifier = Modifier
 //                    .fillMaxWidth()
 //                    .padding(start = 20.dp, end = 20.dp),
@@ -182,7 +185,9 @@ fun CreateAccount(){
             }
             Spacer(modifier = Modifier.width(50.dp))
 
-            Button(onClick = {},
+            Button(onClick = {
+                navController.navigate("Confirm_Password_page")
+            },
 //                modifier = Modifier
 //                    .fillMaxWidth()
 //                    .padding(start = 20.dp, end = 20.dp),

@@ -35,10 +35,11 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 @Composable
 @Preview(showBackground = true)
-fun LoginPage(){
+fun LoginPage(navController: NavController){
 
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -127,7 +128,9 @@ fun LoginPage(){
 
         Spacer(modifier = Modifier.height(5.dp))
 
-        Button(onClick = {},
+        Button(onClick = {
+            navController.navigate("Create_Account_Page")
+        },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp),

@@ -27,12 +27,20 @@ class MainActivity : ComponentActivity() {
 
             //Calling the LandingPage function
             val navController = rememberNavController()
-            NavHost(navController = navController,  startDestination = "Login_Page", builder = {
+            NavHost(navController = navController,  startDestination = "Landing_Page", builder = {
                 composable("Landing_Page"){
                     LandingPage(navController)
                 }
                 composable("Login_Page",){
-                    LoginPage()
+                    LoginPage(navController)
+                }
+
+                composable("Create_Account_Page",){
+                    CreateAccount(navController)
+                }
+
+                composable("Confirm_Password_page",){
+                    ComfirmPasswordPage(navController)
                 }
 
             }
