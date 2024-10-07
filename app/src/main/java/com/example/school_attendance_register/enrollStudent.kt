@@ -1,6 +1,5 @@
 package com.example.school_attendance_register
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -9,7 +8,6 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -26,7 +24,7 @@ fun EnrollStudent(
     var className by remember { mutableStateOf(TextFieldValue("")) }
     var dateOfBirth by remember { mutableStateOf(TextFieldValue("")) } // Date of Birth state
 
-    // Column layout for input fields
+    //  a Column layout for input fields
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -38,7 +36,7 @@ fun EnrollStudent(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Name Input
+        // student name Input
         TextField(
             value = name,
             onValueChange = { name = it },
