@@ -1,5 +1,6 @@
 package com.example.school_attendance_register
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -7,8 +8,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -25,6 +29,9 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -47,6 +54,11 @@ fun LoginPage(){
             fontFamily = FontFamily.Serif,
             fontWeight = FontWeight.Bold,
         )
+        Divider(
+            thickness = 1.dp,
+            color = Color.Black,
+            modifier = Modifier.padding(horizontal = 16.dp)
+        )
         Spacer(modifier = Modifier.height(10.dp))
 
         Icon(imageVector = ImageVector.vectorResource(id = R.drawable.adminloginvector), contentDescription = "Admin vector"
@@ -59,16 +71,29 @@ fun LoginPage(){
             label = {Text("Username")},
             modifier = Modifier.fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp)
+                .background(
+                    color = Color.Black,
+                    shape = RoundedCornerShape(24.dp)
+                ),
+            shape = RoundedCornerShape(24.dp)
 
         )
         Spacer(modifier = Modifier.height(10.dp))
 
         TextField(
             value = password,
+            visualTransformation = PasswordVisualTransformation(),
+            //keyboardActions = KeyboardOptions(keyboardType = KeyboardType.Password),
             onValueChange = {password = it},
             label = {Text("Password")},
             modifier = Modifier.fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp)
+                .background(
+                    color = Color.Black,
+                    shape = RoundedCornerShape(24.dp)
+                ),
+            shape = RoundedCornerShape(24.dp)
+
 
         )
 
@@ -83,7 +108,7 @@ fun LoginPage(){
         ) {
             Text(
                 text = "Login",
-                fontSize = 16.sp,
+                fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily.Serif
 
@@ -111,7 +136,7 @@ fun LoginPage(){
         ) {
             Text(
                 text = "Create Account",
-                fontSize = 16.sp,
+                fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily.Serif
 
