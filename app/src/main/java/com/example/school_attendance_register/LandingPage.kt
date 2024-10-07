@@ -123,8 +123,6 @@ fun LandingPage(navController: NavController){
 
 
             )
-
-
         }
 
 
