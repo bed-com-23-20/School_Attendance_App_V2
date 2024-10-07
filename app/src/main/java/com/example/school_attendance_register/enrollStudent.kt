@@ -16,16 +16,17 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun EnrollStudent(
-    onEnroll: (String, String, String, String, String, String) -> Unit, // Callback for enrollment
+    onEnroll: (String, String, String, String, String, String, String) -> Unit, // Callback for enrollment
     onBack: () -> Unit // Callback for navigating back
 ) {
     // State variables for inputs
-    var name by remember { mutableStateOf(TextFieldValue("")) }
+    var fname by remember { mutableStateOf(TextFieldValue("")) }
+    var sname by remember { mutableStateOf(TextFieldValue("")) }
     var guardianName by remember { mutableStateOf(TextFieldValue("")) } // Guardian Name state
     var guardianPhone by remember { mutableStateOf(TextFieldValue("")) } // Guardian Phone state
     var className by remember { mutableStateOf(TextFieldValue("")) }
     var dateOfBirth by remember { mutableStateOf(TextFieldValue("")) } // Date of Birth state
-    var gender by remember { mutableStateOf("Male") } // State for gender selection
+    var gender by remember { mutableStateOf("") } // State for gender selection
 
     //  a Column layout for input fields
     Column(
@@ -41,13 +42,24 @@ fun EnrollStudent(
 
         // student name Input
         TextField(
-            value = name,
-            onValueChange = { name = it },
-            label = { Text("Student Name") },
+            value = fname,
+            onValueChange = { fname = it },
+            label = { Text("Student Firstname") },
             modifier = Modifier.fillMaxWidth()
         )
 
         Spacer(modifier = Modifier.height(8.dp))
+
+        // student surname Input
+        TextField(
+            value = sname,
+            onValueChange = { sname = it },
+            label = { Text("Student Surname") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
 
         // Guardian Name Input
         TextField(
@@ -90,38 +102,60 @@ fun EnrollStudent(
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(text = "Gender", style = MaterialTheme.typography.bodySmall)
-        Row {
-            // Radio Button for Male
-            RadioButton(
-                selected = gender == "Male",
-                onClick = { gender = "Male" }
-            )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Row (
+modifier = Modifier .fillMaxWidth()
+    .padding( start = 90.dp)
+            , horizontalArrangement = Arrangement.spacedBy(30.dp),
+
+            verticalAlignment = Alignment.CenterVertically
+
+        ){
+
             Text(text = "Male")
 
-            Spacer(modifier = Modifier.width(16.dp))
-
-            // Radio Button for Female
-            RadioButton(
-                selected = gender == "Female",
-                onClick = { gender = "Female" }
-            )
             Text(text = "Female")
 
-            Spacer(modifier = Modifier.width(16.dp))
-
-            // Radio Button for Other
-            RadioButton(
-                selected = gender == "Other",
-                onClick = { gender = "Other" }
-            )
             Text(text = "Other")
-        }
 
+
+        }
+        //Row for gender selection
+Row(
+    modifier = Modifier .fillMaxWidth()
+        .padding( start = 80.dp)
+    , horizontalArrangement = Arrangement.spacedBy(20.dp),
+
+    verticalAlignment = Alignment.CenterVertically
+) {
+    // Radio Button for Male
+    RadioButton(
+        selected = gender == "Male",
+        onClick = { gender = "Male" }
+    )
+
+
+    // Radio Button for Female
+    RadioButton(
+        selected = gender == "Female",
+        onClick = { gender = "Female" }
+    )
+
+
+
+    // Radio Button for Other
+    RadioButton(
+        selected = gender == "Other",
+        onClick = { gender = "Other" }
+    )
+}
 
         // Enroll Button
         Button(
             onClick = {
-                onEnroll(name.text, guardianName.text, guardianPhone.text, className.text, dateOfBirth.text, gender) // Call enrollment with input values
+                onEnroll(fname.text, sname.text, guardianName.text, guardianPhone.text, className.text, dateOfBirth.text, gender) // Call enrollment with input values
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -145,7 +179,7 @@ fun EnrollStudent(
 @Composable
 fun PreviewEnrollStudent() {
     EnrollStudent(
-        onEnroll = { name, guardianName, guardianPhone, className, dateOfBirth, gender -> },
+        onEnroll = { fname, sname, guardianName, guardianPhone, className, dateOfBirth, gender -> },
         onBack = {}
     )
 }
