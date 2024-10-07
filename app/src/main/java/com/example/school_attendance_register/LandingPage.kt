@@ -34,9 +34,10 @@ import java.util.Locale
 
 
 @RequiresApi(Build.VERSION_CODES.O)
-@Preview(showBackground = true)
+
 @Composable
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
+@Preview(showBackground = true)
+//@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
 
 fun LandingPage(navController: NavController){
 

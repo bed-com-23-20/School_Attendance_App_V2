@@ -78,7 +78,7 @@ fun LoginPage(){
             shape = RoundedCornerShape(24.dp)
 
         )
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(15.dp))
 
         TextField(
             value = password,
@@ -97,7 +97,7 @@ fun LoginPage(){
 
         )
 
-        Spacer(modifier = Modifier.height(5.dp))
+        Spacer(modifier = Modifier.height(15.dp))
 
         Button(onClick = {},
             modifier = Modifier
