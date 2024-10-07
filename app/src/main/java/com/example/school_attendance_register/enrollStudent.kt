@@ -3,18 +3,20 @@ package com.example.school_attendance_register
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun EnrollStudent(
-    onEnroll: (String, String, String, String, String) -> Unit, // Callback for enrollment
+    onEnroll: (String, String, String, String, String, String) -> Unit, // Callback for enrollment
     onBack: () -> Unit // Callback for navigating back
 ) {
     // State variables for inputs
@@ -23,6 +25,7 @@ fun EnrollStudent(
     var guardianPhone by remember { mutableStateOf(TextFieldValue("")) } // Guardian Phone state
     var className by remember { mutableStateOf(TextFieldValue("")) }
     var dateOfBirth by remember { mutableStateOf(TextFieldValue("")) } // Date of Birth state
+    var gender by remember { mutableStateOf("Male") } // State for gender selection
 
     //  a Column layout for input fields
     Column(
@@ -86,10 +89,39 @@ fun EnrollStudent(
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        Text(text = "Gender", style = MaterialTheme.typography.bodySmall)
+        Row {
+            // Radio Button for Male
+            RadioButton(
+                selected = gender == "Male",
+                onClick = { gender = "Male" }
+            )
+            Text(text = "Male")
+
+            Spacer(modifier = Modifier.width(16.dp))
+
+            // Radio Button for Female
+            RadioButton(
+                selected = gender == "Female",
+                onClick = { gender = "Female" }
+            )
+            Text(text = "Female")
+
+            Spacer(modifier = Modifier.width(16.dp))
+
+            // Radio Button for Other
+            RadioButton(
+                selected = gender == "Other",
+                onClick = { gender = "Other" }
+            )
+            Text(text = "Other")
+        }
+
+
         // Enroll Button
         Button(
             onClick = {
-                onEnroll(name.text, guardianName.text, guardianPhone.text, className.text, dateOfBirth.text) // Call enrollment with input values
+                onEnroll(name.text, guardianName.text, guardianPhone.text, className.text, dateOfBirth.text, gender) // Call enrollment with input values
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -113,7 +145,7 @@ fun EnrollStudent(
 @Composable
 fun PreviewEnrollStudent() {
     EnrollStudent(
-        onEnroll = { name, guardianName, guardianPhone, className, dateOfBirth -> },
+        onEnroll = { name, guardianName, guardianPhone, className, dateOfBirth, gender -> },
         onBack = {}
     )
 }
