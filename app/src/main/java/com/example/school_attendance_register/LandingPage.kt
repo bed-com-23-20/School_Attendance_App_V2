@@ -23,15 +23,18 @@ import androidx.compose.ui.text.style.TextGeometricTransform
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 
 @RequiresApi(Build.VERSION_CODES.O)
+@Preview(showBackground = true)
 @Composable
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
-fun LandingPage(){
+
+fun LandingPage(navController: NavController){
 
     // Get current time
     val currentTime = LocalTime.now()
@@ -81,7 +84,9 @@ fun LandingPage(){
             }
         Spacer(modifier = Modifier.height(10.dp))
 
-        Button(onClick = {  }) {
+        Button(onClick = {
+            navController.navigate("Login_Page")
+        }) {
             Text(text = "Register Student     >>")
         }
 
