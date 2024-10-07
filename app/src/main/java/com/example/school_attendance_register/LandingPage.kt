@@ -8,15 +8,19 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextGeometricTransform
@@ -86,18 +90,47 @@ fun LandingPage(navController: NavController){
 
         Button(onClick = {
             navController.navigate("Login_Page")
-        }) {
-            Text(text = "Register Student     >>")
+        },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 20.dp, end = 20.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor  = Color.Black)
+
+
+        ) {
+            Text(
+                text = "Register Student",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily.Serif,
+            )
         }
 
         Spacer(modifier = Modifier.height(5.dp))
 
-        Button(onClick = {}) {
-            Text(text = "Mark Attendance      >>",
+        Button(onClick = {},
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 20.dp, end = 20.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor  = Color.Black)
+
+            ) {
+            Text(
+                text = "Mark Attendance",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily.Serif
+
 
             )
+
+
         }
 
+
+//        FontFamily.Serif: A serif font.
+//        FontFamily.SansSerif: A sans-serif font.
+//        FontFamily.Monospace: A monospaced font
 
 
     }
