@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "408072601331",
+    "project_id": "school-attendance-register",
+    "storage_bucket": "school-attendance-register.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:408072601331:android:31f890f8cd02ed88230186",
+        "android_client_info": {
+          "package_name": "com.example.school_attendance_register"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUSc3EmBpn1uLg1xcI3MuFTGiQIC2IgcA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

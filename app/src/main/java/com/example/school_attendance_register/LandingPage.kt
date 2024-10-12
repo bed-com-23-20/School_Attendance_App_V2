@@ -36,7 +36,7 @@ import java.util.Locale
 @RequiresApi(Build.VERSION_CODES.O)
 
 @Composable
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 //@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
 
 fun LandingPage(navController: NavController){
@@ -101,13 +101,13 @@ fun LandingPage(navController: NavController){
         ) {
             Text(
                 text = "Register Student",
-                fontSize = 16.sp,
+                fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily.Serif,
             )
         }
 
-        Spacer(modifier = Modifier.height(5.dp))
+        Spacer(modifier = Modifier.height(15.dp))
 
         Button(onClick = {},
             modifier = Modifier
@@ -118,10 +118,30 @@ fun LandingPage(navController: NavController){
             ) {
             Text(
                 text = "Mark Attendance",
-                fontSize = 16.sp,
+                fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily.Serif
 
+
+            )
+        }
+
+        Spacer(modifier = Modifier.height(15.dp))
+
+        Button(onClick = {
+            System.exit(0)
+        },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 20.dp, end = 20.dp),
+            colors = ButtonDefaults.buttonColors(containerColor  = Color.Black)
+
+        ) {
+            Text(
+                text = "Exit",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily.Serif
 
             )
         }

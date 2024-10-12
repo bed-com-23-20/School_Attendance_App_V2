@@ -14,6 +14,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -38,7 +39,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 @Composable
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 fun LoginPage(navController: NavController){
 
     var username by remember { mutableStateOf("") }
@@ -66,22 +67,22 @@ fun LoginPage(navController: NavController){
             )
         Spacer(modifier = Modifier.height(10.dp))
 
-        TextField(
+        OutlinedTextField(
             value = username,
             onValueChange = {username = it},
             label = {Text("Username")},
             modifier = Modifier.fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp)
                 .background(
-                    color = Color.Black,
-                    shape = RoundedCornerShape(24.dp)
-                ),
-            shape = RoundedCornerShape(24.dp)
+                      color = Color.White,
+                      shape = RoundedCornerShape(24.dp)
+                 ),
+             shape = RoundedCornerShape(24.dp)
 
         )
         Spacer(modifier = Modifier.height(15.dp))
 
-        TextField(
+        OutlinedTextField(
             value = password,
             visualTransformation = PasswordVisualTransformation(),
             //keyboardActions = KeyboardOptions(keyboardType = KeyboardType.Password),
@@ -90,7 +91,7 @@ fun LoginPage(navController: NavController){
             modifier = Modifier.fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp)
                 .background(
-                    color = Color.Black,
+                    color = Color.White,
                     shape = RoundedCornerShape(24.dp)
                 ),
             shape = RoundedCornerShape(24.dp)
@@ -139,6 +140,27 @@ fun LoginPage(navController: NavController){
         ) {
             Text(
                 text = "Create Account",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily.Serif
+
+
+            )
+        }
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Button(onClick = {
+            navController.navigate("Landing_Page")
+        },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 20.dp, end = 20.dp),
+            colors = ButtonDefaults.buttonColors(containerColor  = Color.Black)
+
+        ) {
+            Text(
+                text = "Home",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily.Serif
