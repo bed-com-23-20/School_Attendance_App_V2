@@ -47,6 +47,9 @@ import com.google.firebase.auth.FirebaseAuth
 //@Preview(showBackground = true)
 fun LoginPage(navController: NavController){
 
+
+
+
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
