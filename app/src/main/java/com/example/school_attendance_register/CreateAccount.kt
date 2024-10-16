@@ -61,7 +61,7 @@ fun CreateAccount(navController: NavController){
     //Validation checks
     var result by remember { mutableStateOf("") }
     var check by remember { mutableStateOf<Boolean>(false) }
-    var context = LocalContext.current
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -263,7 +263,7 @@ fun CreateAccount(navController: NavController){
                     createPass =""
                     confirmPass = ""
                         Toast.makeText(context, "Admin Account Created Successfully", Toast.LENGTH_SHORT).show()
-
+                         navController.navigate("Admin_Dash_Board")  
                     }.addOnFailureListener{
                         Toast.makeText(context, it.toString(), Toast.LENGTH_LONG).show()
                     }

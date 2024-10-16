@@ -1,5 +1,6 @@
 package com.example.school_attendance_register
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -26,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
@@ -36,7 +38,10 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 //@Preview(showBackground = true)
@@ -44,6 +49,8 @@ fun LoginPage(navController: NavController){
 
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
+    val context = LocalContext.current
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -101,7 +108,18 @@ fun LoginPage(navController: NavController){
 
         Spacer(modifier = Modifier.height(15.dp))
 
-        Button(onClick = {},
+        Button(onClick = {
+            if(username.isEmpty() && password.isEmpty()){
+
+                Toast.makeText(context, " Username and Password can't be empty", Toast.LENGTH_LONG).show()
+            }
+            else{
+
+
+            }
+
+           // navController.navigate("Admin_Dash_Board")
+        },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp),
