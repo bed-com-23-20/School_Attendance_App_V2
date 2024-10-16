@@ -1,6 +1,6 @@
 package com.example.school_attendance_register
 
-import androidx.compose.foundation.background
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,14 +10,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,23 +27,41 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.google.firebase.database.FirebaseDatabase
+import java.util.Locale
+
 
 @Composable
 @Preview(showBackground = true)
 fun CreateAccount(navController: NavController){
 
-    var adminFname by remember { mutableStateOf("") }
+    //Database Connection
+    val database = FirebaseDatabase.getInstance()
+    val myRef = database.getReference("Admin")
+
+    // Admin Information
+    var adminFullName by remember { mutableStateOf("") }
     var adminSname by remember { mutableStateOf("") }
     var schoolName by remember { mutableStateOf("") }
     var district by remember { mutableStateOf("") }
     var phoneNumber by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
+    var createPass by remember { mutableStateOf("") }
+    var confirmPass by remember { mutableStateOf("") }
+
+    //Validation checks
+    var result by remember { mutableStateOf("") }
+    var check by remember { mutableStateOf<Boolean>(false) }
+    var context = LocalContext.current
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -63,11 +83,12 @@ fun CreateAccount(navController: NavController){
         Spacer(modifier = Modifier.height(10.dp))
 
         TextField(
-            value = adminFname,
-            onValueChange = {adminFname = it},
-            label = {Text("First Name")},
+            value = adminFullName ,
+            onValueChange = {adminFullName  = it},
+            label = {Text("Full Name")},
             //leadingIcon = {ImageVector.vectorResource(id = R.drawable.password_vector)},
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp)
 //                .background(
 //                    color = Color.Black,
@@ -76,22 +97,23 @@ fun CreateAccount(navController: NavController){
 //            shape = RoundedCornerShape(24.dp)
 
         )
-        Spacer(modifier = Modifier.height(15.dp))
-
-        TextField(
-            value = adminSname,
-            onValueChange = {adminSname = it},
-            label = {Text("Surname")},
-            //leadingIcon = {ImageVector.vectorResource(id = R.drawable.password_vector)},
-            modifier = Modifier.fillMaxWidth()
-                .padding(start = 20.dp, end = 20.dp)
-//                .background(
-//                    color = Color.Black,
-//                    shape = RoundedCornerShape(24.dp)
-//                ),
-//            shape = RoundedCornerShape(24.dp)
-
-        )
+       // Spacer(modifier = Modifier.height(15.dp))
+//
+//        TextField(
+//            value = adminSname,
+//            onValueChange = {adminSname = it},
+//            label = {Text("Surname")},
+//            //leadingIcon = {ImageVector.vectorResource(id = R.drawable.password_vector)},
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(start = 20.dp, end = 20.dp)
+////                .background(
+////                    color = Color.Black,
+////                    shape = RoundedCornerShape(24.dp)
+////                ),
+////            shape = RoundedCornerShape(24.dp)
+//
+//        )
 
         Spacer(modifier = Modifier.height(15.dp))
 
@@ -100,7 +122,8 @@ fun CreateAccount(navController: NavController){
             onValueChange = {schoolName = it},
             label = {Text("School Name")},
             //leadingIcon = {ImageVector.vectorResource(id = R.drawable.password_vector)},
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp)
 //                .background(
 //                    color = Color.Black,
@@ -117,7 +140,8 @@ fun CreateAccount(navController: NavController){
             onValueChange = {district = it},
             label = {Text("District ")},
             //leadingIcon = {ImageVector.vectorResource(id = R.drawable.password_vector)},
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp)
 //                .background(
 //                    color = Color.Black,
@@ -134,7 +158,8 @@ fun CreateAccount(navController: NavController){
             onValueChange = {phoneNumber = it},
             label = {Text("Phone Number")},
             //leadingIcon = {ImageVector.vectorResource(id = R.drawable.password_vector)},
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp)
 //                .background(
 //                    color = Color.Black,
@@ -150,7 +175,8 @@ fun CreateAccount(navController: NavController){
             onValueChange = {email = it},
             label = {Text("Email")},
             //leadingIcon = {ImageVector.vectorResource(id = R.drawable.password_vector)},
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp)
 //                .background(
 //                    color = Color.Black,
@@ -160,10 +186,40 @@ fun CreateAccount(navController: NavController){
         )
         Spacer(modifier = Modifier.height(20.dp))
 
+        TextField(
+            value = createPass,
+            visualTransformation = PasswordVisualTransformation(),
+            onValueChange = { createPass = it },
+            label = { Text("Create Password") },
+            //leadingIcon = {ImageVector.vectorResource(id = R.drawable.password_vector)},
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    start = 20.dp, end = 20.dp
+                )
+        )
+        Spacer(modifier = Modifier.height(15.dp))
+
+        TextField(
+            value = confirmPass,
+            visualTransformation = PasswordVisualTransformation(),
+            onValueChange = { confirmPass = it },
+            label = { Text("Confirm Password") },
+            //leadingIcon = {ImageVector.vectorResource(id = R.drawable.password_vector)},
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    start = 20.dp, end = 20.dp
+                )
+        )
+
+        Spacer(modifier = Modifier.height(15.dp))
+
         Row(
-            modifier = Modifier.fillMaxWidth()
-            .padding(start = 40.dp, end = 30.dp)
-            .align(Alignment.CenterHorizontally)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 40.dp, end = 30.dp)
+                .align(Alignment.CenterHorizontally)
         ) {
             Button(onClick = {
                 navController.navigate("Login_Page")
@@ -186,7 +242,37 @@ fun CreateAccount(navController: NavController){
             Spacer(modifier = Modifier.width(50.dp))
 
             Button(onClick = {
-                navController.navigate("Confirm_Password_page")
+              if(createPass != confirmPass && adminFullName.isNotEmpty() && schoolName.isNotEmpty() && district.isNotEmpty() &&
+                  phoneNumber.isNotEmpty() && email.isNotEmpty() && createPass.isNotEmpty() && confirmPass.isNotEmpty()) {
+                Toast.makeText(context, "Password does not match. Re-check the password", Toast.LENGTH_LONG).show()
+
+              }
+
+          else if(adminFullName.isNotEmpty() && schoolName.isNotEmpty() && district.isNotEmpty() &&
+                    phoneNumber.isNotEmpty() && email.isNotEmpty() && createPass.isNotEmpty() && confirmPass.isNotEmpty() &&
+                    createPass == confirmPass
+                    ){
+                  //var adminInfo = AdminInfo(adminFullName, schoolName, district, phoneNumber.toInt(), email, createPass, confirmPass)
+                    val adminInfo = AdminInfo(adminFullName.toUpperCase(Locale.ROOT),schoolName, district, phoneNumber.toInt(), email, createPass, confirmPass)
+                  myRef.child(adminFullName).setValue(adminInfo).addOnSuccessListener {
+                    adminFullName = ""
+                    schoolName = ""
+                    district = ""
+                    phoneNumber = ""
+                    email = ""
+                    createPass =""
+                    confirmPass = ""
+                        Toast.makeText(context, "Admin Account Created Successfully", Toast.LENGTH_SHORT).show()
+
+                    }.addOnFailureListener{
+                        Toast.makeText(context, it.toString(), Toast.LENGTH_LONG).show()
+                    }
+
+                }
+                else{
+                    Toast.makeText(context, "Please insert all the values first before submitting", Toast.LENGTH_SHORT).show()
+                }
+                //navController.navigate("Admin_Dash_Board")
             },
 //                modifier = Modifier
 //                    .fillMaxWidth()
@@ -195,7 +281,7 @@ fun CreateAccount(navController: NavController){
 
             ) {
                 Text(
-                    text = "  Next  ",
+                    text = " Submit ",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = FontFamily.Serif
@@ -203,6 +289,8 @@ fun CreateAccount(navController: NavController){
 
                 )
             }
+
+
 
         }
 

@@ -42,6 +42,10 @@ class MainActivity : ComponentActivity() {
                 composable("Confirm_Password_page",){
                     ComfirmPasswordPage(navController)
                 }
+                composable("Admin_Dash_Board",){
+                    AdminDashBoard(navController)
+                }
+
 
             }
             )
