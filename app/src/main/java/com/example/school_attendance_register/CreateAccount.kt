@@ -1,5 +1,6 @@
 package com.example.school_attendance_register
 
+import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -40,6 +41,7 @@ import com.google.firebase.database.FirebaseDatabase
 import java.util.Locale
 
 
+@SuppressLint("SuspiciousIndentation")
 @Composable
 @Preview(showBackground = true)
 fun CreateAccount(navController: NavController){

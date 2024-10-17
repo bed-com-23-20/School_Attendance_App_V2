@@ -1,13 +1,11 @@
 package com.example.school_attendance_register
 
 
-import androidx.compose.material.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
-//import com.example.myapp.auth.AuthViewModel
 
 @Composable
 fun LoginTemp() {
