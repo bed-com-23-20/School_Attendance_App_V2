@@ -2,6 +2,8 @@ package com.example.school_attendance_register
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
@@ -9,10 +11,12 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+
 
 @Composable
 fun EnrollStudent(
@@ -154,6 +158,11 @@ Row(
 
         // Enroll Button
         Button(
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Black,  // Set the button's container color to black
+                contentColor = Color.White     // Set the text color to white for contrast
+            ),
+
             onClick = {
                 onEnroll(fname.text, sname.text, guardianName.text, guardianPhone.text, className.text, dateOfBirth.text, gender) // Call enrollment with input values
             },
@@ -166,8 +175,13 @@ Row(
 
         // Back Button
         Button(
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Black,  // Set the button's container color to black
+                contentColor = Color.White     // Set the text color to white for contrast
+            ),
             onClick = onBack,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+
         ) {
             Text(text = "Back")
         }
