@@ -108,3 +108,26 @@ fun AdminDashBoardPage() {
 fun onRegister(text: String, text1: String, text2: String, text3: String, text4: String) {
     TODO("Not yet implemented")
 }
+
+@Composable
+fun RegistrationScreen(onRegister: (String, String, String, String, String) -> Unit) {
+    var name by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var phone by remember { mutableStateOf("") }
+    var className by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+
+    Column(modifier = Modifier.padding(16.dp)) {
+        TextField(value = name, onValueChange = { name = it }, label = { Text("Name") })
+        TextField(value = email, onValueChange = { email = it }, label = { Text("Email") })
+        TextField(value = phone, onValueChange = { phone = it }, label = { Text("Phone") })
+        TextField(value = className, onValueChange = { className = it }, label = { Text("Class Name") })
+        TextField(value = password, onValueChange = { password = it }, label = { Text("Password") }, visualTransformation = PasswordVisualTransformation())
+
+        Button(onClick = {
+            onRegister(name, email, phone, className, password) // Call registration with input values
+        }) {
+            Text("Register")
+        }
+    }
+}
