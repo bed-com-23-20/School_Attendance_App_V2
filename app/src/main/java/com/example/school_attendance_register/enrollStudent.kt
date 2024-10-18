@@ -5,6 +5,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -65,7 +66,7 @@ fun EnrollStudent(
         Spacer(modifier = Modifier.height(16.dp))
 
         // student name Input
-        TextField(
+        OutlinedTextField(
             value = fname,
             onValueChange = { fname = it },
             label = { Text("Student Firstname") },
@@ -75,7 +76,7 @@ fun EnrollStudent(
         Spacer(modifier = Modifier.height(8.dp))
 
         // student surname Input
-        TextField(
+        OutlinedTextField(
             value = sname,
             onValueChange = { sname = it },
             label = { Text("Student Surname") },
@@ -86,7 +87,7 @@ fun EnrollStudent(
 
 
         // Guardian Name Input
-        TextField(
+        OutlinedTextField(
             value = guardianName,
             onValueChange = { guardianName = it },
             label = { Text("Guardian Name") },
@@ -96,7 +97,7 @@ fun EnrollStudent(
         Spacer(modifier = Modifier.height(8.dp))
 
         // Guardian Phone Number Input
-        TextField(
+        OutlinedTextField(
             value = guardianPhone,
             onValueChange = { guardianPhone = it },
             label = { Text("Guardian Phone Number") },
@@ -106,7 +107,7 @@ fun EnrollStudent(
         Spacer(modifier = Modifier.height(8.dp))
 
         // Class Input
-        TextField(
+        OutlinedTextField(
             value = className,
             onValueChange = { className = it },
             label = { Text("Class") },
@@ -116,7 +117,7 @@ fun EnrollStudent(
         Spacer(modifier = Modifier.height(8.dp))
 
         // Date of Birth Input
-        TextField(
+        OutlinedTextField(
             value = dateOfBirth,
             onValueChange = { dateOfBirth = it },
             label = { Text("Date of Birth") },
