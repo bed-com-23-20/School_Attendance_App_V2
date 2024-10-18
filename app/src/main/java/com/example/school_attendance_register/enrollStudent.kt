@@ -32,6 +32,26 @@ fun EnrollStudent(
     var dateOfBirth by remember { mutableStateOf(TextFieldValue("")) } // Date of Birth state
     var gender by remember { mutableStateOf("") } // State for gender selection
 
+    Column(
+        modifier = Modifier
+            .fillMaxSize()  // Take up full available space
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Top,  // Align contents to the top
+        horizontalAlignment = Alignment.CenterHorizontally  // Center horizontally
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = "Enroll Student",
+                style = MaterialTheme.typography.headlineSmall,
+                textAlign = TextAlign.Center
+            )
+        }
+    }
+
+
     //  a Column layout for input fields
     Column(
         modifier = Modifier
@@ -40,7 +60,7 @@ fun EnrollStudent(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.Start // Align elements to the start
     ) {
-        Text(text = "Enroll Student", style = MaterialTheme.typography.headlineSmall)
+
 
         Spacer(modifier = Modifier.height(16.dp))
 
