@@ -22,6 +22,7 @@ fun AdminDashBoard(
     onCreateEnrollStudent: () -> Unit,
     onViewAttendance: () -> Unit
 ) {
+    // Create a column to hold the admin dashboard heading
     Column(
         modifier = Modifier
             .fillMaxSize()  // Take up full available space
