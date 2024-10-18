@@ -42,8 +42,11 @@ import java.util.Locale
 
 
 @SuppressLint("SuspiciousIndentation")
+
 @Composable
+
 @Preview(showBackground = true)
+
 fun CreateAccount(navController: NavController){
 
     //Database Connection

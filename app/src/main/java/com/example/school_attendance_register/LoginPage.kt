@@ -112,6 +112,7 @@ fun LoginPage(navController: NavController){
         Spacer(modifier = Modifier.height(15.dp))
 
         Button(onClick = {
+
             if(username.isEmpty() && password.isEmpty()){
 
                 Toast.makeText(context, " Username and Password can't be empty", Toast.LENGTH_LONG).show()
@@ -121,7 +122,7 @@ fun LoginPage(navController: NavController){
 
             }
 
-           // navController.navigate("Admin_Dash_Board")
+           navController.navigate("Admin_Dash_Board")
         },
             modifier = Modifier
                 .fillMaxWidth()
