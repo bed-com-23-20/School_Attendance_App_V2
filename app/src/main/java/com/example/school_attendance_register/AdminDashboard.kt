@@ -15,10 +15,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 
 @Composable
-fun AdminDashboard(
-    onCreateStaffAccount: () -> Unit,
+fun AdminDashBoard(
+    onCreateStaffAccount: NavHostController,
     onCreateEnrollStudent: () -> Unit,
     onViewAttendance: () -> Unit
 ) {
@@ -100,7 +101,7 @@ fun AdminDashboard(
 @Preview(showBackground = true)
 @Composable
 fun PreviewAdminDashboard() {
-    AdminDashboard(
+    AdminDashBoard(
         onCreateStaffAccount = {},
         onCreateEnrollStudent = {},
         onViewAttendance = {}
