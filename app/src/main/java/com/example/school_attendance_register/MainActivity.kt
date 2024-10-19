@@ -18,38 +18,38 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         FirebaseApp.initializeApp(this)
         setContent {
-
-            //Calling the LandingPage function
             val navController = rememberNavController()
-            NavHost(navController = navController,  startDestination = "Landing_Page", builder = {
-                composable("Landing_Page"){
+            NavHost(navController = navController, startDestination = "Landing_Page") {
+                composable("Landing_Page") {
                     LandingPage(navController)
                 }
-                composable("Login_Page",){
+                composable("Login_Page") {
                     LoginPage(navController)
                 }
-
-                composable("Create_Account_Page",){
+                composable("Create_Account_Page") {
                     CreateAccount(navController)
                 }
-
-                composable("Confirm_Password_page",){
+                composable("Confirm_Password_page") {
                     ComfirmPasswordPage(navController)
                 }
                 composable("Admin_Dash_Board") {
                     AdminDashBoard(
-                        onCreateStaffAccount = { navController.navigate("Create_Account_Page") },
-                        onCreateEnrollStudent = { navController.navigate("Create_Account_Page") }, // Or any other page for enrolling students
-                        onViewAttendance = { navController.navigate("View_Attendance_Page") }  // Create and define this route
+                        navController = navController, // Pass the NavController
+                        onCreateStaffAccount = { /* Handle creating staff account logic here */ },
+                        onCreateEnrollStudent = { navController.navigate("enroll_student") },
+                        onViewAttendance = { navController.navigate("View_Attendance_Page") } // Ensure this route is defined
+                    )
+                }
+                composable("enroll_student") {
+                    EnrollStudent(
+                        onEnroll = { fname, sname, guardianName, guardianPhone, className, dateOfBirth, gender ->
+                            // Handle enrollment logic
+                        },
+                        onBack = { navController.popBackStack() }
                     )
                 }
 
-
-
             }
-            )
-
         }
     }
 }
-

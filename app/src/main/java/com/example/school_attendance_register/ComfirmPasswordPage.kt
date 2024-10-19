@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 @Composable
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 fun ComfirmPasswordPage(navController: NavController){
 
     var createPass by remember { mutableStateOf("") }
