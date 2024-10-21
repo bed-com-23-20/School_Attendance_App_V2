@@ -58,8 +58,10 @@ fun EnrollStudent(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
         // Header for "Enroll Student"
         Text(
+
             text = "STUDENT ENROLLMENT PAGE", // Adjusted heading text
             fontSize = 28.sp,
             fontFamily = FontFamily.Serif,

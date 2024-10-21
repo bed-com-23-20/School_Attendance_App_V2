@@ -37,9 +37,10 @@ fun AdminDashBoard(
         verticalArrangement = Arrangement.Top, // Align items to the top
         horizontalAlignment = Alignment.CenterHorizontally // Center horizontally
     ) {
+        Spacer(modifier = Modifier.weight(1f))
         // Admin Dashboard heading at the top
         Text(
-            text = "Admin Dashboard",
+            text = "ADMIN DASHBOARD",
             fontSize = 28.sp, // Set the font size
             fontFamily = FontFamily.Serif,
             fontWeight = FontWeight.Bold,

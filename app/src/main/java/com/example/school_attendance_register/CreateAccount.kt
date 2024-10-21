@@ -289,7 +289,7 @@ fun CreateAccount(navController: NavController) {
                             ).show()
 
                             // Navigate to the Admin Dashboard only after successful creation
-                            navController.navigate("Admin_Dash_Board")
+                            navController.navigate("Admin_DashBoard")
                         }.addOnFailureListener {
                             Toast.makeText(context, it.toString(), Toast.LENGTH_LONG).show()
                         }
