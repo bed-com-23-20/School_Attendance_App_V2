@@ -9,6 +9,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="com.example.school_attendance_register" />
+                  <option name="mobileSdkAppId" value="1:81835245302:android:a7b095e805ba33e6a7f6d7" />
+                  <option name="projectId" value="schoolattendanceregi-513a8dd4" />
+                  <option name="projectNumber" value="81835245302" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

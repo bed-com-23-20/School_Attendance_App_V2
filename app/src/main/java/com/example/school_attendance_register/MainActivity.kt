@@ -45,11 +45,11 @@ class MainActivity : ComponentActivity() {
                     AdminDashBoard(navController)
                 }
 
-                /*
+
                 composable("Register_Staff") {
                     RegisterStaff(
                         onRegister = { fname, sname, phone, email, className ->
-                            // Handle the registration logic here
+                            // Handle the registration
                         },
                         onBack = { navController.popBackStack() } // Navigate back to home screen
                     )
@@ -57,7 +57,7 @@ class MainActivity : ComponentActivity() {
                 composable("Enroll_Student") {
                     EnrollStudent(
                         onEnroll = { fname, sname, guardianName, guardianPhone, className, dateOfBirth, gender ->
-                            // Handle enrollment logic
+                            // Handle enrollment
                         },
                         onBack = { navController.popBackStack() }
                     )
@@ -66,7 +66,7 @@ class MainActivity : ComponentActivity() {
                     ViewAttendance(onBack = { navController.popBackStack() })
                 }
 
-                 */
+
             }
         }
     }
