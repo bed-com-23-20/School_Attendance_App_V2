@@ -46,7 +46,7 @@ import java.util.Locale
 
 @Composable
 
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 
 fun CreateAccount(navController: NavController) {
 

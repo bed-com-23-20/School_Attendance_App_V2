@@ -13,6 +13,10 @@ googleGmsGoogleServices = "4.4.2"
 firebaseAuth = "23.0.0"
 firebaseDatabase = "21.0.0"
 firebaseCommonKtx = "21.0.0"
+navigationRuntimeKtx = "2.8.3"
+navigationComposeVersion = "2.8.3"
+firebaseAuthKtx = "23.0.0"
+firebaseDatabaseKtx = "21.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -37,6 +41,10 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
 firebase-common-ktx = { group = "com.google.firebase", name = "firebase-common-ktx", version.ref = "firebaseCommonKtx" }
+androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
+navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationComposeVersion" }
+firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx", version.ref = "firebaseAuthKtx" }
+firebase-database-ktx = { group = "com.google.firebase", name = "firebase-database-ktx", version.ref = "firebaseDatabaseKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

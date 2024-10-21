@@ -3,6 +3,7 @@ package com.example.school_attendance_register
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.database.DatabaseReference
 
 class AuthViewModel : ViewModel() {
 
