@@ -30,11 +30,13 @@ class MainActivity : ComponentActivity() {
             //Calling the LandingPage function
             val navController = rememberNavController()
             NavHost(navController = navController,  startDestination = "Landing_Page", builder = {
+
+
                 composable("Landing_Page"){
                     LandingPage(navController)
                 }
                 composable("Login_Page",){
-                    LoginPage(navController)
+                    LoginPage(navController, AuthViewModel())
                 }
 
                 composable("Create_Account_Page",){

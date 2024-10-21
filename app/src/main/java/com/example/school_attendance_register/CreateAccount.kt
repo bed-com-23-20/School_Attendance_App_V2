@@ -58,7 +58,7 @@ fun CreateAccount(navController: NavController){
     var phoneNumber by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var createPass by remember { mutableStateOf("") }
-    var confirmPass by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
 
     //Validation checks
     var result by remember { mutableStateOf("") }
@@ -203,9 +203,9 @@ fun CreateAccount(navController: NavController){
         Spacer(modifier = Modifier.height(15.dp))
 
         TextField(
-            value = confirmPass,
+            value = password,
             visualTransformation = PasswordVisualTransformation(),
-            onValueChange = { confirmPass = it },
+            onValueChange = { password = it },
             label = { Text("Confirm Password") },
             //leadingIcon = {ImageVector.vectorResource(id = R.drawable.password_vector)},
             modifier = Modifier
@@ -244,18 +244,18 @@ fun CreateAccount(navController: NavController){
             Spacer(modifier = Modifier.width(50.dp))
 
             Button(onClick = {
-              if(createPass != confirmPass && adminFullName.isNotEmpty() && schoolName.isNotEmpty() && district.isNotEmpty() &&
-                  phoneNumber.isNotEmpty() && email.isNotEmpty() && createPass.isNotEmpty() && confirmPass.isNotEmpty()) {
+              if(createPass != password && adminFullName.isNotEmpty() && schoolName.isNotEmpty() && district.isNotEmpty() &&
+                  phoneNumber.isNotEmpty() && email.isNotEmpty() && createPass.isNotEmpty() && password.isNotEmpty()) {
                 Toast.makeText(context, "Password does not match. Re-check the password", Toast.LENGTH_LONG).show()
 
               }
 
           else if(adminFullName.isNotEmpty() && schoolName.isNotEmpty() && district.isNotEmpty() &&
-                    phoneNumber.isNotEmpty() && email.isNotEmpty() && createPass.isNotEmpty() && confirmPass.isNotEmpty() &&
-                    createPass == confirmPass
+                    phoneNumber.isNotEmpty() && email.isNotEmpty() && createPass.isNotEmpty() && password.isNotEmpty() &&
+                    createPass == password
                     ){
                   //var adminInfo = AdminInfo(adminFullName, schoolName, district, phoneNumber.toInt(), email, createPass, confirmPass)
-                    val adminInfo = AdminInfo(adminFullName.toUpperCase(Locale.ROOT),schoolName, district, phoneNumber.toInt(), email, createPass, confirmPass)
+                    val adminInfo = AdminInfo(adminFullName.toUpperCase(Locale.ROOT),schoolName, district, phoneNumber.toInt(), email, createPass, password)
                   myRef.child(adminFullName).setValue(adminInfo).addOnSuccessListener {
                     adminFullName = ""
                     schoolName = ""
@@ -263,7 +263,7 @@ fun CreateAccount(navController: NavController){
                     phoneNumber = ""
                     email = ""
                     createPass =""
-                    confirmPass = ""
+                      password = ""
                         Toast.makeText(context, "Admin Account Created Successfully", Toast.LENGTH_SHORT).show()
                          navController.navigate("Admin_Dash_Board")  
                     }.addOnFailureListener{
