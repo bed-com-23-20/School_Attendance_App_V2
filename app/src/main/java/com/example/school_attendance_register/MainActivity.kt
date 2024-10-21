@@ -6,9 +6,17 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.school_attendance_register.ui.theme.School_Attendance_RegisterTheme
 import com.google.firebase.FirebaseApp
 
 class MainActivity : ComponentActivity() {
@@ -18,56 +26,35 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         FirebaseApp.initializeApp(this)
         setContent {
+
+            //Calling the LandingPage function
             val navController = rememberNavController()
-            NavHost(navController = navController, startDestination = "Landing_Page") {
-                composable("Landing_Page") {
+            NavHost(navController = navController,  startDestination = "Landing_Page", builder = {
+
+
+                composable("Landing_Page"){
                     LandingPage(navController)
                 }
-                composable("Login_Page") {
-                    LoginPage(navController)
+                composable("Login_Page",){
+                    LoginPage(navController, AuthViewModel())
                 }
 
-                composable("Create_Account_Page") {
+                composable("Create_Account_Page",){
                     CreateAccount(navController)
                 }
-                composable ("Create_Page"){
-                    CreatePage(navController)
-                 }
 
-                composable("Landing_Page") {
-                    LandingPage(navController)
-                }
-
-                composable("Confirm_Password_page") {
+                composable("Confirm_Password_page",){
                     ComfirmPasswordPage(navController)
                 }
-                composable("Admin_Dash_Board_Page") {
+                composable("Admin_Dash_Board",){
                     AdminDashBoard(navController)
                 }
 
 
-                composable("Register_Staff") {
-                    RegisterStaff(
-                        onRegister = { fname, sname, phone, email, className ->
-                            // Handle the registration
-                        },
-                        onBack = { navController.popBackStack() } // Navigate back to home screen
-                    )
-                }
-                composable("Enroll_Student") {
-                    EnrollStudent(
-                        onEnroll = { fname, sname, guardianName, guardianPhone, className, dateOfBirth, gender ->
-                            // Handle enrollment
-                        },
-                        onBack = { navController.popBackStack() }
-                    )
-                }
-                composable("View_Attendance") {
-                    ViewAttendance(onBack = { navController.popBackStack() })
-                }
-
-
             }
+            )
+
         }
     }
 }
+

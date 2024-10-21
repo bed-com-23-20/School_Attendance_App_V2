@@ -10,16 +10,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -32,28 +32,72 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
-import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 //@Preview(showBackground = true)
-fun LoginPage(navController: NavController){
+fun LoginPage(navController: NavController, authViewModel: AuthViewModel){
 
 
-
-
-    var username by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
-    val context = LocalContext.current
+//    val authState = authViewModel.authState.observeAsState()
+//    val context = LocalContext.current
+//
+//    LaunchedEffect(authState.value) {
+//        when(authState.value){
+//            is AuthState.Authenticated -> navController.navigate("Admin_Dash_Board")
+//            is AuthState.Error -> Toast.makeText(context,
+//                (authState.value as AuthState.Error).message, Toast.LENGTH_SHORT).show()
+//            else -> Unit
+//        }
+//    }
+
+    //val authViewModel: AuthViewModel = viewModel()
+    var loading by remember { mutableStateOf(false) }
+    var error by remember { mutableStateOf<String?>(null) }
+    var isLoggedIn by remember { mutableStateOf(false) }
+
+//    if (isLoggedIn) {
+//        // Show logged-in content
+//        Text("Logged in successfully")
+//    } else {
+//        // Show login button
+//        Button(
+//            onClick = {
+//                loading = true
+//                authViewModel.fetchCredentials({ email, password ->
+//                    authViewModel.login(email, password, {
+//                        loading = false
+//                        isLoggedIn = true
+//                    }, { loginError ->
+//                        loading = false
+//                        error = loginError
+//                    })
+//                }, { fetchError ->
+//                    loading = false
+//                    error = fetchError
+//                })
+//            }
+//        ) {
+//            Text(if (loading) "Logging in..." else "Login")
+//        }
+//
+//        error?.let {
+//            Text("Error: $it", color = Color.Red)
+//        }
+//    }
+
+
+
+
+
+
+
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -73,14 +117,13 @@ fun LoginPage(navController: NavController){
         )
         Spacer(modifier = Modifier.height(10.dp))
 
-        /*Icon(imageVector = ImageVector.vectorResource(id = R.drawable.adminloginvector), contentDescription = "Admin vector"
-            )*/
-
+        Icon(imageVector = ImageVector.vectorResource(id = R.drawable.adminloginvector), contentDescription = "Admin vector"
+            )
         Spacer(modifier = Modifier.height(10.dp))
 
         OutlinedTextField(
-            value = username,
-            onValueChange = {username = it},
+            value = email,
+            onValueChange = {email = it},
             label = {Text("Username")},
             modifier = Modifier.fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp)
@@ -112,34 +155,51 @@ fun LoginPage(navController: NavController){
 
         Spacer(modifier = Modifier.height(15.dp))
 
-        Button(onClick = {
+            Button(
+                onClick = {
+                    loading = true
+                    authViewModel.fetchCredentials({ email: String, password: String ->
+                        authViewModel.login(email, password, {
+                            loading = false
+                            isLoggedIn = true
+                        }, { loginError ->
+                            loading = false
+                            error = loginError
+                        })
+                    },
+                        onError = { fetchError: String ->
+                            loading = false
+                            error = fetchError
+                        }
+                    )
+                }
 
-            if(username.isEmpty() && password.isEmpty()){
 
-                Toast.makeText(context, " Username and Password can't be empty", Toast.LENGTH_LONG).show()
+
+
+            ) {
+                Text(if (loading) "Logging in..." else "Login",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = FontFamily.Serif
+                )
             }
-            else{
-                navController.navigate("Admin_Dash_Board_Page")
 
+            error?.let {
+            Text("Error: $it", color = Color.Red)
             }
+//
+//            {
+//                Text(
+//                    text = "Login",
+//                    fontSize = 20.sp,
+//                    fontWeight = FontWeight.Bold,
+//                    fontFamily = FontFamily.Serif
+//
+//
+//                )
+//            }
 
-
-        },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 20.dp, end = 20.dp),
-            colors = ButtonDefaults.buttonColors(containerColor  = Color.Black)
-
-        ) {
-            Text(
-                text = "Login",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = FontFamily.Serif
-
-
-            )
-        }
         Spacer(modifier = Modifier.height(5.dp))
 
         Text(
@@ -153,7 +213,7 @@ fun LoginPage(navController: NavController){
         Spacer(modifier = Modifier.height(5.dp))
 
         Button(onClick = {
-            navController.navigate("Create_Page")
+            navController.navigate("Create_Account_Page")
         },
             modifier = Modifier
                 .fillMaxWidth()

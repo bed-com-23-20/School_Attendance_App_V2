@@ -34,7 +34,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -43,12 +42,9 @@ import java.util.Locale
 
 
 @SuppressLint("SuspiciousIndentation")
-
 @Composable
-
-//@Preview(showBackground = true)
-
-fun CreateAccount(navController: NavController) {
+@Preview(showBackground = true)
+fun CreateAccount(navController: NavController){
 
     //Database Connection
     val database = FirebaseDatabase.getInstance()
@@ -62,7 +58,7 @@ fun CreateAccount(navController: NavController) {
     var phoneNumber by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var createPass by remember { mutableStateOf("") }
-    var confirmPass by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
 
     //Validation checks
     var result by remember { mutableStateOf("") }
@@ -72,9 +68,9 @@ fun CreateAccount(navController: NavController) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment =  Alignment.CenterHorizontally
 
-    ) {
+    ){
         Text(
             text = "Create Account",
             fontSize = 28.sp,
@@ -89,9 +85,9 @@ fun CreateAccount(navController: NavController) {
         Spacer(modifier = Modifier.height(10.dp))
 
         TextField(
-            value = adminFullName,
-            onValueChange = { adminFullName = it },
-            label = { Text("Full Name") },
+            value = adminFullName ,
+            onValueChange = {adminFullName  = it},
+            label = {Text("Full Name")},
             //leadingIcon = {ImageVector.vectorResource(id = R.drawable.password_vector)},
             modifier = Modifier
                 .fillMaxWidth()
@@ -103,7 +99,7 @@ fun CreateAccount(navController: NavController) {
 //            shape = RoundedCornerShape(24.dp)
 
         )
-        // Spacer(modifier = Modifier.height(15.dp))
+       // Spacer(modifier = Modifier.height(15.dp))
 //
 //        TextField(
 //            value = adminSname,
@@ -125,8 +121,8 @@ fun CreateAccount(navController: NavController) {
 
         TextField(
             value = schoolName,
-            onValueChange = { schoolName = it },
-            label = { Text("School Name") },
+            onValueChange = {schoolName = it},
+            label = {Text("School Name")},
             //leadingIcon = {ImageVector.vectorResource(id = R.drawable.password_vector)},
             modifier = Modifier
                 .fillMaxWidth()
@@ -143,8 +139,8 @@ fun CreateAccount(navController: NavController) {
 
         TextField(
             value = district,
-            onValueChange = { district = it },
-            label = { Text("District ") },
+            onValueChange = {district = it},
+            label = {Text("District ")},
             //leadingIcon = {ImageVector.vectorResource(id = R.drawable.password_vector)},
             modifier = Modifier
                 .fillMaxWidth()
@@ -161,8 +157,8 @@ fun CreateAccount(navController: NavController) {
 
         TextField(
             value = phoneNumber,
-            onValueChange = { phoneNumber = it },
-            label = { Text("Phone Number") },
+            onValueChange = {phoneNumber = it},
+            label = {Text("Phone Number")},
             //leadingIcon = {ImageVector.vectorResource(id = R.drawable.password_vector)},
             modifier = Modifier
                 .fillMaxWidth()
@@ -178,8 +174,8 @@ fun CreateAccount(navController: NavController) {
 
         TextField(
             value = email,
-            onValueChange = { email = it },
-            label = { Text("Email") },
+            onValueChange = {email = it},
+            label = {Text("Email")},
             //leadingIcon = {ImageVector.vectorResource(id = R.drawable.password_vector)},
             modifier = Modifier
                 .fillMaxWidth()
@@ -207,9 +203,9 @@ fun CreateAccount(navController: NavController) {
         Spacer(modifier = Modifier.height(15.dp))
 
         TextField(
-            value = confirmPass,
+            value = password,
             visualTransformation = PasswordVisualTransformation(),
-            onValueChange = { confirmPass = it },
+            onValueChange = { password = it },
             label = { Text("Confirm Password") },
             //leadingIcon = {ImageVector.vectorResource(id = R.drawable.password_vector)},
             modifier = Modifier
@@ -227,14 +223,13 @@ fun CreateAccount(navController: NavController) {
                 .padding(start = 40.dp, end = 30.dp)
                 .align(Alignment.CenterHorizontally)
         ) {
-            Button(
-                onClick = {
-                    navController.navigate("Login_Page")
-                },
+            Button(onClick = {
+                navController.navigate("Login_Page")
+            },
 //                modifier = Modifier
 //                    .fillMaxWidth()
 //                    .padding(start = 20.dp, end = 20.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
+                colors = ButtonDefaults.buttonColors(containerColor  = Color.Black)
 
             ) {
                 Text(
@@ -248,68 +243,60 @@ fun CreateAccount(navController: NavController) {
             }
             Spacer(modifier = Modifier.width(50.dp))
 
-            Button(
-                onClick = {
-                    // Validation checks for creating the admin account
-                    if (createPass != confirmPass) {
-                        Toast.makeText(
-                            context,
-                            "Password does not match. Re-check the password",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    } else if (adminFullName.isNotEmpty() && schoolName.isNotEmpty() && district.isNotEmpty() &&
-                        phoneNumber.isNotEmpty() && email.isNotEmpty() && createPass.isNotEmpty() && confirmPass.isNotEmpty()
-                    ) {
+            Button(onClick = {
+              if(createPass != password && adminFullName.isNotEmpty() && schoolName.isNotEmpty() && district.isNotEmpty() &&
+                  phoneNumber.isNotEmpty() && email.isNotEmpty() && createPass.isNotEmpty() && password.isNotEmpty()) {
+                Toast.makeText(context, "Password does not match. Re-check the password", Toast.LENGTH_LONG).show()
 
-                        // Save the admin info to the database
-                        val adminInfo = AdminInfo(
-                            adminFullName.toUpperCase(Locale.ROOT),
-                            schoolName,
-                            district,
-                            phoneNumber.toInt(),
-                            email,
-                            createPass,
-                            confirmPass
-                        )
-                        myRef.child(adminFullName).setValue(adminInfo).addOnSuccessListener {
-                            // Clear the fields upon success
-                            adminFullName = ""
-                            schoolName = ""
-                            district = ""
-                            phoneNumber = ""
-                            email = ""
-                            createPass = ""
-                            confirmPass = ""
+              }
 
-                            // Display success message
-                            Toast.makeText(
-                                context,
-                                "Admin Account Created Successfully",
-                                Toast.LENGTH_SHORT
-                            ).show()
-
-                            // Navigate to the Admin Dashboard only after successful creation
-                            navController.navigate("Admin_DashBoard")
-                        }.addOnFailureListener {
-                            Toast.makeText(context, it.toString(), Toast.LENGTH_LONG).show()
-                        }
-                    } else {
-                        Toast.makeText(
-                            context,
-                            "Please fill in all the fields before submitting",
-                            Toast.LENGTH_SHORT
-                        ).show()
+          else if(adminFullName.isNotEmpty() && schoolName.isNotEmpty() && district.isNotEmpty() &&
+                    phoneNumber.isNotEmpty() && email.isNotEmpty() && createPass.isNotEmpty() && password.isNotEmpty() &&
+                    createPass == password
+                    ){
+                  //var adminInfo = AdminInfo(adminFullName, schoolName, district, phoneNumber.toInt(), email, createPass, confirmPass)
+                    val adminInfo = AdminInfo(adminFullName.toUpperCase(Locale.ROOT),schoolName, district, phoneNumber.toInt(), email, createPass, password)
+                  myRef.child(adminFullName).setValue(adminInfo).addOnSuccessListener {
+                    adminFullName = ""
+                    schoolName = ""
+                    district = ""
+                    phoneNumber = ""
+                    email = ""
+                    createPass =""
+                      password = ""
+                        Toast.makeText(context, "Admin Account Created Successfully", Toast.LENGTH_SHORT).show()
+                         navController.navigate("Admin_Dash_Board")  
+                    }.addOnFailureListener{
+                        Toast.makeText(context, it.toString(), Toast.LENGTH_LONG).show()
                     }
-                },
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
+
+                }
+                else{
+                    Toast.makeText(context, "Please insert all the values first before submitting", Toast.LENGTH_SHORT).show()
+                }
+                //navController.navigate("Admin_Dash_Board")
+            },
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(start = 20.dp, end = 20.dp),
+                colors = ButtonDefaults.buttonColors(containerColor  = Color.Black)
+
             ) {
                 Text(
-                    text = "Submit",
+                    text = " Submit ",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = FontFamily.Serif
+
+
                 )
             }
+
+
+
         }
+
     }
+
+
 }
