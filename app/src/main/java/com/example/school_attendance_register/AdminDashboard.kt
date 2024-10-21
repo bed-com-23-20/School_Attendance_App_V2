@@ -23,12 +23,10 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun AdminDashBoard(
-    navController: NavController,
-    onCreateStaffAccount: () -> Unit,
-    onCreateEnrollStudent: () -> Unit,
-    onViewAttendance: () -> Unit
-) {
+fun AdminDashBoard(navController: NavController)
+
+ {
+
     // Create a column to hold the entire admin dashboard
     Column(
         modifier = Modifier
@@ -119,7 +117,7 @@ fun AdminDashBoard(
 
 
 //shows on screen as a preview
-@Preview(showBackground = true)
+/*@Preview(showBackground = true)
 @Composable
 fun PreviewAdminDashboard() {
     // Create a mock NavController
@@ -128,8 +126,8 @@ fun PreviewAdminDashboard() {
     // Call AdminDashBoard with the mock NavController
     AdminDashBoard(
         navController = navController, // Pass the mock NavController
-        onCreateStaffAccount = {},
+        /*onCreateStaffAccount = {},
         onCreateEnrollStudent = {},
-        onViewAttendance = {}
+        onViewAttendance = {}*/
     )
-}
+}*/

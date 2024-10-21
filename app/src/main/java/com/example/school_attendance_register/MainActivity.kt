@@ -26,20 +26,26 @@ class MainActivity : ComponentActivity() {
                 composable("Login_Page") {
                     LoginPage(navController)
                 }
+
                 composable("Create_Account_Page") {
                     CreateAccount(navController)
                 }
+                composable ("Create_Page"){
+                    CreatePage(navController)
+                 }
+
+                composable("Landing_Page") {
+                    LandingPage(navController)
+                }
+
                 composable("Confirm_Password_page") {
                     ComfirmPasswordPage(navController)
                 }
-                composable("Admin_Dash_Board") {
-                    AdminDashBoard(
-                        navController = navController, // Pass the NavController
-                        onCreateStaffAccount = { /* Handle creating staff account logic here */ },
-                        onCreateEnrollStudent = { navController.navigate("enroll_student") },
-                        onViewAttendance = { navController.navigate("View_Attendance") } // Ensure this route is defined
-                    )
+                composable("Admin_Dash_Board_Page") {
+                    AdminDashBoard(navController)
                 }
+
+                /*
                 composable("Register_Staff") {
                     RegisterStaff(
                         onRegister = { fname, sname, phone, email, className ->
@@ -59,6 +65,8 @@ class MainActivity : ComponentActivity() {
                 composable("View_Attendance") {
                     ViewAttendance(onBack = { navController.popBackStack() })
                 }
+
+                 */
             }
         }
     }

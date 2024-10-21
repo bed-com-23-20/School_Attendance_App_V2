@@ -73,8 +73,9 @@ fun LoginPage(navController: NavController){
         )
         Spacer(modifier = Modifier.height(10.dp))
 
-        Icon(imageVector = ImageVector.vectorResource(id = R.drawable.adminloginvector), contentDescription = "Admin vector"
-            )
+        /*Icon(imageVector = ImageVector.vectorResource(id = R.drawable.adminloginvector), contentDescription = "Admin vector"
+            )*/
+
         Spacer(modifier = Modifier.height(10.dp))
 
         OutlinedTextField(
@@ -118,11 +119,11 @@ fun LoginPage(navController: NavController){
                 Toast.makeText(context, " Username and Password can't be empty", Toast.LENGTH_LONG).show()
             }
             else{
-
+                navController.navigate("Admin_Dash_Board_Page")
 
             }
 
-           navController.navigate("Admin_Dash_Board")
+
         },
             modifier = Modifier
                 .fillMaxWidth()
@@ -152,7 +153,7 @@ fun LoginPage(navController: NavController){
         Spacer(modifier = Modifier.height(5.dp))
 
         Button(onClick = {
-            navController.navigate("Create_Account_Page")
+            navController.navigate("Create_Page")
         },
             modifier = Modifier
                 .fillMaxWidth()
