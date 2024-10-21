@@ -40,6 +40,14 @@ class MainActivity : ComponentActivity() {
                         onViewAttendance = { navController.navigate("View_Attendance") } // Ensure this route is defined
                     )
                 }
+                composable("Register_Staff") {
+                    RegisterStaff(
+                        onRegister = { fname, sname, phone, email, className ->
+                            // Handle the registration logic here
+                        },
+                        onBack = { navController.popBackStack() } // Navigate back to home screen
+                    )
+                }
                 composable("Enroll_Student") {
                     EnrollStudent(
                         onEnroll = { fname, sname, guardianName, guardianPhone, className, dateOfBirth, gender ->

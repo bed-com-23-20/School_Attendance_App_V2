@@ -68,7 +68,9 @@ fun AdminDashBoard(
                     containerColor = Color.Black, // Set the button's container color to black
                     contentColor = Color.White // Set the text color to white for contrast
                 ),
-                onClick = onCreateStaffAccount,
+                onClick =  {
+                    navController.navigate("Register_Staff") // Navigate to EnrollStudent screen
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 8.dp) // Vertical padding for space between buttons
