@@ -37,10 +37,10 @@ class MainActivity : ComponentActivity() {
                         navController = navController, // Pass the NavController
                         onCreateStaffAccount = { /* Handle creating staff account logic here */ },
                         onCreateEnrollStudent = { navController.navigate("enroll_student") },
-                        onViewAttendance = { navController.navigate("View_Attendance_Page") } // Ensure this route is defined
+                        onViewAttendance = { navController.navigate("View_Attendance") } // Ensure this route is defined
                     )
                 }
-                composable("enroll_student") {
+                composable("Enroll_Student") {
                     EnrollStudent(
                         onEnroll = { fname, sname, guardianName, guardianPhone, className, dateOfBirth, gender ->
                             // Handle enrollment logic
@@ -48,7 +48,9 @@ class MainActivity : ComponentActivity() {
                         onBack = { navController.popBackStack() }
                     )
                 }
-
+                composable("View_Attendance") {
+                    ViewAttendance(onBack = { navController.popBackStack() })
+                }
             }
         }
     }

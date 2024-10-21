@@ -82,7 +82,7 @@ fun AdminDashBoard(
                     contentColor = Color.White     // Set the text color to white for contrast
                 ),
                 onClick = {
-                    navController.navigate("enroll_student") // Navigate to EnrollStudent screen
+                    navController.navigate("Enroll_Student") // Navigate to EnrollStudent screen
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -92,13 +92,15 @@ fun AdminDashBoard(
             }
 
 
-            // Button to view records
+            // Button to view attendance records
             Button(
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Black, // Set the button's container color to black
                     contentColor = Color.White // Set the text color to white for contrast
                 ),
-                onClick = onViewAttendance,
+                onClick = {
+                    navController.navigate("View_Attendance") // Navigate to ViewAttendance screen
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 8.dp) // Vertical padding for space between buttons
