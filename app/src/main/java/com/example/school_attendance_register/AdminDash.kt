@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,16 +15,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun AdminDashBoard(navController: NavController)
-
- {
+fun AdminDash(navController: NavController) {
 
     // Create a column to hold the entire admin dashboard
     Column(
@@ -36,6 +31,7 @@ fun AdminDashBoard(navController: NavController)
         horizontalAlignment = Alignment.CenterHorizontally // Center horizontally
     ) {
         Spacer(modifier = Modifier.weight(1f))
+
         // Admin Dashboard heading at the top
         Text(
             text = "ADMIN DASHBOARD",
@@ -66,8 +62,8 @@ fun AdminDashBoard(navController: NavController)
                     containerColor = Color.Black, // Set the button's container color to black
                     contentColor = Color.White // Set the text color to white for contrast
                 ),
-                onClick =  {
-                    navController.navigate("Register_Staff") // Navigate to EnrollStudent screen
+                onClick = {
+                    navController.navigate("Register_Staff") // Navigate to Register Staff screen
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -83,7 +79,7 @@ fun AdminDashBoard(navController: NavController)
                     contentColor = Color.White     // Set the text color to white for contrast
                 ),
                 onClick = {
-                    navController.navigate("Enroll_Student") // Navigate to EnrollStudent screen
+                    navController.navigate("Enroll_Student") // Navigate to Enroll Student screen
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -92,7 +88,6 @@ fun AdminDashBoard(navController: NavController)
                 Text(text = "Enroll Student")
             }
 
-
             // Button to view attendance records
             Button(
                 colors = ButtonDefaults.buttonColors(
@@ -100,7 +95,7 @@ fun AdminDashBoard(navController: NavController)
                     contentColor = Color.White // Set the text color to white for contrast
                 ),
                 onClick = {
-                    navController.navigate("View_Attendance") // Navigate to ViewAttendance screen
+                    navController.navigate("View_Attendance") // Navigate to View Attendance screen
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -114,20 +109,3 @@ fun AdminDashBoard(navController: NavController)
         Spacer(modifier = Modifier.weight(1f))
     }
 }
-
-
-//shows on screen as a preview
-/*@Preview(showBackground = true)
-@Composable
-fun PreviewAdminDashboard() {
-    // Create a mock NavController
-    val navController = rememberNavController()
-
-    // Call AdminDashBoard with the mock NavController
-    AdminDashBoard(
-        navController = navController, // Pass the mock NavController
-        /*onCreateStaffAccount = {},
-        onCreateEnrollStudent = {},
-        onViewAttendance = {}*/
-    )
-}*/
