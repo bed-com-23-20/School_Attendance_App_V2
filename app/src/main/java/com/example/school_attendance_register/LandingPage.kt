@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -60,7 +62,8 @@ fun LandingPage(navController: NavController){
 
 
     Column (
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize()
+            .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment =  Alignment.CenterHorizontally
     ) {
@@ -145,11 +148,6 @@ fun LandingPage(navController: NavController){
 
             )
         }
-
-
-//        FontFamily.Serif: A serif font.
-//        FontFamily.SansSerif: A sans-serif font.
-//        FontFamily.Monospace: A monospaced font
 
 
     }

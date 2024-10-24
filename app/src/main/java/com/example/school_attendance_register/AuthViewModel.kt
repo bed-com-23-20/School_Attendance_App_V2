@@ -1,85 +1,78 @@
+
 package com.example.school_attendance_register
 
+import android.content.ContentValues.TAG
 import android.util.Log
 import android.widget.Toast
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.navigation.compose.rememberNavController
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
+import org.mindrot.jbcrypt.BCrypt
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.auth.AuthState
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 
 class AuthViewModel : ViewModel() {
 
 
-//    private val _authState = MutableLiveData<AuthState>()
-//    val authState: LiveData<AuthState> = _authState
-
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
-    private val database: DatabaseReference = FirebaseDatabase.getInstance().getReference("Admin")
+    private val database: FirebaseDatabase = FirebaseDatabase.getInstance()
+    //private val uiHelper = UIHelper()
 
 
-//    init {
-//        checkAuthStatus()
-//    }
-//
-//
-//    fun checkAuthStatus(){
-//        if(auth.currentUser==null){
-//            _authState.value = AuthState.Unauthenticated
-//        }else{
-//            _authState.value = AuthState.Authenticated
-//        }
-//    }
+    fun hashPassword(password: String): String {
+        return BCrypt.hashpw(password, BCrypt.gensalt())
+    }
 
-
-
-    // Function to fetch credentials from Firebase Realtime Database
-    fun fetchCredentials(
-        onComplete: (String, String) -> Unit,
-        onError: (String) -> Unit
+    fun loginUser(
+        userId: String,
+        providedPassword: String,
+        navyController: NavController,
+        onError: (String) -> Unit,
+        onSuccess: () -> Unit,
+        //name: onSuccess
     ) {
-        database.addListenerForSingleValueEvent(object : ValueEventListener {
+        val usersRef = database.getReference("Admin").child(userId)
+
+        usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                val email = snapshot.child("email").getValue(String::class.java)
+                val password= snapshot.child("confirmPass").getValue(String::class.java)
 
-                for (adminSnapshot in snapshot.children) {
-                    val email = snapshot.child("email").value as? String ?: ""
-                    val password = snapshot.child("createPass").value as? String ?: ""
+                if (email != null && password != null) {
+                    val hashedPassword = hashPassword(providedPassword)
 
-                    if (email.isNotEmpty() && password.isNotEmpty()) {
-                        onComplete(
-                            email,
-                            password
-                        )  // Pass email and password to the onComplete lambda
-                        return
+                    if (hashedPassword == password) {
+                        auth.signInWithEmailAndPassword(email, providedPassword)
+                            .addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    Log.d(TAG, "signInWithEmail:success")
+                                    Log.d(TAG,"Email $email\nPassword $password")
+                                    onSuccess.invoke()
+                                    navyController.navigate("Admin_Dash_Board")
+                                } else {
+                                    val errorMessage =
+                                        task.exception?.message ?: "Authentication failed"
+                                    onError(errorMessage) // Call onError lambda with error message
+                                }
+                            }
+                    } else {
+                        onError("Incorrect password")
                     }
+                } else {
+                    onError("User not found")
                 }
-                onError("Email or password not found in the database")
-
             }
 
             override fun onCancelled(error: DatabaseError) {
-                onError("Error fetching data: ${error.message}")  // Pass error message to the onError lambda
+                Log.w(TAG, "Failed to read value.", error.toException())
+                onError("Database error: ${error.message}")
             }
         })
-    }
-
-    // Function to log in using Firebase Authentication
-    fun login(
-        email: String,
-        password: String,
-        onSuccess: () -> Unit,     // Lambda for handling login success
-        onFailure: (String) -> Unit  // Lambda for handling login failure
-    ) {
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    onSuccess()  // Call onSuccess if login succeeds
-                } else {
-                    task.exception?.message?.let { onFailure(it) }  // Pass the error message to onFailure if login fails
-                }
-            }
     }
 
 }

@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Button
@@ -50,6 +52,8 @@ fun CreateAccount(navController: NavController){
     val database = FirebaseDatabase.getInstance()
     val myRef = database.getReference("Admin")
 
+    var loading by remember { mutableStateOf(false) }
+
     // Admin Information
     var adminFullName by remember { mutableStateOf("") }
     var adminSname by remember { mutableStateOf("") }
@@ -66,7 +70,8 @@ fun CreateAccount(navController: NavController){
     val context = LocalContext.current
 
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize()
+            .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment =  Alignment.CenterHorizontally
 
@@ -92,30 +97,9 @@ fun CreateAccount(navController: NavController){
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp)
-//                .background(
-//                    color = Color.Black,
-//                    shape = RoundedCornerShape(24.dp)
-//                ),
-//            shape = RoundedCornerShape(24.dp)
+
 
         )
-       // Spacer(modifier = Modifier.height(15.dp))
-//
-//        TextField(
-//            value = adminSname,
-//            onValueChange = {adminSname = it},
-//            label = {Text("Surname")},
-//            //leadingIcon = {ImageVector.vectorResource(id = R.drawable.password_vector)},
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(start = 20.dp, end = 20.dp)
-////                .background(
-////                    color = Color.Black,
-////                    shape = RoundedCornerShape(24.dp)
-////                ),
-////            shape = RoundedCornerShape(24.dp)
-//
-//        )
 
         Spacer(modifier = Modifier.height(15.dp))
 
@@ -127,11 +111,7 @@ fun CreateAccount(navController: NavController){
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp)
-//                .background(
-//                    color = Color.Black,
-//                    shape = RoundedCornerShape(24.dp)
-//                ),
-//            shape = RoundedCornerShape(24.dp)
+
 
         )
 
@@ -145,11 +125,7 @@ fun CreateAccount(navController: NavController){
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp)
-//                .background(
-//                    color = Color.Black,
-//                    shape = RoundedCornerShape(24.dp)
-//                ),
-//            shape = RoundedCornerShape(24.dp)
+
 
         )
 
@@ -163,11 +139,7 @@ fun CreateAccount(navController: NavController){
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp)
-//                .background(
-//                    color = Color.Black,
-//                    shape = RoundedCornerShape(24.dp)
-//                ),
-//            shape = RoundedCornerShape(24.dp)
+
         )
 
         Spacer(modifier = Modifier.height(15.dp))
@@ -180,11 +152,7 @@ fun CreateAccount(navController: NavController){
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp)
-//                .background(
-//                    color = Color.Black,
-//                    shape = RoundedCornerShape(24.dp)
-//                ),
-//            shape = RoundedCornerShape(24.dp)
+
         )
         Spacer(modifier = Modifier.height(20.dp))
 
@@ -226,9 +194,7 @@ fun CreateAccount(navController: NavController){
             Button(onClick = {
                 navController.navigate("Login_Page")
             },
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(start = 20.dp, end = 20.dp),
+
                 colors = ButtonDefaults.buttonColors(containerColor  = Color.Black)
 
             ) {
@@ -243,7 +209,10 @@ fun CreateAccount(navController: NavController){
             }
             Spacer(modifier = Modifier.width(50.dp))
 
-            Button(onClick = {
+            Button(
+                onClick = {
+                    loading = true
+
               if(createPass != password && adminFullName.isNotEmpty() && schoolName.isNotEmpty() && district.isNotEmpty() &&
                   phoneNumber.isNotEmpty() && email.isNotEmpty() && createPass.isNotEmpty() && password.isNotEmpty()) {
                 Toast.makeText(context, "Password does not match. Re-check the password", Toast.LENGTH_LONG).show()
@@ -274,16 +243,15 @@ fun CreateAccount(navController: NavController){
                 else{
                     Toast.makeText(context, "Please insert all the values first before submitting", Toast.LENGTH_SHORT).show()
                 }
-                //navController.navigate("Admin_Dash_Board")
+
             },
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(start = 20.dp, end = 20.dp),
+
                 colors = ButtonDefaults.buttonColors(containerColor  = Color.Black)
 
             ) {
                 Text(
-                    text = " Submit ",
+                     "Submit",
+                    //text = "Submit",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = FontFamily.Serif
