@@ -34,7 +34,7 @@ fun AdminDashBoardPage() {
             .fillMaxSize()
             .padding(16.dp),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.Start // Align elements to the start
+        horizontalAlignment = Alignment.CenterHorizontally // Align elements to the start
     ) {
         Text(text = "Register Staff", fontSize = 28.sp, fontWeight = FontWeight.Bold)
 
@@ -77,9 +77,9 @@ fun AdminDashBoardPage() {
         // Register Button
         Button(
             onClick = {
-                onRegister(name.text, email.text, phone.text, className.text, password.text) // Call registration with input values
+                onRegister(name.text, email.text, phone.text, className.text, password.text)
             },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.width(300.dp) // Set fixed width, adjust as needed
         ) {
             Text(text = "Register")
         }
