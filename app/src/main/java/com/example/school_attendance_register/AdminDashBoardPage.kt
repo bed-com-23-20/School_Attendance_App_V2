@@ -4,21 +4,24 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 
 @Preview(showBackground = true)
 @Composable
 fun AdminDashBoardPage() {
-    // State variables for inputs
+    // Stating variables for inputs
     var name by remember { mutableStateOf(TextFieldValue("")) }
     var email by remember { mutableStateOf(TextFieldValue("")) }
     var phone by remember { mutableStateOf(TextFieldValue("")) }
@@ -33,58 +36,41 @@ fun AdminDashBoardPage() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.Start // Align elements to the start
     ) {
-        Text(text = "Register Staff", style = MaterialTheme.typography.headlineSmall)
+        Text(text = "Register Staff", fontSize = 28.sp, fontWeight = FontWeight.Bold)
 
         Spacer(modifier = Modifier.height(16.dp))
 
         // Name Input
-        TextField(
-            value = name,
-            onValueChange = { name = it },
-            label = { Text("Name") },
-            modifier = Modifier.fillMaxWidth()
-        )
+        OutlinedTextField(value = "", onValueChange = {}, label = {
+            Text(text = "Name")
+        })
 
         Spacer(modifier = Modifier.height(8.dp))
 
         // Email Input
-        TextField(
-            value = email,
-            onValueChange = { email = it },
-            label = { Text("Email") },
-            modifier = Modifier.fillMaxWidth()
-        )
+        OutlinedTextField(value = "", onValueChange = {}, label = {
+            Text(text = "Email")
+        })
 
         Spacer(modifier = Modifier.height(8.dp))
 
         // Phone Number Input
-        TextField(
-            value = phone,
-            onValueChange = { phone = it },
-            label = { Text("Phone Number") },
-            modifier = Modifier.fillMaxWidth()
-        )
+        OutlinedTextField(value = "", onValueChange = {}, label = {
+            Text(text = "Phone Number")
+        })
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Class Input
-        TextField(
-            value = className,
-            onValueChange = { className = it },
-            label = { Text("Class") },
-            modifier = Modifier.fillMaxWidth()
-        )
+        OutlinedTextField(value = "", onValueChange = {}, label = {
+            Text(text = "Class")
+        })
 
         Spacer(modifier = Modifier.height(8.dp))
 
         // Password Input
-        TextField(
-            value = password,
-            onValueChange = { password = it },
-            label = { Text("Password") },
-            visualTransformation = PasswordVisualTransformation(), // Hides the password
-            modifier = Modifier.fillMaxWidth()
-        )
+        OutlinedTextField(value = "", onValueChange = {}, label = {
+            Text(text = "Password")
+        })
 
         Spacer(modifier = Modifier.height(16.dp))
 
