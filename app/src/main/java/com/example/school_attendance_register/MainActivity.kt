@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
 
-           MarkAttendance()
+        RegisterStaff<Any>()
 //            School_Attendance_RegisterTheme {
 //                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
 //                    Greeting(

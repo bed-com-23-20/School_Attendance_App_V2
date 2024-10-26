@@ -41,7 +41,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.1" // This enables the Compose Compiler plugin
     }
     packaging {
         resources {
@@ -51,7 +51,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -61,7 +60,20 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.firebase.auth)
-    implementation(libs.firebase.database)
+    implementation("com.google.firebase:firebase-firestore:25.1.1")
+    implementation(platform("androidx.compose:compose-bom:2023.01.00"))
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+
+    // Navigation dependencies
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.navigation.ui)
+    implementation(libs.androidx.navigation.dynamic.features.fragment)
+    androidTestImplementation(libs.androidx.navigation.testing)
+
+    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -69,20 +81,4 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
-    val nav_version = "2.8.2"
-
-    // Jetpack Compose integration
-    implementation(libs.androidx.navigation.compose)
-
-    // Views/Fragments integration
-    implementation(libs.androidx.navigation.fragment)
-    implementation(libs.androidx.navigation.ui)
-
-    // Feature module support for Fragments
-    implementation(libs.androidx.navigation.dynamic.features.fragment)
-
-    // Testing Navigation
-    androidTestImplementation(libs.androidx.navigation.testing)
-
 }
