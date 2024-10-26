@@ -44,9 +44,6 @@ class MainActivity : ComponentActivity() {
                 }
 
 
-                composable("Register_Staff",){
-                    RegisterStaff (navController)
-                }
             }
             )
 
