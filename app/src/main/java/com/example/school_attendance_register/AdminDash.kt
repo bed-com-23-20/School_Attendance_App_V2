@@ -94,9 +94,7 @@ fun AdminDash(navController: NavController) {
                     containerColor = Color.Black, // Set the button's container color to black
                     contentColor = Color.White // Set the text color to white for contrast
                 ),
-                onClick = {
-                    navController.navigate("View_Attendance") // Navigate to View Attendance screen
-                },
+                onClick = {},
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 8.dp) // Vertical padding for space between buttons

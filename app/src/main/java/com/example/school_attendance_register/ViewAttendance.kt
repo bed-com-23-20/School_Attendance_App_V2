@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun ViewAttendance(
-    onBack: () -> Unit // Callback to navigate back
+
 ) {
     var selectedTerm by remember { mutableStateOf("First Term") }
     var startDate by remember { mutableStateOf("") }
@@ -63,7 +63,9 @@ fun ViewAttendance(
         Spacer(modifier = Modifier.height(16.dp))
 
         // Back Button
-        Button(onClick = onBack) {
+        Button(onClick ={
+
+        }) {
 
             Text(text = "Back")
         }
@@ -91,5 +93,5 @@ fun DropdownMenu(
 @Preview(showBackground = true)
 @Composable
 fun PreviewViewAttendanceScreen() {
-    ViewAttendance(onBack = {})
+    ViewAttendance()
 }
