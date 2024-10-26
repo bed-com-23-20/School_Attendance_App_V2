@@ -1,0 +1,1 @@
+This is the Mobile App where different schools will be able to enroll their students and be able to mark the attendace automatically by just scanning the finger print of the student or by punching in the student unique passcode into the system. Hence reducing the burden for the teacher to be calling out the name when marking the attendance for each student. 
