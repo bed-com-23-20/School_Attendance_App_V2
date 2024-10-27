@@ -76,7 +76,8 @@ fun AdminDashBoard(navController: NavController) {
                     contentColor = Color.White     // Set the text color to white for contrast
                 ),
                 onClick = {
-                    navController.navigate("Enroll_Student") // Navigate to Enroll Student screen
+                    navController.navigate("Student_Enroll")
+
                 },
                 modifier = Modifier
                     .fillMaxWidth()
