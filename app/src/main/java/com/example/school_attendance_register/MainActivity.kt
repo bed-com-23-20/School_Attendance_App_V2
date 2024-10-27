@@ -9,7 +9,7 @@ import androidx.annotation.RequiresApi
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.school_attendance_register.plastol_pages.AdminDashBoard
+import com.example.school_attendance_register.chikondi_pages.AdminDashBoard
 import com.example.school_attendance_register.plastol_pages.AuthViewModel
 import com.example.school_attendance_register.plastol_pages.ComfirmPasswordPage
 import com.example.school_attendance_register.plastol_pages.CreateAccount
