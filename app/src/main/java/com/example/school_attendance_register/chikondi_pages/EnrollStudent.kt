@@ -3,7 +3,6 @@ package com.example.school_attendance_register.chikondi_pages
 import android.app.DatePickerDialog
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -15,6 +14,8 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.school_attendance_register.plastol_pages.data_classes.StudentInfo
+import com.google.firebase.database.FirebaseDatabase
 import java.util.*
 
 @Composable
@@ -27,6 +28,9 @@ fun EnrollStudent(navController: NavController) {
     var dateOfBirth by remember { mutableStateOf("") }
     var gender by remember { mutableStateOf("") }
     var showError by remember { mutableStateOf(false) }
+
+    val database = FirebaseDatabase.getInstance()
+    val myRef = database.getReference("Admin")
 
     val calendar = Calendar.getInstance()
     val year = calendar.get(Calendar.YEAR)
@@ -156,17 +160,32 @@ fun EnrollStudent(navController: NavController) {
 
             Button(
                 onClick = {
+//                    if(fname.isNotEmpty() && sname.isNotEmpty() && guardianName.isNotEmpty() && guardianPhone.isNotEmpty() &&
+//                        classform.isNotEmpty() && dateOfBirth.isNotEmpty() && gender.isNotEmpty()
+//                        ){
+//                        var studentInfo = StudentInfo(
+//                            fname.toString(), sname.toString(), guardianName.toString(),
+//                            guardianPhone, classform, dateOfBirth, gender
+//                        )
+//                        myRef.child(adminFullName).setValue(adminInfo).addOnSuccessListener
+//
+//                    }
+                    
 
                 },
+
+
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Enroll")
+                Text("Submit")
             }
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Button(
-                onClick = { navController.popBackStack() }, // Navigate back
+                onClick = {
+                    navController.navigate("Admin_Dash_Board")
+                          },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Back")

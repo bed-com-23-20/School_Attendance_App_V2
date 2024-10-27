@@ -219,7 +219,7 @@ fun CreateAccount(navController: NavController){
                     phoneNumber.isNotEmpty() && email.isNotEmpty() && createPass.isNotEmpty() && password.isNotEmpty() &&
                     createPass == password
                     ){
-                  //var adminInfo = AdminInfo(adminFullName, schoolName, district, phoneNumber.toInt(), email, createPass, confirmPass)
+
                     val adminInfo = AdminInfo(adminFullName.toUpperCase(Locale.ROOT),schoolName, district, phoneNumber.toInt(), email, createPass, password)
                   myRef.child(adminFullName).setValue(adminInfo).addOnSuccessListener {
                     adminFullName = ""
