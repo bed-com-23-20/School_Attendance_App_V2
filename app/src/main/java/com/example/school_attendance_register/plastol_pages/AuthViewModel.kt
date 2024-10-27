@@ -1,11 +1,8 @@
 
-package com.example.school_attendance_register
+package com.example.school_attendance_register.plastol_pages
 
 import android.content.ContentValues.TAG
 import android.util.Log
-import android.widget.Toast
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
 import org.mindrot.jbcrypt.BCrypt
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -13,7 +10,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 
 class AuthViewModel : ViewModel() {

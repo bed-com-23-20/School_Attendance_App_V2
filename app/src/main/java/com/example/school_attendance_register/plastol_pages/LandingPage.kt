@@ -1,6 +1,5 @@
-package com.example.school_attendance_register
+package com.example.school_attendance_register.plastol_pages
 
-import android.content.res.Configuration
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
@@ -23,16 +22,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextGeometricTransform
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.school_attendance_register.R
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
-import java.util.Locale
 
 
 @RequiresApi(Build.VERSION_CODES.O)

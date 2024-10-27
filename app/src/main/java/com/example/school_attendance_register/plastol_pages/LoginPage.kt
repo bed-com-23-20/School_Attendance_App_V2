@@ -1,7 +1,6 @@
 
-package com.example.school_attendance_register
+package com.example.school_attendance_register.plastol_pages
 
-import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -21,7 +20,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,10 +36,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import kotlinx.coroutines.delay
+import com.example.school_attendance_register.R
 
 @Composable
 //@Preview(showBackground = true)
@@ -51,12 +47,9 @@ fun LoginPage(navController: NavController, authViewModel: AuthViewModel){
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
-//    val navController = rememberNavController() // Get NavController
-//    val authViewModel = viewModel<AuthViewModel>()
-
 
     var loading by remember { mutableStateOf(false) }
-    var error by remember { mutableStateOf<String?>(null) }
+    val error by remember { mutableStateOf<String?>(null) }
     var isLoggedIn by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
@@ -127,12 +120,14 @@ fun LoginPage(navController: NavController, authViewModel: AuthViewModel){
 
                     if(password.isEmpty() && email.isEmpty()){
                                 Toast.makeText(context, "Email and Password cant be empty", Toast.LENGTH_SHORT).show()
+                        loading = false
                     }else {
                         authViewModel.loginUser(email, password, navController,
 
                             onSuccess  = {
                             //Toast.makeText(context, "You have Successfully Logged in", Toast.LENGTH_SHORT).show()
                                     navController.navigate("Admin_Dash_Board")
+                                loading = false
 
                         }, 
                             onError = { errorMessage ->
@@ -143,12 +138,14 @@ fun LoginPage(navController: NavController, authViewModel: AuthViewModel){
                                     Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
 
                                 }
+                                loading = false
                         }
 
                             
                              )
                         }
                 },
+
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 20.dp, end = 20.dp),
@@ -165,17 +162,7 @@ fun LoginPage(navController: NavController, authViewModel: AuthViewModel){
             error?.let {
             Text("Error: $it", color = Color.Red)
             }
-//
-//            {
-//                Text(
-//                    text = "Login",
-//                    fontSize = 20.sp,
-//                    fontWeight = FontWeight.Bold,
-//                    fontFamily = FontFamily.Serif
-//
-//
-//                )
-//            }
+
 
         Spacer(modifier = Modifier.height(5.dp))
 
@@ -190,10 +177,7 @@ fun LoginPage(navController: NavController, authViewModel: AuthViewModel){
         Spacer(modifier = Modifier.height(5.dp))
 
         Button(onClick = {
-//            { loginError : String ->
-//                loading = false
-//                error = loginError
-//            }
+
             navController.navigate("Create_Account_Page")
         },
             modifier = Modifier
