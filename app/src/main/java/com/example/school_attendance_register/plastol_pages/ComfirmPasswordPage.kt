@@ -1,4 +1,4 @@
-package com.example.school_attendance_register
+package com.example.school_attendance_register.plastol_pages
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

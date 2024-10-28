@@ -1,6 +1,5 @@
-package com.example.school_attendance_register
+package com.example.school_attendance_register.plastol_pages
 
-import android.content.res.Configuration
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
@@ -12,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -21,16 +22,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextGeometricTransform
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.school_attendance_register.R
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
-import java.util.Locale
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -60,7 +58,8 @@ fun LandingPage(navController: NavController){
 
 
     Column (
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize()
+            .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment =  Alignment.CenterHorizontally
     ) {
@@ -145,11 +144,6 @@ fun LandingPage(navController: NavController){
 
             )
         }
-
-
-//        FontFamily.Serif: A serif font.
-//        FontFamily.SansSerif: A sans-serif font.
-//        FontFamily.Monospace: A monospaced font
 
 
     }
