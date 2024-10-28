@@ -10,11 +10,22 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.school_attendance_register.StudentData
+import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
+
+data class StudentData(
+    val fname: String = "",
+    val sname: String = "",
+    val guardianName: String = "",
+    val guardianPhone: String = "",
+    val className: String = "",
+    val dateOfBirth: String = "",
+    val gender: String = ""
+)
 
 @Composable
 fun EnrollStudent(navController: NavController) {
@@ -163,10 +174,9 @@ fun EnrollStudent(navController: NavController) {
                     } else {
                         showError = false
 
-                        // Creating a StudentData object
                         val studentData = StudentData(
-                            firstName = fname.text,
-                            surname = sname.text,
+                            fname = fname.text,
+                            sname = sname.text,
                             guardianName = guardianName.text,
                             guardianPhone = guardianPhone.text,
                             className = className.text,
@@ -174,7 +184,15 @@ fun EnrollStudent(navController: NavController) {
                             gender = gender
                         )
 
-                        // Handle enrollment logic here with studentData
+                        val db = FirebaseFirestore.getInstance()
+                        db.collection("students")
+                            .add(studentData)
+                            .addOnSuccessListener {
+                                // Show success message
+                            }
+                            .addOnFailureListener {
+                                // Show error message
+                            }
                     }
                 },
                 modifier = Modifier.fillMaxWidth()
@@ -185,10 +203,10 @@ fun EnrollStudent(navController: NavController) {
             Spacer(modifier = Modifier.height(8.dp))
 
             Button(
-                onClick = { navController.popBackStack() }, // Navigate back
+                onClick = { navController.navigate("viewAttendance") },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Back")
+                Text("View Attendance Records")
             }
         }
     }
