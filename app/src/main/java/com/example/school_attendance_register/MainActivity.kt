@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.rememberScrollState
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -26,9 +27,10 @@ class MainActivity : ComponentActivity() {
         FirebaseApp.initializeApp(this)
         setContent {
 
+            val scrollState = rememberScrollState()
             //Calling the LandingPage function
             val navController = rememberNavController()
-            NavHost(navController = navController,  startDestination = "Landing_Page", builder = {
+            NavHost(navController = navController,  startDestination = "Student_Enroll", builder = {
 
 
                 composable("Landing_Page"){
@@ -49,7 +51,7 @@ class MainActivity : ComponentActivity() {
                     AdminDashBoard(navController)
                 }
                 composable("Student_Enroll") {
-                    EnrollStudent(navController)
+                    EnrollStudent(navController, "adminFullName")
                 }
 
 

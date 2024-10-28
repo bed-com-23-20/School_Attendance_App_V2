@@ -10,6 +10,7 @@ data class StudentInfo(
     var classform: TextFieldValue,
     var dateOfBirth: String,
     var gender: String,
-    var fullname: String = fname +""+ sname
+    val uniqueId: String,
+    var fullName: String = fname +""+ sname
 
 )

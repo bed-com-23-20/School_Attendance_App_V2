@@ -52,10 +52,11 @@ fun LoginPage(navController: NavController, authViewModel: AuthViewModel){
     val error by remember { mutableStateOf<String?>(null) }
     var isLoggedIn by remember { mutableStateOf(false) }
     val context = LocalContext.current
+    val scrollState = rememberScrollState()
 
     Column(
         modifier = Modifier.fillMaxSize()
-        .verticalScroll(rememberScrollState()),
+        .verticalScroll(scrollState),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment =  Alignment.CenterHorizontally
 
