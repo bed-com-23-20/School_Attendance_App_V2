@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.gms.google.services)
+    id("org.jetbrains.kotlin.plugin.compose") version "2.0.0"
 }
 
 android {
@@ -49,6 +50,10 @@ android {
         }
     }
 }
+composeCompiler {
+    reportsDestination = layout.buildDirectory.dir("compose_compiler")
+    stabilityConfigurationFile = rootProject.layout.projectDirectory.file("stability_config.conf")
+}
 
 dependencies {
     implementation(libs.androidx.core.ktx)
@@ -71,6 +76,9 @@ dependencies {
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
     implementation(libs.androidx.navigation.dynamic.features.fragment)
+    implementation(libs.firebase.crashlytics.buildtools)
+    implementation(libs.firebase.database.ktx)
+    implementation(libs.androidx.runtime.livedata)
     androidTestImplementation(libs.androidx.navigation.testing)
 
     // Testing

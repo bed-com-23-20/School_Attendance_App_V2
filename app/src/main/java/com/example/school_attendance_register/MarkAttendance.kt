@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateOf
@@ -15,11 +14,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 @Composable
-fun MarkAttendance() {
+fun MarkAttendance(navController: NavController) {
     // State to hold the student code input
     var studentCode by remember { mutableStateOf("") }
+    var message by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -29,37 +30,63 @@ fun MarkAttendance() {
         verticalArrangement = Arrangement.Center
     ) {
         // Title
-        Text(text = "Mark Attendance", fontSize = 28.sp, fontWeight = FontWeight.Bold)
+        Text(
+            text = "Mark Attendance",
+            fontSize = 28.sp,
+            fontWeight = FontWeight.Bold
+        )
 
         Spacer(modifier = Modifier.height(40.dp))
 
-        // Student Code Label
-        Text(text = "Student Code", fontSize = 16.sp, fontWeight = FontWeight.Bold)
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        OutlinedTextField(value = "", onValueChange = {}, label = {
-            Text(text = "Enter student code")
-        })
+        // Student Code Input Field
+        OutlinedTextField(
+            value = studentCode,
+            onValueChange = { studentCode = it },
+            label = { Text(text = "Enter student code") },
+            modifier = Modifier.fillMaxWidth()
+        )
 
         Spacer(modifier = Modifier.height(30.dp))
+
+        // Display feedback message if attendance is marked
+        if (message.isNotEmpty()) {
+            Text(
+                text = message,
+                color = androidx.compose.ui.graphics.Color.Green,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Medium,
+                modifier = Modifier.padding(8.dp)
+            )
+        }
 
         // Buttons
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center // Center-aligns the buttons in the Row
+            horizontalArrangement = Arrangement.Center
         ) {
-            Button(onClick = { /* Handle Cancel */ }) {
+            Button(
+                onClick = { navController.navigate("Admin_Dash_Board") },
+                modifier = Modifier.padding(horizontal = 8.dp)
+            ) {
                 Text(text = "Cancel")
             }
 
-            Spacer(modifier = Modifier.width(40.dp)) // Space between the two buttons
+            Spacer(modifier = Modifier.width(20.dp))
 
-            Button(onClick = { /* Handle Submit */ }) {
+            Button(
+                onClick = {
+                    // Logic to mark attendance
+                    if (studentCode.isNotBlank()) {
+                        message = "Attendance marked for student code: $studentCode"
+                        studentCode = "" // Reset input after submission
+                    } else {
+                        message = "Please enter a valid student code."
+                    }
+                },
+                modifier = Modifier.padding(horizontal = 8.dp)
+            ) {
                 Text(text = "Submit")
             }
         }
-
-
     }
 }

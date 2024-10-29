@@ -1,132 +1,111 @@
 package com.example.school_attendance_register
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Divider
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 @Composable
-@Preview(showBackground = true)
-fun ComfirmPasswordPage(navController: NavController){
+fun ConfirmPasswordPage(navController: NavController) {
 
     var createPass by remember { mutableStateOf("") }
-    var confimPass by remember { mutableStateOf("") }
+    var confirmPass by remember { mutableStateOf("") }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
 
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 20.dp),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment =  Alignment.CenterHorizontally
-    )
-    {
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Text(
             text = "Create Password",
             fontSize = 28.sp,
             fontFamily = FontFamily.Serif,
             fontWeight = FontWeight.Bold,
         )
+
         Divider(
             thickness = 1.dp,
             color = Color.Black,
-            modifier = Modifier.padding(horizontal = 16.dp)
+            modifier = Modifier.padding(vertical = 10.dp)
         )
+
         Spacer(modifier = Modifier.height(10.dp))
 
+        // Create Password Field
         TextField(
             value = createPass,
             onValueChange = { createPass = it },
             label = { Text("Create Password") },
-            //leadingIcon = {ImageVector.vectorResource(id = R.drawable.password_vector)},
+            visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth()
-                .padding(
-                    start = 20.dp, end = 20.dp
-                )
         )
+
         Spacer(modifier = Modifier.height(10.dp))
 
+        // Confirm Password Field
         TextField(
-            value = confimPass,
-            onValueChange = { confimPass = it },
-            label = { Text("Create Password") },
-            //leadingIcon = {ImageVector.vectorResource(id = R.drawable.password_vector)},
+            value = confirmPass,
+            onValueChange = { confirmPass = it },
+            label = { Text("Confirm Password") },
+            visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth()
-                .padding(
-                    start = 20.dp, end = 20.dp
-                )
         )
 
         Spacer(modifier = Modifier.height(20.dp))
 
+        // Display Error Message if Passwords Do Not Match
+        errorMessage?.let {
+            Text(it, color = Color.Red, fontSize = 14.sp, modifier = Modifier.padding(bottom = 10.dp))
+        }
+
         Row(
-            modifier = Modifier.fillMaxWidth()
-                .padding(start = 40.dp, end = 30.dp)
-                .align(Alignment.CenterHorizontally)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Button(
-                onClick = {
-                    navController.navigate("Create_Account_Page")
-                },
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(start = 20.dp, end = 20.dp),
+                onClick = { navController.navigate("Create_Account_Page") },
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
-
             ) {
                 Text(
-                    text = " Back ",
+                    text = "Back",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = FontFamily.Serif
-
-
                 )
             }
-
-            Spacer(modifier = Modifier.width(50.dp))
 
             Button(
-                onClick = {},
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(start = 20.dp, end = 20.dp),
+                onClick = {
+                    if (createPass != confirmPass) {
+                        errorMessage = "Passwords do not match"
+                    } else {
+                        errorMessage = null
+                        // Navigate to the next screen or perform further actions
+                        navController.navigate("Admin_Dash_Board")
+                    }
+                },
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
-
             ) {
                 Text(
-                    text = "  Finish  ",
+                    text = "Finish",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = FontFamily.Serif
-
-
                 )
             }
-
-
         }
     }
-
 }

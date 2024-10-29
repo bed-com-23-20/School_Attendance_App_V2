@@ -4,74 +4,48 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.school_attendance_register.ui.theme.School_Attendance_RegisterTheme
 import com.google.firebase.FirebaseApp
 
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         FirebaseApp.initializeApp(this)
+
         setContent {
-
-<<<<<<< HEAD
-        RegisterStaff<Any>()
-//            School_Attendance_RegisterTheme {
-//                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-//                    Greeting(
-//                        name = "Android",
-//                        modifier = Modifier.padding(innerPadding)
-//                    )
-//                }
-//            }
-=======
-            //Calling the LandingPage function
             val navController = rememberNavController()
-            NavHost(navController = navController,  startDestination = "Landing_Page", builder = {
-
-
-                composable("Landing_Page"){
+            NavHost(navController = navController, startDestination = "Landing_Page") {
+                composable("Landing_Page") {
                     LandingPage(navController)
                 }
-                composable("Login_Page",){
+                composable("Login_Page") {
                     LoginPage(navController, AuthViewModel())
                 }
-
-                composable("Create_Account_Page",){
+                composable("Create_Account_Page") {
                     CreateAccount(navController)
                 }
-
-                composable("Confirm_Password_page",){
+                composable("Confirm_Password_page") {
                     ComfirmPasswordPage(navController)
                 }
-                composable("Admin_Dash_Board",){
+                composable("Admin_Dash_Board") {
                     AdminDashBoard(navController)
                 }
-
-
+                composable("Register_staff") {
+                    RegisterStaff(navController)
+                }
+                composable("Mark_Attendance") {
+                    MarkAttendance(navController)
+                }
             }
-            )
-
->>>>>>> origin/master
         }
     }
+
+    private fun ComfirmPasswordPage(navController: NavHostController) {
+        TODO("Not yet implemented")
+    }
 }
-
-<<<<<<< HEAD
-
-
-=======
->>>>>>> origin/master
