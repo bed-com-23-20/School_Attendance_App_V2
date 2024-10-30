@@ -152,28 +152,35 @@ fun CreateAccount(navController: NavController) {
                     } else if (adminFullName.isNotEmpty() && schoolName.isNotEmpty() && district.isNotEmpty()
                         && phoneNumber.isNotEmpty() && email.isNotEmpty() && createPass.isNotEmpty()
                     ) {
-                        // Save Admin Info to Database
-                        val adminInfo = AdminInfo(
-                            adminFullName.toUpperCase(Locale.ROOT),
-                            schoolName,
-                            district,
-                            phoneNumber.toIntOrNull() ?: 0,
-                            email,
-                            createPass
-                        )
-                        myRef.child(adminFullName).setValue(adminInfo).addOnSuccessListener {
-                            // Reset fields after successful creation
-                            adminFullName = ""
-                            schoolName = ""
-                            district = ""
-                            phoneNumber = ""
-                            email = ""
-                            createPass = ""
-                            confirmPass = ""
-                            Toast.makeText(context, "Admin Account Created Successfully", Toast.LENGTH_SHORT).show()
-                            navController.navigate("Admin_Dash_Board")
-                        }.addOnFailureListener {
-                            Toast.makeText(context, "Error: ${it.message}", Toast.LENGTH_LONG).show()
+                        val phoneInt = phoneNumber.toIntOrNull()
+                        if (phoneInt == null) {
+                            Toast.makeText(context, "Invalid phone number", Toast.LENGTH_SHORT).show()
+                        } else {
+                            // Save Admin Info to Database
+                            val adminInfo = AdminInfo(
+                                adminFullName.toUpperCase(Locale.ROOT),
+                                schoolName,
+                                district,
+                                phoneInt,
+                                email,
+                                createPass,
+                                confirmPass = confirmPass  // Add this line if `confirmPass` is required
+                            )
+
+                            myRef.child(adminFullName).setValue(adminInfo).addOnSuccessListener {
+                                // Reset fields after successful creation
+                                adminFullName = ""
+                                schoolName = ""
+                                district = ""
+                                phoneNumber = ""
+                                email = ""
+                                createPass = ""
+                                confirmPass = ""
+                                Toast.makeText(context, "Admin Account Created Successfully", Toast.LENGTH_SHORT).show()
+                                navController.navigate("Admin_Dash_Board")
+                            }.addOnFailureListener {
+                                Toast.makeText(context, "Error: ${it.message}", Toast.LENGTH_LONG).show()
+                            }
                         }
                     } else {
                         Toast.makeText(context, "Please fill in all fields", Toast.LENGTH_SHORT).show()

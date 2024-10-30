@@ -1,11 +1,29 @@
 package com.example.school_attendance_register
 
 import android.widget.Toast
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -15,13 +33,11 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardOptions
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.auth.AuthState
 
 @Composable
 fun LoginPage(navController: NavController, authViewModel: AuthViewModel) {
@@ -30,7 +46,6 @@ fun LoginPage(navController: NavController, authViewModel: AuthViewModel) {
     var password by remember { mutableStateOf("") }
     var loading by remember { mutableStateOf(false) }
     var error by remember { mutableStateOf<String?>(null) }
-    var isLoggedIn by remember { mutableStateOf(false) }
 
     // Observe authentication state from ViewModel
     val authState by authViewModel.authState.observeAsState()
@@ -38,12 +53,22 @@ fun LoginPage(navController: NavController, authViewModel: AuthViewModel) {
 
     LaunchedEffect(authState) {
         when (authState) {
-            is AuthState.Authenticated -> navController.navigate("Admin_Dash_Board")
-            is AuthState.Error -> Toast.makeText(
-                context,
-                (authState as AuthState.Error).message,
-                Toast.LENGTH_SHORT
-            ).show()
+            is AuthState.Authenticated -> {
+                loading = false
+                navController.navigate("Admin_Dash_Board")
+            }
+            is AuthState.Error -> {
+                loading = false
+                Toast.makeText(context, (authState as AuthState.Error).message, Toast.LENGTH_SHORT).show()
+            }
+            is AuthState.Unauthenticated -> {
+                loading = false
+                // Optional: Handle unauthenticated case if needed
+            }
+            null -> {
+                loading = false
+                // Optional: Handle null case if needed
+            }
         }
     }
 
@@ -103,16 +128,7 @@ fun LoginPage(navController: NavController, authViewModel: AuthViewModel) {
         Button(
             onClick = {
                 loading = true
-                authViewModel.login(email, password,
-                    onSuccess = {
-                        loading = false
-                        isLoggedIn = true
-                    },
-                    onError = { loginError ->
-                        loading = false
-                        error = loginError
-                    }
-                )
+                authViewModel.login(email, password)
             },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
