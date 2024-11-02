@@ -1,6 +1,7 @@
 
 package com.example.school_attendance_register.plastol_pages
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -119,34 +120,43 @@ fun LoginPage(navController: NavController, authViewModel: AuthViewModel){
             Button(
                 onClick = {
 
-                    loading = true
+                  try {
+                      loading = true
 
-                    if(password.isEmpty() && email.isEmpty()){
-                                Toast.makeText(context, "Email and Password cant be empty", Toast.LENGTH_SHORT).show()
-                        loading = false
-                    }else {
-                        authViewModel.loginUser(email, password, navController,
+                      if(password.isEmpty() && email.isEmpty()){
+                          Toast.makeText(context, "Email and Password cant be empty", Toast.LENGTH_SHORT).show()
+                          loading = false
+                      }else {
+                          authViewModel.loginUser(email, password, navController,
 
-                            onSuccess  = {
-                            //Toast.makeText(context, "You have Successfully Logged in", Toast.LENGTH_SHORT).show()
-                                    navController.navigate("Admin_Dash_Board")
-                                loading = false
+                              onSuccess  = {
+                                  Toast.makeText(context, "You have Successfully Logged in", Toast.LENGTH_SHORT).show()
+                                  Log.d("OnSuccess", "The credentials fetched successfully")
+                                  navController.navigate("Admin_Dash_Board")
+                                  loading = false
 
-                        }, 
-                            onError = { errorMessage ->
-                                if (errorMessage == "User not found") {
-                                    // Handle user not found case
-                                    Toast.makeText(context, "User not found", Toast.LENGTH_SHORT).show()
-                            } else{
-                                    Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+                              },
+                              onError = { errorMessage ->
+                                  if (errorMessage == "User not found") {
+                                      //Log.d("OnError", "Error while fetching: ${e.message}")
+                                      // Handle user not found case
+                                      Toast.makeText(context, "User not found", Toast.LENGTH_SHORT).show()
+                                  } else{
+                                      Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
 
-                                }
-                                loading = false
-                        }
+                                  }
+                                  loading = false
+                              }
 
-                            
-                             )
-                        }
+
+                          )
+                      }
+
+                  }  catch (e: Exception){
+                      Log.d("CatchError", "Error while Fetching: ${e.message}")
+
+                  }
+
                 },
 
                 modifier = Modifier
