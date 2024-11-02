@@ -51,7 +51,8 @@ class MainActivity : ComponentActivity() {
                     AdminDashBoard(navController)
                 }
                 composable("Student_Enroll") {
-                    EnrollStudent(navController, "adminFullName")
+                    //val adminFullName = CreateAccount().adminFullName
+                    EnrollStudent(navController, "Blessings")
                 }
 
 

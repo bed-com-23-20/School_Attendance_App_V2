@@ -1,16 +1,14 @@
 package com.example.school_attendance_register.plastol_pages.data_classes
 
-import androidx.compose.ui.text.input.TextFieldValue
-
 data class StudentInfo(
     var fname: String,
     var sname: String,
     var guardianName: String,
-    var guardianPhone: TextFieldValue,
-    var classform: TextFieldValue,
+    var guardianPhone: String,
+    var classform: String,
     var dateOfBirth: String,
     var gender: String,
     val uniqueId: String,
-    var fullName: String = fname +""+ sname
+    var fullName: String = "$fname $sname"
 
 )
