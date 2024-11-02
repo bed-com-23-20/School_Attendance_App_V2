@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 @Composable
-fun AdminDash(navController: NavController) {
+fun AdminDashboardPage(navController: NavController) {
 
     // Create a column to hold the entire admin dashboard
     Column(
