@@ -131,12 +131,12 @@ fun LoginPage(navController: NavController, viewModel: AuthViewModel<Any?>){
                           viewModel.fetchUserCredentials(email) { result ->
                               result.fold(
                                   onSuccess = { credentials ->
-                                      // Handle successful login
-                                      password = credentials.second // Use the fetched password
+
+                                      password = credentials.second
                                       navController.navigate("Admin_Dash_Board")
                                   },
                                   onFailure = { exception ->
-                                      errorMessage = exception.message // Display error
+                                      errorMessage = exception.message
                                       Toast.makeText(context, "User not found", Toast.LENGTH_SHORT).show()
                                       Log.e("LoginScreen", "Login error: ${exception.message}")
                                       loading = false
@@ -144,38 +144,6 @@ fun LoginPage(navController: NavController, viewModel: AuthViewModel<Any?>){
                               )
                           }
                       }
-
-//                          authViewModel.loginUser(encodedEmail, password, navController,
-//
-//                              onSuccess  = {
-//                                  Toast.makeText(context, "You have Successfully Logged in", Toast.LENGTH_SHORT).show()
-//                                  Log.d("OnSuccess", "The credentials fetched successfully")
-//                                  navController.navigate("Admin_Dash_Board")
-//                                  loading = false
-//
-//                              },
-//                              onError = { errorMessage ->
-//                                  if (errorMessage == "User not found") {
-//                                      //Log.d("OnError", "Error while fetching: ${e.message}")
-//                                      // Handle user not found case
-//                                      Toast.makeText(context, "User not found", Toast.LENGTH_SHORT).show()
-//                                      Log.d("UserNotFound", "the not Available: $error.message")
-//                                      loading = false
-//
-//                                  } else{
-//                                      Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
-//                                      loading = false
-//
-//                                  }
-//                                  loading = false
-//                              }
-//
-//
-//
-//                          )
-                      //})
-
-
                 },
 
                 modifier = Modifier

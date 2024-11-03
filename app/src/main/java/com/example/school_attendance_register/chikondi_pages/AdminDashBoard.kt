@@ -19,7 +19,7 @@ import androidx.navigation.NavController
 @Composable
 fun AdminDashBoard(navController: NavController) {
 
-    // Create a column to hold the entire admin dashboard
+    
     Column(
         modifier = Modifier
             .fillMaxSize() // Take up full available space

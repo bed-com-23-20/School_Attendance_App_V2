@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.school_attendance_register.plastol_pages.AuthViewModel
 import com.example.school_attendance_register.plastol_pages.data_classes.AdminInfo
 import com.example.school_attendance_register.plastol_pages.data_classes.StudentInfo
 import com.google.firebase.database.FirebaseDatabase
@@ -21,7 +22,8 @@ import java.util.*
 import kotlin.random.Random
 
 @Composable
-fun EnrollStudent(navController: NavController, adminFullName: String) {
+fun EnrollStudent(navController: NavController, encodeEmail: String) {
+
     var fname by remember { mutableStateOf(TextFieldValue("")) }
     var sname by remember { mutableStateOf(TextFieldValue("")) }
     var guardianName by remember { mutableStateOf(TextFieldValue("")) }
@@ -36,7 +38,7 @@ fun EnrollStudent(navController: NavController, adminFullName: String) {
 
 
     val database = FirebaseDatabase.getInstance()
-    val myRefStudent = database.getReference("Admin").child(adminFullName).child("Students")
+    val myRefStudent = database.getReference("Admin").child(encodeEmail).child("Students")
     val context = LocalContext.current
 
     val calendar = Calendar.getInstance()

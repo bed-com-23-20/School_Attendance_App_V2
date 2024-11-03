@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.rememberScrollState
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -44,15 +45,12 @@ class MainActivity : ComponentActivity() {
                     CreateAccount(navController)
                 }
 
-                composable("Confirm_Password_page",){
-                    ComfirmPasswordPage(navController)
-                }
                 composable("Admin_Dash_Board",){
                     AdminDashBoard(navController)
                 }
+
                 composable("Student_Enroll") {
-                    //val adminFullName = CreateAccount().adminFullName
-                    EnrollStudent(navController, "Blessings")
+                    EnrollStudent(navController, "plas@gmail,com")
                 }
 
 

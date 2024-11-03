@@ -3,6 +3,7 @@ package com.example.school_attendance_register.plastol_pages
 
 import android.content.ContentValues.TAG
 import android.util.Log
+import androidx.compose.runtime.mutableStateOf
 import org.mindrot.jbcrypt.BCrypt
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -20,6 +21,7 @@ import kotlinx.coroutines.tasks.await
 
 class AuthViewModel<DatabaseReference> : ViewModel() {
     private val database: com.google.firebase.database.DatabaseReference = Firebase.database.reference
+
 
     // Fetch user email and password from the Admin node
     fun fetchUserCredentials(email: String, onResult: (Result<Pair<String, String>>) -> Unit) {
@@ -45,7 +47,7 @@ class AuthViewModel<DatabaseReference> : ViewModel() {
     }
 
 
-    private fun encodeEmail(email: String): String {
+    fun encodeEmail(email: String): String {
         return email.replace(".", ",")
     }
 }
