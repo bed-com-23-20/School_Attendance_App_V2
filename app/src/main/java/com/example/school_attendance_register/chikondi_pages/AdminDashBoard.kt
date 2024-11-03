@@ -19,7 +19,7 @@ import androidx.navigation.NavController
 @Composable
 fun AdminDashBoard(navController: NavController) {
 
-    
+
     Column(
         modifier = Modifier
             .fillMaxSize() // Take up full available space
@@ -60,7 +60,7 @@ fun AdminDashBoard(navController: NavController) {
                     contentColor = Color.White // Set the text color to white for contrast
                 ),
                 onClick = {
-                    navController.navigate("Register_Staff") // Navigate to Register Staff screen
+                    navController.navigate("Register_Staff")
                 },
                 modifier = Modifier
                     .fillMaxWidth()

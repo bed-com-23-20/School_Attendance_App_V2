@@ -216,6 +216,7 @@ fun EnrollStudent(navController: NavController, encodeEmail: String) {
                                         guardianPhone = TextFieldValue("")
                                         classform = TextFieldValue("")
                                         dateOfBirth = ""
+                                        gender = ""
                                         idTextF = "The ID Number is $uniqueId"
 
                                         Toast.makeText(
