@@ -3,7 +3,14 @@ package com.example.school_attendance_register
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -17,7 +24,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.school_attendance_register.R
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
@@ -79,7 +85,7 @@ fun LandingPage(navController: NavController) {
         Spacer(modifier = Modifier.height(15.dp))
 
         Button(
-            onClick = { /* TODO: Add navigation action for marking attendance */ },
+            onClick = { navController.navigate("Mark_Attendance") },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp),

@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -29,9 +28,6 @@ class MainActivity : ComponentActivity() {
                 composable("Create_Account_Page") {
                     CreateAccount(navController)
                 }
-                composable("Confirm_Password_page") {
-                    ComfirmPasswordPage(navController)
-                }
                 composable("Admin_Dash_Board") {
                     AdminDashBoard(navController)
                 }
@@ -45,7 +41,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun ComfirmPasswordPage(navController: NavHostController) {
-        TODO("Not yet implemented")
-    }
+//    private fun ComfirmPasswordPage(navController: NavHostController) {
+//        TODO("Not yet implemented")
+//    }
 }
