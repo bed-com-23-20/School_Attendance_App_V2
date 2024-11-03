@@ -31,7 +31,7 @@ fun AdminDashBoard(navController: NavController) {
 
         // Admin Dashboard heading at the top
         Text(
-            text = "ADMIN DASHBOARD",
+            text = "ADMIN DASH BOARD",
             fontSize = 28.sp, // Set the font size
             fontFamily = FontFamily.Serif,
             fontWeight = FontWeight.Bold,
