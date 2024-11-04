@@ -41,9 +41,10 @@ import java.util.Locale
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
-@Preview(showBackground = true)
 fun CreateAccount(navController: NavController){
 
+    var email by remember { mutableStateOf("") }
+    var encodedEmail = encodeEmail(email)
     //Database Connection
     val database = FirebaseDatabase.getInstance()
     val myRef = database.getReference("Admin")
@@ -56,7 +57,7 @@ fun CreateAccount(navController: NavController){
     var schoolName by remember { mutableStateOf("") }
     var district by remember { mutableStateOf("") }
     var phoneNumber by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
+    //var email by remember { mutableStateOf("") }
     var createPass by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -219,14 +220,14 @@ fun CreateAccount(navController: NavController){
                     phoneNumber.isNotEmpty() && email.isNotEmpty() && createPass.isNotEmpty() && password.isNotEmpty() &&
                     createPass == password
                     ){
-
-                    val adminInfo = AdminInfo(adminFullName.toUpperCase(Locale.ROOT),schoolName, district, phoneNumber.toInt(), email, createPass, password)
-                  myRef.child(adminFullName).setValue(adminInfo).addOnSuccessListener {
+                  val encodedEmail = encodeEmail(email)
+                    val adminInfo = AdminInfo(adminFullName.toUpperCase(Locale.ROOT),schoolName, district, phoneNumber.toInt(), encodedEmail, createPass, password)
+                  myRef.child(encodedEmail).setValue(adminInfo).addOnSuccessListener {
                     adminFullName = ""
                     schoolName = ""
                     district = ""
                     phoneNumber = ""
-                    email = ""
+                      email = ""
                     createPass =""
                       password = ""
                         Toast.makeText(context, "Admin Account Created Successfully", Toast.LENGTH_SHORT).show()
@@ -262,5 +263,10 @@ fun CreateAccount(navController: NavController){
 
     }
 
+
+}
+
+fun encodeEmail(email: String): String {
+    return email.replace(".", ",")
 
 }

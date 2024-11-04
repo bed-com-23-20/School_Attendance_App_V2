@@ -19,7 +19,7 @@ import androidx.navigation.NavController
 @Composable
 fun AdminDashBoard(navController: NavController) {
 
-    // Create a column to hold the entire admin dashboard
+
     Column(
         modifier = Modifier
             .fillMaxSize() // Take up full available space
@@ -31,7 +31,7 @@ fun AdminDashBoard(navController: NavController) {
 
         // Admin Dashboard heading at the top
         Text(
-            text = "ADMIN DASHBOARD",
+            text = "ADMIN DASH BOARD",
             fontSize = 28.sp, // Set the font size
             fontFamily = FontFamily.Serif,
             fontWeight = FontWeight.Bold,
@@ -60,7 +60,7 @@ fun AdminDashBoard(navController: NavController) {
                     contentColor = Color.White // Set the text color to white for contrast
                 ),
                 onClick = {
-                    navController.navigate("Register_Staff") // Navigate to Register Staff screen
+                    navController.navigate("Register_Staff")
                 },
                 modifier = Modifier
                     .fillMaxWidth()

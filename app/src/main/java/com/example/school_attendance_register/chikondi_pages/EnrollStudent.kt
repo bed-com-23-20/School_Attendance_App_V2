@@ -1,25 +1,29 @@
 package com.example.school_attendance_register.chikondi_pages
 
 import android.app.DatePickerDialog
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.school_attendance_register.plastol_pages.AuthViewModel
+import com.example.school_attendance_register.plastol_pages.data_classes.AdminInfo
 import com.example.school_attendance_register.plastol_pages.data_classes.StudentInfo
 import com.google.firebase.database.FirebaseDatabase
 import java.util.*
+import kotlin.random.Random
 
 @Composable
-fun EnrollStudent(navController: NavController) {
+fun EnrollStudent(navController: NavController, encodeEmail: String) {
+
     var fname by remember { mutableStateOf(TextFieldValue("")) }
     var sname by remember { mutableStateOf(TextFieldValue("")) }
     var guardianName by remember { mutableStateOf(TextFieldValue("")) }
@@ -27,10 +31,15 @@ fun EnrollStudent(navController: NavController) {
     var classform by remember { mutableStateOf(TextFieldValue("")) }
     var dateOfBirth by remember { mutableStateOf("") }
     var gender by remember { mutableStateOf("") }
-    var showError by remember { mutableStateOf(false) }
+    var idTextF by remember { mutableStateOf("") }
+
+    var firstNameChar by remember { mutableStateOf<Char?>(null) }
+    var surNameChar by remember { mutableStateOf<Char?>(null) }
+
 
     val database = FirebaseDatabase.getInstance()
-    val myRef = database.getReference("Admin")
+    val myRefStudent = database.getReference("Admin").child(encodeEmail).child("Students")
+    val context = LocalContext.current
 
     val calendar = Calendar.getInstance()
     val year = calendar.get(Calendar.YEAR)
@@ -40,7 +49,7 @@ fun EnrollStudent(navController: NavController) {
     val datePickerDialog = DatePickerDialog(
         LocalContext.current,
         { _, selectedYear, selectedMonth, selectedDay ->
-            dateOfBirth = "$selectedDay/${selectedMonth + 1}/$selectedYear"
+            dateOfBirth = "$selectedDay -${selectedMonth + 1}-$selectedYear"
         },
         year, month, day
     )
@@ -52,12 +61,6 @@ fun EnrollStudent(navController: NavController) {
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "STUDENT ENROLLMENT PAGE",
-            fontSize = 28.sp,
-            fontFamily = FontFamily.Serif,
-            fontWeight = FontWeight.Bold
-        )
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -68,7 +71,10 @@ fun EnrollStudent(navController: NavController) {
         ) {
             OutlinedTextField(
                 value = fname,
-                onValueChange = { fname = it },
+                onValueChange = {
+                    fname = it
+                    firstNameChar = if (fname.text.isNotEmpty()) fname.text[0].toUpperCase() else null
+                                },
                 label = { Text("Student Firstname") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -77,7 +83,10 @@ fun EnrollStudent(navController: NavController) {
 
             OutlinedTextField(
                 value = sname,
-                onValueChange = { sname = it },
+                onValueChange = {
+                    sname = it
+                    surNameChar = if (sname.text.isNotEmpty()) sname.text[0].toUpperCase() else null
+                                },
                 label = { Text("Student Surname") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -147,49 +156,124 @@ fun EnrollStudent(navController: NavController) {
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            if (showError) {
-                Text(
-                    text = "Please fill all the necessary details before submitting.",
-                    color = MaterialTheme.colorScheme.error
-                )
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Button(
-                onClick = {
-//                    if(fname.isNotEmpty() && sname.isNotEmpty() && guardianName.isNotEmpty() && guardianPhone.isNotEmpty() &&
-//                        classform.isNotEmpty() && dateOfBirth.isNotEmpty() && gender.isNotEmpty()
-//                        ){
-//                        var studentInfo = StudentInfo(
-//                            fname.toString(), sname.toString(), guardianName.toString(),
-//                            guardianPhone, classform, dateOfBirth, gender
-//                        )
-//                        myRef.child(adminFullName).setValue(adminInfo).addOnSuccessListener
-//
-//                    }
-                    
-
-                },
-
-
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Submit")
-            }
-
             Spacer(modifier = Modifier.height(8.dp))
 
-            Button(
-                onClick = {
-                    navController.navigate("Admin_Dash_Board")
-                          },
-                modifier = Modifier.fillMaxWidth()
+            OutlinedTextField(
+                value = idTextF,
+                onValueChange = {},
+                label = { Text("Do not Write here") },
+                modifier = Modifier.fillMaxWidth(),
+                enabled = false,
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 2.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("Back")
+
+                Button(
+                    onClick = {
+
+                        try {
+                            val randomNumber = Random.nextInt(100000, 1000000)
+                            val uniqueId = "${firstNameChar?.toUpperCase()}${surNameChar?.toUpperCase()}-$randomNumber-${classform.text}"
+
+                            if (fname.text.isNotEmpty() && sname.text.isNotEmpty() && guardianName.text.isNotEmpty() && dateOfBirth.isNotEmpty() &&
+                                guardianPhone.text.isNotEmpty() && classform.text.isNotEmpty() &&
+                                gender.isNotEmpty()
+                            ) {
+
+                                val sanitizedFName = fname.text.replace("[./#$\\[\\]]".toRegex(), "")
+                                val sanitizedSName = sname.text.replace("[./#$\\[\\]]".toRegex(), "")
+                                val sanitizedGuardianName = guardianName.text.replace("[./#$\\[\\]]".toRegex(), "")
+                                val sanitizedGuardianPhone = guardianPhone.text.replace("[./#$\\[\\]]".toRegex(), "")
+                                val sanitizedGuardDateOfBirth = dateOfBirth.replace("[./#$\\[\\]]".toRegex(), "")
+                                val sanitizedClassForm = classform.text.replace("[./#$\\[\\]]".toRegex(), "")
+
+                                val sanitizedFullName = "$sanitizedFName $sanitizedSName".toUpperCase(Locale.ROOT)
+
+                                // Create the StudentInfo object with sanitized fields
+                                val studentInfo = StudentInfo(
+                                   sanitizedFName.toUpperCase(Locale.ROOT),
+                                    sanitizedSName.toUpperCase(Locale.ROOT),
+                                    sanitizedGuardianName,
+                                    sanitizedGuardianPhone,
+                                    sanitizedClassForm,
+                                    sanitizedGuardDateOfBirth,
+                                    gender,
+                                    uniqueId
+                                )
+                                myRefStudent.child(sanitizedFullName).setValue(studentInfo)
+                                    .addOnSuccessListener {
+                                       fname = TextFieldValue("")
+                                        sname = TextFieldValue("")
+                                        guardianName = TextFieldValue("")
+                                        guardianPhone = TextFieldValue("")
+                                        classform = TextFieldValue("")
+                                        dateOfBirth = ""
+                                        gender = ""
+                                        idTextF = "The ID Number is $uniqueId"
+
+                                        Toast.makeText(
+                                            context,
+                                            "Student Successfully Enrolled",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                        //navController.navigate("Admin_Dash_Board")
+                                        Log.d("Successful", "Student info saved successfully")
+                                    }.addOnFailureListener { e ->
+                                        Toast.makeText(
+                                            context,
+                                            "Failed to save student info: ${e.message}",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                        Log.d("FirebaseError", "Error saving student info: ${e.message}")
+                                    }
+
+                            } else {
+                                Toast.makeText(
+                                    context,
+                                    "Please insert all the values first before submitting",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                Log.d("EmptyFields", "Fill the fields")
+                                return@Button
+                            }
+
+
+                        }catch (e: Exception){
+                            Log.d("FirebaseError", "Error saving student info: ${e.message}")
+                        }
+
+
+
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
+
+
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Submit")
+                }
+
+                Spacer(modifier = Modifier.width(6.dp))
+
+                Button(
+                    onClick = {
+                        navController.navigate("Admin_Dash_Board")
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Cancel")
+                }
             }
+
         }
     }
 }

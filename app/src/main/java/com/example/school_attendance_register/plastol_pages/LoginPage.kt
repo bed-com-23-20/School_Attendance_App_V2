@@ -1,6 +1,7 @@
 
 package com.example.school_attendance_register.plastol_pages
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -33,6 +35,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -41,10 +44,11 @@ import com.example.school_attendance_register.R
 
 @Composable
 //@Preview(showBackground = true)
-fun LoginPage(navController: NavController, authViewModel: AuthViewModel){
+fun LoginPage(navController: NavController, viewModel: AuthViewModel<Any?>){
 
 
     var email by remember { mutableStateOf("") }
+    var encodedEmail = encodeEmail(email)
     var password by remember { mutableStateOf("") }
 
 
@@ -52,10 +56,12 @@ fun LoginPage(navController: NavController, authViewModel: AuthViewModel){
     val error by remember { mutableStateOf<String?>(null) }
     var isLoggedIn by remember { mutableStateOf(false) }
     val context = LocalContext.current
+    val scrollState = rememberScrollState()
+    var errorMessage by remember { mutableStateOf<String?>(null) }
 
     Column(
         modifier = Modifier.fillMaxSize()
-        .verticalScroll(rememberScrollState()),
+        .verticalScroll(scrollState),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment =  Alignment.CenterHorizontally
 
@@ -96,7 +102,7 @@ fun LoginPage(navController: NavController, authViewModel: AuthViewModel){
         OutlinedTextField(
             value = password,
             visualTransformation = PasswordVisualTransformation(),
-            //keyboardActions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             onValueChange = {password = it},
             label = {Text("Password")},
             modifier = Modifier
@@ -116,34 +122,28 @@ fun LoginPage(navController: NavController, authViewModel: AuthViewModel){
             Button(
                 onClick = {
 
-                    loading = true
+                      loading = true
 
-                    if(password.isEmpty() && email.isEmpty()){
-                                Toast.makeText(context, "Email and Password cant be empty", Toast.LENGTH_SHORT).show()
-                        loading = false
-                    }else {
-                        authViewModel.loginUser(email, password, navController,
+                      if(password.isEmpty() && email.isEmpty()){
+                          Toast.makeText(context, "Email and Password cant be empty", Toast.LENGTH_SHORT).show()
+                          loading = false
+                      }else {
+                          viewModel.fetchUserCredentials(email) { result ->
+                              result.fold(
+                                  onSuccess = { credentials ->
 
-                            onSuccess  = {
-                            //Toast.makeText(context, "You have Successfully Logged in", Toast.LENGTH_SHORT).show()
-                                    navController.navigate("Admin_Dash_Board")
-                                loading = false
-
-                        }, 
-                            onError = { errorMessage ->
-                                if (errorMessage == "User not found") {
-                                    // Handle user not found case
-                                    Toast.makeText(context, "User not found", Toast.LENGTH_SHORT).show()
-                            } else{
-                                    Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
-
-                                }
-                                loading = false
-                        }
-
-                            
-                             )
-                        }
+                                      password = credentials.second
+                                      navController.navigate("Admin_Dash_Board")
+                                  },
+                                  onFailure = { exception ->
+                                      errorMessage = exception.message
+                                      Toast.makeText(context, "User not found", Toast.LENGTH_SHORT).show()
+                                      Log.e("LoginScreen", "Login error: ${exception.message}")
+                                      loading = false
+                                  }
+                              )
+                          }
+                      }
                 },
 
                 modifier = Modifier
