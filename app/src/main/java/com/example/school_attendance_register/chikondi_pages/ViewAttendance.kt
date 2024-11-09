@@ -1,4 +1,4 @@
-package com.example.school_attendance_register
+package com.example.school_attendance_register.chikondi_pages
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,7 +16,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 @Composable
-fun ViewStudentRecords(navController: NavController) {
+fun ViewAttendance(navController: NavController) {
     var studentList by remember { mutableStateOf(listOf<StudentInfo>()) }
     val database = FirebaseDatabase.getInstance().getReference("Admin")
 
@@ -79,8 +79,8 @@ fun StudentRecordItem(student: StudentInfo) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text("Name: ${student.fname} ${student.sname}")
             Text("Guardian: ${student.guardianName}")
-            Text("Phone: ${student.guardianPhone.text}")
-            Text("Class: ${student.classform.text}")
+            Text("Phone: ${student.guardianPhone}")
+            Text("Class: ${student.classform}")
             Text("DOB: ${student.dateOfBirth}")
             Text("Gender: ${student.gender}")
         }

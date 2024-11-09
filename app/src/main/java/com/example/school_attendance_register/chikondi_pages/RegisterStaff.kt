@@ -1,13 +1,11 @@
 package com.example.school_attendance_register.chikondi_pages
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
@@ -15,30 +13,43 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
 
-@Preview(showBackground = true)
 @Composable
 fun RegisterStaff(navController: NavController) {
+    // Data class for storing staff information
+    data class Staff(
+        val name: String,
+        val email: String,
+        val phone: String,
+        val className: String,
+        val password: String
+    )
+
     // State variables for inputs
     var name by remember { mutableStateOf(TextFieldValue("")) }
     var email by remember { mutableStateOf(TextFieldValue("")) }
     var phone by remember { mutableStateOf(TextFieldValue("")) }
     var className by remember { mutableStateOf(TextFieldValue("")) }
-    var password by remember { mutableStateOf(TextFieldValue("")) } // Password state
+    var password by remember { mutableStateOf(TextFieldValue("")) }
+    var confirmPassword by remember { mutableStateOf(TextFieldValue("")) }
+    var passwordError by remember { mutableStateOf(false) }
 
-    // Column layout for input fields
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.Start // Align elements to the start
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.Start
     ) {
-        Text(text = "Register Staff", style = MaterialTheme.typography.headlineSmall)
-
         Spacer(modifier = Modifier.height(16.dp))
 
+        Text(
+            text = "Register Staff",
+            style = MaterialTheme.typography.headlineSmall,
+            modifier = Modifier.padding(bottom = 8.dp)
+        )
+
         // Name Input
-        TextField(
+        OutlinedTextField(
             value = name,
             onValueChange = { name = it },
             label = { Text("Name") },
@@ -48,7 +59,7 @@ fun RegisterStaff(navController: NavController) {
         Spacer(modifier = Modifier.height(8.dp))
 
         // Email Input
-        TextField(
+        OutlinedTextField(
             value = email,
             onValueChange = { email = it },
             label = { Text("Email") },
@@ -58,7 +69,7 @@ fun RegisterStaff(navController: NavController) {
         Spacer(modifier = Modifier.height(8.dp))
 
         // Phone Number Input
-        TextField(
+        OutlinedTextField(
             value = phone,
             onValueChange = { phone = it },
             label = { Text("Phone Number") },
@@ -68,7 +79,7 @@ fun RegisterStaff(navController: NavController) {
         Spacer(modifier = Modifier.height(8.dp))
 
         // Class Input
-        TextField(
+        OutlinedTextField(
             value = className,
             onValueChange = { className = it },
             label = { Text("Class") },
@@ -78,56 +89,79 @@ fun RegisterStaff(navController: NavController) {
         Spacer(modifier = Modifier.height(8.dp))
 
         // Password Input
-        TextField(
+        OutlinedTextField(
             value = password,
             onValueChange = { password = it },
             label = { Text("Password") },
-            visualTransformation = PasswordVisualTransformation(), // Hides the password
+            visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Register Button
-        Button(
-            onClick = {
-                onRegister(name.text, email.text, phone.text, className.text, password.text) // Call registration with input values
-            },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(text = "Register")
-        }
-
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Back Button
+        // Confirm Password Input
+        OutlinedTextField(
+            value = confirmPassword,
+            onValueChange = {
+                confirmPassword = it
+                passwordError = confirmPassword.text != password.text
+            },
+            label = { Text("Confirm Password") },
+            visualTransformation = PasswordVisualTransformation(),
+            modifier = Modifier.fillMaxWidth(),
+            isError = passwordError
+        )
 
-    }
-}
+        if (passwordError) {
+            Text(
+                text = "Passwords do not match",
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.padding(start = 16.dp, top = 4.dp)
+            )
+        }
 
-fun onRegister(text: String, text1: String, text2: String, text3: String, text4: String) {
-    TODO("Not yet implemented")
-}
+        Spacer(modifier = Modifier.height(16.dp))
 
-@Composable
-fun RegistrationScreen(onRegister: (String, String, String, String, String) -> Unit) {
-    var name by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var phone by remember { mutableStateOf("") }
-    var className by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+        // Register and Back Button
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Button(
+                onClick = {
+                    if (!passwordError) {
+                        // Create a new Staff instance with the entered information
+                        val newStaff = Staff(
+                            name = name.text,
+                            email = email.text,
+                            phone = phone.text,
+                            className = className.text,
+                            password = password.text
+                        )
+                        // Handle the newStaff data (e.g., save to database)
+                    }
+                },
+                enabled = !passwordError,
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Black), // Set to black
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(text = "Register", color = Color.White) // White text
+            }
 
-    Column(modifier = Modifier.padding(16.dp)) {
-        TextField(value = name, onValueChange = { name = it }, label = { Text("Name") })
-        TextField(value = email, onValueChange = { email = it }, label = { Text("Email") })
-        TextField(value = phone, onValueChange = { phone = it }, label = { Text("Phone") })
-        TextField(value = className, onValueChange = { className = it }, label = { Text("Class Name") })
-        TextField(value = password, onValueChange = { password = it }, label = { Text("Password") }, visualTransformation = PasswordVisualTransformation())
+            Spacer(modifier = Modifier.width(8.dp))
 
-        Button(onClick = {
-            onRegister(name, email, phone, className, password) // Call registration with input values
-        }) {
-            Text("Register")
+            Button(
+                onClick = {
+                    // Navigate back or handle the back action
+                    navController.popBackStack()
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Black), // Set to black
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(text = "Back", color = Color.White) // White text
+            }
         }
     }
 }

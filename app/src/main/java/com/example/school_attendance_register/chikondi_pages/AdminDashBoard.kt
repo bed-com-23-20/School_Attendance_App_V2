@@ -12,11 +12,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 @Composable
+
 fun AdminDashBoard(navController: NavController) {
 
 
@@ -86,13 +88,47 @@ fun AdminDashBoard(navController: NavController) {
                 Text(text = "Enroll Student")
             }
 
+            // Button to create a teacher account
+            Button(
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Black, // Set the button's container color to black
+                    contentColor = Color.White // Set the text color to white for contrast
+                ),
+                onClick = {
+                    navController.navigate("Staff_Records")
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp) // Vertical padding for space between buttons
+            ) {
+                Text(text = "Staff Records")
+            }
+
+            // Button to create a teacher account
+            Button(
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Black, // Set the button's container color to black
+                    contentColor = Color.White // Set the text color to white for contrast
+                ),
+                onClick = {
+                    navController.navigate("Student_Records")
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp) // Vertical padding for space between buttons
+            ) {
+                Text(text = "Student Records")
+            }
+
             // Button to view attendance records
             Button(
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Black, // Set the button's container color to black
                     contentColor = Color.White // Set the text color to white for contrast
                 ),
-                onClick = {},
+                onClick = {
+                    navController.navigate("View_Attendance")
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 8.dp) // Vertical padding for space between buttons
