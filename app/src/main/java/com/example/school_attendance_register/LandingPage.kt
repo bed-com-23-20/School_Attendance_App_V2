@@ -37,11 +37,7 @@ fun LandingPage(navController: NavController) {
     val formattedTime = currentTime.format(formatter)
 
     // Determine greeting message based on AM/PM
-    val greetingMessage = if (formattedTime.contains("AM")) {
-        "What are you up to this morning?"
-    } else {
-        "What are you up to this afternoon?"
-    }
+    //
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -56,13 +52,13 @@ fun LandingPage(navController: NavController) {
         )
 
         // Welcome Texts
-        Text(text = "Welcome to", fontSize = 28.sp, fontWeight = FontWeight.SemiBold)
+        //Text(text = "Welcome to", fontSize = 28.sp, fontWeight = FontWeight.SemiBold)
         Text(text = "Attendance Register System", fontSize = 28.sp, fontWeight = FontWeight.Bold)
 
         Spacer(modifier = Modifier.height(10.dp))
 
         // Dynamic greeting message based on time
-        Text(text = greetingMessage, fontSize = 20.sp)
+        //Text(text = greetingMessage, fontSize = 20.sp)
 
         Spacer(modifier = Modifier.height(10.dp))
 

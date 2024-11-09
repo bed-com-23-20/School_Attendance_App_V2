@@ -149,12 +149,7 @@ fun LoginPage(navController: NavController, authViewModel: AuthViewModel) {
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        Text(
-            text = "Not yet an Admin? Become one",
-            fontFamily = FontFamily.Serif,
-            fontSize = 20.sp,
-            fontStyle = FontStyle.Italic
-        )
+       //
 
         Spacer(modifier = Modifier.height(10.dp))
 
