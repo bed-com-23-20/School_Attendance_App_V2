@@ -22,7 +22,7 @@ import java.util.*
 import kotlin.random.Random
 
 @Composable
-fun EnrollStudent(navController: NavController, encodeEmail: String) {
+fun EnrollStudent(navController: NavController) {
 
     var fname by remember { mutableStateOf(TextFieldValue("")) }
     var sname by remember { mutableStateOf(TextFieldValue("")) }
@@ -38,7 +38,7 @@ fun EnrollStudent(navController: NavController, encodeEmail: String) {
 
 
     val database = FirebaseDatabase.getInstance()
-    val myRefStudent = database.getReference("Admin").child(encodeEmail).child("Students")
+    val myRefStudent = database.getReference("Students") //.child(encodeEmail).child("Students")
     val context = LocalContext.current
 
     val calendar = Calendar.getInstance()
