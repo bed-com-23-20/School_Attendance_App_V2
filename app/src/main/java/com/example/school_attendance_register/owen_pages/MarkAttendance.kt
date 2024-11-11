@@ -94,7 +94,12 @@ fun MarkAttendance(navController: NavController) {
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
 
             ) {
-                Text(text = "Cancel")
+                Text(
+                    text = "Cancel",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = FontFamily.Serif
+                )
             }
 
             Spacer(modifier = Modifier.width(20.dp))
@@ -123,7 +128,13 @@ fun MarkAttendance(navController: NavController) {
                 modifier = Modifier.padding(horizontal = 8.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
             ) {
-                Text(text = "Submit")
+                Text(
+                    text = "Submit",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = FontFamily.Serif
+                )
+
             }
         }
     }
