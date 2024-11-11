@@ -64,17 +64,9 @@ fun MarkAttendance(navController: NavController) {
         // Student Code Input Field
         OutlinedTextField(
             value = studentCode,
-            onValueChange = { input ->
-                // Only update the text if the input is a digit
-                if (input.all { it.isDigit() }) {
-                    studentCode  = input
-                }
-                  },
-
-
+            onValueChange = { studentCode = it },
             label = { Text(text = "Enter student code") },
             modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
 
         Spacer(modifier = Modifier.height(30.dp))

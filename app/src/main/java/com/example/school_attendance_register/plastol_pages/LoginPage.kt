@@ -19,6 +19,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -41,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.school_attendance_register.R
+import java.util.regex.Pattern
 
 @Composable
 //@Preview(showBackground = true)
@@ -50,6 +52,11 @@ fun LoginPage(navController: NavController, viewModel: AuthViewModel<Any?>){
     var email by remember { mutableStateOf("") }
     var encodedEmail = encodeEmail(email)
     var password by remember { mutableStateOf("") }
+
+    var isEmailError by remember { mutableStateOf(false) }
+    val emailPattern = Pattern.compile(
+        "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"
+    )
 
 
     var loading by remember { mutableStateOf(false) }
@@ -85,7 +92,13 @@ fun LoginPage(navController: NavController, viewModel: AuthViewModel<Any?>){
 
         OutlinedTextField(
             value = email,
-            onValueChange = {email = it},
+            onValueChange = { input ->
+                email = input
+                isEmailError = !emailPattern.matcher(input).matches()
+                            },
+
+
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             label = {Text("Username")},
             modifier = Modifier
                 .fillMaxWidth()
@@ -94,9 +107,17 @@ fun LoginPage(navController: NavController, viewModel: AuthViewModel<Any?>){
                     color = Color.White,
                     shape = RoundedCornerShape(24.dp)
                 ),
-             shape = RoundedCornerShape(24.dp)
+             shape = RoundedCornerShape(24.dp),
+            isError = isEmailError
 
         )
+        if (isEmailError) {
+            Text(
+                text = "Please enter a valid email address",
+                color = MaterialTheme.colorScheme.error
+            )
+        }
+
         Spacer(modifier = Modifier.height(15.dp))
 
         OutlinedTextField(

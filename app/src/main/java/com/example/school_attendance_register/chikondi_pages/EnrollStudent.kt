@@ -108,7 +108,7 @@ fun EnrollStudent(navController: NavController) {
                 value = guardianPhone,
                 onValueChange = { guardianPhone = it },
                 label = { Text("Guardian Phone Number") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                 modifier = Modifier.fillMaxWidth()
             )
 
