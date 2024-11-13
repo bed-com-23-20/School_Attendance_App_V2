@@ -12,10 +12,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -29,6 +31,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,6 +40,7 @@ import androidx.navigation.NavController
 import com.example.school_attendance_register.plastol_pages.data_classes.AdminInfo
 import com.google.firebase.database.FirebaseDatabase
 import java.util.Locale
+import java.util.regex.Pattern
 
 
 @SuppressLint("SuspiciousIndentation")
@@ -50,6 +54,12 @@ fun CreateAccount(navController: NavController){
     val myRef = database.getReference("Admin")
 
     var loading by remember { mutableStateOf(false) }
+    var isError by remember { mutableStateOf(false) }
+    var isEmailError by remember { mutableStateOf(false) }
+    val emailPattern = Pattern.compile(
+        "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"
+    )
+    var minLength = 6
 
     // Admin Information
     var adminFullName by remember { mutableStateOf("") }
@@ -132,6 +142,7 @@ fun CreateAccount(navController: NavController){
             value = phoneNumber,
             onValueChange = {phoneNumber = it},
             label = {Text("Phone Number")},
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
             //leadingIcon = {ImageVector.vectorResource(id = R.drawable.password_vector)},
             modifier = Modifier
                 .fillMaxWidth()
@@ -141,30 +152,87 @@ fun CreateAccount(navController: NavController){
 
         Spacer(modifier = Modifier.height(15.dp))
 
-        TextField(
-            value = email,
-            onValueChange = {email = it},
-            label = {Text("Email")},
-            //leadingIcon = {ImageVector.vectorResource(id = R.drawable.password_vector)},
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 20.dp, end = 20.dp)
 
-        )
-        Spacer(modifier = Modifier.height(20.dp))
-
-        TextField(
-            value = createPass,
-            visualTransformation = PasswordVisualTransformation(),
-            onValueChange = { createPass = it },
-            label = { Text("Create Password") },
-            //leadingIcon = {ImageVector.vectorResource(id = R.drawable.password_vector)},
-            modifier = Modifier
+            TextField(
+                value = email,
+                onValueChange = { input ->
+                    email = input
+                    isEmailError = !emailPattern.matcher(input).matches()
+                },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                label = { Text("Email") },
+                modifier = Modifier
                 .fillMaxWidth()
                 .padding(
                     start = 20.dp, end = 20.dp
+                ),
+                isError = isEmailError
+            )
+
+            if (isEmailError) {
+                Text(
+                    text = "Please enter a valid email address",
+                    color = MaterialTheme.colorScheme.error
                 )
-        )
+            }
+
+//
+//        TextField(
+//            value = email,
+//            onValueChange = {email = it},
+//            label = {Text("Email")},
+//            //leadingIcon = {ImageVector.vectorResource(id = R.drawable.password_vector)},
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(start = 20.dp, end = 20.dp)
+//
+//        )
+
+
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+            TextField(
+                value = createPass,
+                onValueChange = { input ->
+                    createPass = input
+                    isError = input.length < minLength
+                },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                visualTransformation = PasswordVisualTransformation(),
+                label = { Text("Enter password") },
+                modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    start = 20.dp, end = 20.dp
+                ),
+                isError = isError
+            )
+
+            if (isError) {
+                Text(
+                    text = "Password must be at least $minLength characters",
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
+
+
+
+
+
+//        TextField(
+//            value = createPass,
+//            visualTransformation = PasswordVisualTransformation(),
+//            onValueChange = { createPass = it },
+//            label = { Text("Create Password") },
+//            //leadingIcon = {ImageVector.vectorResource(id = R.drawable.password_vector)},
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(
+//                    start = 20.dp, end = 20.dp
+//                )
+//        )
+
         Spacer(modifier = Modifier.height(15.dp))
 
         TextField(

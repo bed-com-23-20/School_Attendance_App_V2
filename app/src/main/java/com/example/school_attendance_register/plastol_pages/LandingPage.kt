@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -19,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
@@ -29,6 +31,7 @@ import androidx.navigation.NavController
 import com.example.school_attendance_register.R
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import kotlin.system.exitProcess
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -63,29 +66,38 @@ fun LandingPage(navController: NavController){
         verticalArrangement = Arrangement.Center,
         horizontalAlignment =  Alignment.CenterHorizontally
     ) {
-        Image(painter = painterResource(id = R.drawable.school), contentDescription = "Landing page Image",
-        modifier = Modifier.size(200.dp))
+        Text(text = "ATTENDANCE REGISTER", fontSize = 25.sp, fontWeight =  FontWeight.Bold, fontFamily = FontFamily.Serif)
+
+        Spacer(modifier = Modifier.height(16.dp))
 
         Column(
             //modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center
 
         ) {
-            Text(text = "Welcome to", fontSize = 28.sp, fontWeight =  FontWeight.SemiBold)
+            Text(text = "SYSTEM", fontSize = 25.sp, fontWeight =  FontWeight.Bold, fontFamily = FontFamily.Serif)
 
         }
-        Text(text = "Attendance Register System", fontSize = 28.sp, fontWeight =  FontWeight.Bold)
+        Spacer(modifier = Modifier.height(40.dp))
+
+        Image(painter = painterResource(id = R.drawable.school), contentDescription = "Landing page Image",
+        modifier = Modifier.size(200.dp)
+            //.clip(CircleShape)
+        )
+
+
 
         Spacer(modifier = Modifier.height(10.dp))
 
 
-            if (formattedTime.contains("AM")) {
-                Text(text = "What are you up to this morning?", fontSize = 20.sp,)
-            }
+//            if (formattedTime.contains("AM")) {
+//                Text(text = "What are you up to this morning?", fontSize = 20.sp,)
+//            }
+//
+//            else{
+//                Text(text = "What are you up to this afternoon?", fontSize = 20.sp)
+//            }
 
-            else{
-                Text(text = "What are you up to this afternoon?", fontSize = 20.sp)
-            }
         Spacer(modifier = Modifier.height(10.dp))
 
         Button(onClick = {
@@ -108,7 +120,9 @@ fun LandingPage(navController: NavController){
 
         Spacer(modifier = Modifier.height(15.dp))
 
-        Button(onClick = {},
+        Button(onClick = {
+            navController.navigate("Mark_Attendance")
+        },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp),
@@ -128,7 +142,7 @@ fun LandingPage(navController: NavController){
         Spacer(modifier = Modifier.height(15.dp))
 
         Button(onClick = {
-            System.exit(0)
+            exitProcess(0)
         },
             modifier = Modifier
                 .fillMaxWidth()
