@@ -3,6 +3,7 @@ package com.example.school_attendance_register.chikondi_pages
 import android.app.DatePickerDialog
 import android.util.Log
 import android.widget.Toast
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -15,6 +16,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.school_attendance_register.plastol_pages.AuthViewModel
 import com.example.school_attendance_register.plastol_pages.data_classes.AdminInfo
@@ -42,6 +44,9 @@ fun EnrollStudent(navController: NavController) {
     val database = FirebaseDatabase.getInstance()
     val myRefStudent = database.getReference("Students") //.child(encodeEmail).child("Students")
     val context = LocalContext.current
+
+    var result by remember { mutableStateOf("") }
+    var check by remember { mutableStateOf<Boolean>(false) }
 
     val calendar = Calendar.getInstance()
     val year = calendar.get(Calendar.YEAR)
@@ -162,15 +167,16 @@ fun EnrollStudent(navController: NavController) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            OutlinedTextField(
-                value = idTextF,
-                onValueChange = {},
-                label = { Text("Do not Write here") },
-                modifier = Modifier.fillMaxWidth(),
-                enabled = false,
-            )
 
-            Spacer(modifier = Modifier.height(10.dp))
+//            OutlinedTextField(
+//                value = idTextF,
+//                onValueChange = {},
+//                label = { Text("Do not Write here") },
+//                modifier = Modifier.fillMaxWidth(),
+//                enabled = false,
+//            )
+
+            //Spacer(modifier = Modifier.height(10.dp))
 
             Row(
                 modifier = Modifier
@@ -230,6 +236,24 @@ fun EnrollStudent(navController: NavController) {
                                         ).show()
                                         //navController.navigate("Admin_Dash_Board")
                                         Log.d("Successful", "Student info saved successfully")
+                                        //Displaying the Students Data
+
+                                        val data = StringBuffer()
+                                        myRefStudent.get().addOnSuccessListener { it1 ->
+                                            if(it1.exists()){
+                                                it1.children.forEach{
+                                                    data.append("\nStudent Name = "+it.child("fname").value)
+                                                    data.append("\n-----------------------------------------------------------------------------")
+                                                }
+                                                check = true
+                                                result = data.toString()
+                                            }
+
+                                        }.addOnFailureListener{
+                                            Toast.makeText(context, "No Students found", Toast.LENGTH_SHORT).show()
+                                        }
+
+
                                     }.addOnFailureListener { e ->
                                         Toast.makeText(
                                             context,
@@ -265,19 +289,13 @@ fun EnrollStudent(navController: NavController) {
                     Text("Submit")
                 }
 
-                Spacer(modifier = Modifier.width(6.dp))
 
-                Button(
-                    onClick = {
-                        navController.navigate("Admin_Dash_Board")
-                    },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text("Cancel")
-                }
             }
 
+            AnimatedVisibility(visible = check, Modifier.fillMaxWidth())
+            {
+                Text(text = result, fontSize = 15.sp, color = Color.Black)
+            }
         }
     }
 }

@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
             val scrollState = rememberScrollState()
             //Calling the LandingPage function
             val navController = rememberNavController()
-            NavHost(navController = navController,  startDestination = "Landing_Page", builder = {
+            NavHost(navController = navController,  startDestination = "Student_Enroll", builder = {
 
 
                 composable("Landing_Page"){
