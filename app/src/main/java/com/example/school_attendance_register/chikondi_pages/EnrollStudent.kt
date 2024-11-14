@@ -242,11 +242,20 @@ fun EnrollStudent(navController: NavController) {
                                         myRefStudent.get().addOnSuccessListener { it1 ->
                                             if(it1.exists()){
                                                 it1.children.forEach{
-                                                    data.append("\nStudent Name = "+it.child("fname").value)
-                                                    data.append("\n-----------------------------------------------------------------------------")
+                                                    data.append("\nFirst Name = "+it.child("fname").value)
+                                                    data.append("\nSurname  = "+it.child("sname").value)
+                                                    data.append("\nUnique Code  = "+it.child("uniqueId").value)
+                                                    data.append("\nGuardian Name = "+it.child("guardianName").value)
+                                                    data.append("\nGuardian Contact = "+it.child("guardianPhone").value)
+                                                    data.append("\nClass = "+it.child("classform").value)
+                                                    data.append("\nDate of Birth = "+it.child("dateOfBirth").value)
+                                                    data.append("\nGender = "+it.child("gender").value)
+                                                    data.append("\n------------------------------------------------------------------------")
                                                 }
                                                 check = true
                                                 result = data.toString()
+
+                                                navController.navigate("allStudents/$result")
                                             }
 
                                         }.addOnFailureListener{
@@ -292,10 +301,10 @@ fun EnrollStudent(navController: NavController) {
 
             }
 
-            AnimatedVisibility(visible = check, Modifier.fillMaxWidth())
-            {
-                Text(text = result, fontSize = 15.sp, color = Color.Black)
-            }
+//            AnimatedVisibility(visible = check, Modifier.fillMaxWidth())
+//            {
+//                Text(text = result, fontSize = 15.sp, color = Color.Black)
+//            }
         }
     }
 }
