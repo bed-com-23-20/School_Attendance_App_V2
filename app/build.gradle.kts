@@ -71,6 +71,7 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.ui:ui-tooling-preview")
 
+
     // Navigation dependencies
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.navigation.fragment)
@@ -80,6 +81,10 @@ dependencies {
     implementation(libs.firebase.database.ktx)
     implementation(libs.androidx.runtime.livedata)
     androidTestImplementation(libs.androidx.navigation.testing)
+    implementation ("androidx.compose.material3:material3:1.2.0")
+    implementation ("androidx.navigation:navigation-compose:2.7.4")
+
+
 
     // Testing
     testImplementation(libs.junit)

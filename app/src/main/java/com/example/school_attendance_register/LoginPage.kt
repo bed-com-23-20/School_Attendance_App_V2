@@ -16,6 +16,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -31,13 +32,13 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.school_attendance_register.ui.components.TopAppBarWithBack
 
 @Composable
 fun LoginPage(navController: NavController, authViewModel: AuthViewModel) {
@@ -63,124 +64,126 @@ fun LoginPage(navController: NavController, authViewModel: AuthViewModel) {
             }
             is AuthState.Unauthenticated -> {
                 loading = false
-                // Optional: Handle unauthenticated case if needed
             }
             null -> {
                 loading = false
-                // Optional: Handle null case if needed
             }
         }
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 20.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = "ADMIN LOGIN PAGE",
-            fontSize = 28.sp,
-            fontFamily = FontFamily.Serif,
-            fontWeight = FontWeight.Bold,
-        )
-
-        Divider(
-            thickness = 1.dp,
-            color = Color.Black,
-            modifier = Modifier.padding(vertical = 10.dp)
-        )
-
-        Icon(
-            imageVector = ImageVector.vectorResource(id = R.drawable.adminloginvector),
-            contentDescription = "Admin vector",
-            modifier = Modifier.size(100.dp)
-        )
-
-        Spacer(modifier = Modifier.height(15.dp))
-
-        // Email TextField
-        OutlinedTextField(
-            value = email,
-            onValueChange = { email = it },
-            label = { Text("Username") },
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(24.dp)
-        )
-
-        Spacer(modifier = Modifier.height(15.dp))
-
-        // Password TextField
-        OutlinedTextField(
-            value = password,
-            onValueChange = { password = it },
-            label = { Text("Password") },
-            modifier = Modifier.fillMaxWidth(),
-            visualTransformation = PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            shape = RoundedCornerShape(24.dp)
-        )
-
-        Spacer(modifier = Modifier.height(15.dp))
-
-        // Login Button
-        Button(
-            onClick = {
-                loading = true
-                authViewModel.login(email, password)
-            },
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
+    // Adding Scaffold for top app bar with back arrow
+    Scaffold(
+        topBar = {
+            TopAppBarWithBack(navController = navController, title = "Login")
+        }
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 20.dp)
+                .padding(paddingValues), // Use padding values from Scaffold
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = if (loading) "Logging in..." else "Login",
-                fontSize = 20.sp,
+                text = "ADMIN LOGIN PAGE",
+                fontSize = 28.sp,
+                fontFamily = FontFamily.Serif,
                 fontWeight = FontWeight.Bold,
-                fontFamily = FontFamily.Serif
             )
-        }
 
-        // Display Error Message
-        error?.let {
+            Divider(
+                thickness = 1.dp,
+                color = Color.Black,
+                modifier = Modifier.padding(vertical = 10.dp)
+            )
+
+            Icon(
+                imageVector = ImageVector.vectorResource(id = R.drawable.adminloginvector),
+                contentDescription = "Admin vector",
+                modifier = Modifier.size(100.dp)
+            )
+
+            Spacer(modifier = Modifier.height(15.dp))
+
+            // Email TextField
+            OutlinedTextField(
+                value = email,
+                onValueChange = { email = it },
+                label = { Text("Username") },
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(24.dp)
+            )
+
+            Spacer(modifier = Modifier.height(15.dp))
+
+            // Password TextField
+            OutlinedTextField(
+                value = password,
+                onValueChange = { password = it },
+                label = { Text("Password") },
+                modifier = Modifier.fillMaxWidth(),
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                shape = RoundedCornerShape(24.dp)
+            )
+
+            Spacer(modifier = Modifier.height(15.dp))
+
+            // Login Button
+            Button(
+                onClick = {
+                    loading = true
+                    authViewModel.login(email, password)
+                },
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
+            ) {
+                Text(
+                    text = if (loading) "Logging in..." else "Login",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = FontFamily.Serif
+                )
+            }
+
+            // Display Error Message
+            error?.let {
+                Spacer(modifier = Modifier.height(10.dp))
+                Text("Error: $it", color = Color.Red)
+            }
+
             Spacer(modifier = Modifier.height(10.dp))
-            Text("Error: $it", color = Color.Red)
-        }
 
-        Spacer(modifier = Modifier.height(10.dp))
+            // Create Account Button
+            Button(
+                onClick = { navController.navigate("Create_Account_Page") },
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
+            ) {
+                Text(
+                    text = "Create Account",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = FontFamily.Serif
+                )
+            }
 
-       //
+            Spacer(modifier = Modifier.height(10.dp))
 
-        Spacer(modifier = Modifier.height(10.dp))
-
-        // Create Account Button
-        Button(
-            onClick = { navController.navigate("Create_Account_Page") },
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
-        ) {
-            Text(
-                text = "Create Account",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = FontFamily.Serif
-            )
-        }
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        // Home Button
-        Button(
-            onClick = { navController.navigate("Landing_Page") },
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
-        ) {
-            Text(
-                text = "Home",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = FontFamily.Serif
-            )
+            // Home Button
+            Button(
+                onClick = { navController.navigate("Landing_Page") },
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
+            ) {
+                Text(
+                    text = "Home",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = FontFamily.Serif
+                )
+            }
         }
     }
 }
