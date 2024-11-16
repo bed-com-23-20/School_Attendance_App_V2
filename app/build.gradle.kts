@@ -2,11 +2,13 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.gms.google.services)
+    id("org.jetbrains.kotlin.plugin.compose") version "2.0.0"
 }
 
 android {
     namespace = "com.example.school_attendance_register"
     compileSdk = 34
+
 
     defaultConfig {
         applicationId = "com.example.school_attendance_register"
@@ -19,6 +21,7 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
     }
 
     buildTypes {
@@ -48,6 +51,10 @@ android {
             //excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+}
+composeCompiler {
+    reportsDestination = layout.buildDirectory.dir("compose_compiler")
+    //stabilityConfigurationFile = rootProject.layout.projectDirectory.file("stability_config.conf")
 }
 
 dependencies {
