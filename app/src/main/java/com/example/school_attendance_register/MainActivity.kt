@@ -7,7 +7,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.rememberScrollState
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -15,8 +14,8 @@ import com.example.school_attendance_register.chikondi_pages.AdminDashBoard
 import com.example.school_attendance_register.chikondi_pages.EnrollStudent
 //import com.example.school_attendance_register.chikondi_pages.RegisterStaff
 import com.example.school_attendance_register.owen_pages.MarkAttendance
+import com.example.school_attendance_register.plastol_pages.AllStudents
 import com.example.school_attendance_register.plastol_pages.AuthViewModel
-import com.example.school_attendance_register.plastol_pages.ComfirmPasswordPage
 import com.example.school_attendance_register.plastol_pages.CreateAccount
 import com.example.school_attendance_register.plastol_pages.LandingPage
 import com.example.school_attendance_register.plastol_pages.LoginPage
@@ -33,7 +32,7 @@ class MainActivity : ComponentActivity() {
             val scrollState = rememberScrollState()
             //Calling the LandingPage function
             val navController = rememberNavController()
-            NavHost(navController = navController,  startDestination = "Landing_Page", builder = {
+            NavHost(navController = navController,  startDestination = "Student_Enroll", builder = {
 
 
                 composable("Landing_Page"){
@@ -47,7 +46,9 @@ class MainActivity : ComponentActivity() {
                     CreateAccount(navController)
                 }
 
-                composable("Admin_Dash_Board",){
+                composable("Admin_Dash_Board/{result},"){backStackEntry ->
+                    val result = backStackEntry.arguments?.getString("result") ?: ""
+
                     AdminDashBoard(navController)
                 }
 
@@ -60,6 +61,10 @@ class MainActivity : ComponentActivity() {
 //                }
                 composable("Mark_Attendance"){
                     MarkAttendance(navController)
+                }
+                composable("allStudents/{result}") { backStackEntry ->
+                    val result = backStackEntry.arguments?.getString("result") ?: ""
+                    AllStudents(result)
                 }
 
 

@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.coroutines.tasks.await
 
 @Composable
 fun MarkAttendance(navController: NavController) {
@@ -108,6 +109,9 @@ fun MarkAttendance(navController: NavController) {
                 onClick = {
                     if (studentCode.isEmpty()) {
                         Toast.makeText(context,"The Code Can not be Empty", Toast.LENGTH_LONG).show()
+                    }
+                    else{
+
                     }
 
 

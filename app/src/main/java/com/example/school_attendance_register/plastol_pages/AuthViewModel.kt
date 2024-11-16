@@ -33,7 +33,7 @@ class AuthViewModel<DatabaseReference> : ViewModel() {
 
         viewModelScope.launch {
             try {
-                // Fetch the user data from the Admin node using the encoded email
+
                 val snapshot = database.child("Admin").child(encodedEmail).get().await()
                 if (snapshot.exists()) {
                     // Fetch the password from the snapshot
