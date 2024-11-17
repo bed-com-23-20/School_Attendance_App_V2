@@ -1,5 +1,6 @@
 package com.example.school_attendance_register
 
+//import com.example.school_attendance_register.chikondi_pages.RegisterStaff
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -12,8 +13,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.school_attendance_register.chikondi_pages.AdminDashBoard
 import com.example.school_attendance_register.chikondi_pages.EnrollStudent
-//import com.example.school_attendance_register.chikondi_pages.RegisterStaff
-import com.example.school_attendance_register.owen_pages.MarkAttendance
 import com.example.school_attendance_register.plastol_pages.AllStudents
 import com.example.school_attendance_register.plastol_pages.AuthViewModel
 import com.example.school_attendance_register.plastol_pages.CreateAccount
@@ -32,7 +31,7 @@ class MainActivity : ComponentActivity() {
             val scrollState = rememberScrollState()
             //Calling the LandingPage function
             val navController = rememberNavController()
-            NavHost(navController = navController,  startDestination = "Student_Enroll", builder = {
+            NavHost(navController = navController,  startDestination = "Landing_Page", builder = {
 
 
                 composable("Landing_Page"){
