@@ -1,5 +1,6 @@
 package com.example.school_attendance_register.plastol_pages
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -26,17 +27,38 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun AllStudents(result: String) {
 
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 50.dp, bottom = 20.dp),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally
+    )
+    {
+        Text(text = "ENROLLED STUDENTS",
+            fontSize = 28.sp,
+            fontFamily = FontFamily.Serif,
+            fontWeight = FontWeight.Bold,
+            color = Color.Black,
+            modifier = Modifier
+                .background(color = Color.White)
+
+        )
+    }
+
+    Spacer(modifier = Modifier.height(20.dp))
+
 
     val students = result.split("------------------------------------------------------------------------")
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(start = 13.dp, top = 70.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start
     ) {
-        Text(text = "All Enrolled Students", fontSize = 20.sp, color = Color.Black)
+
 
         Spacer(modifier = Modifier.height(8.dp))
 
