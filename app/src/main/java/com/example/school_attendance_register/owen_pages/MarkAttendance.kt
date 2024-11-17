@@ -76,14 +76,15 @@ fun MarkAttendance(navController: NavController) {
         if (message.isNotEmpty()) {
             Text(
                 text = message,
-                color = androidx.compose.ui.graphics.Color.Green,
-                fontSize = 16.sp,
+                color = androidx.compose.ui.graphics.Color.Black,
+                fontSize = 20.sp,
                 fontWeight = FontWeight.Medium,
+                fontFamily = FontFamily.Serif,
                 modifier = Modifier.padding(8.dp)
             )
         }
+        Spacer(modifier = Modifier.height(30.dp))
 
-        // Buttons
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
@@ -108,27 +109,48 @@ fun MarkAttendance(navController: NavController) {
             Button(
                 onClick = {
                     if (studentCode.isEmpty()) {
-                        Toast.makeText(context,"The Code Can not be Empty", Toast.LENGTH_LONG).show()
-                    }
-                    else{
+                        Toast.makeText(context, "The Code Can not be Empty", Toast.LENGTH_LONG)
+                            .show()
+                    } else {
+
+                        myRefStudent.get()
+                            .addOnSuccessListener { snapshot ->
+                                var studentName: String? = null
+
+                                for (child in snapshot.children) {
+                                    val codeId = child.child("uniqueId").getValue(String::class.java)
+                                    if (codeId == studentCode) {
+                                        studentName = child.child("fullName").getValue(String::class.java)
+                                        break
+                                    }
+                                }
+                                if (studentName != null) {
+                                    Toast.makeText(
+                                        context,
+                                        "Code exists! Student Name: $studentName",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                    message = "$studentName has successfully marked present today"
+                                    studentCode = ""
+                                } else {
+                                    Toast.makeText(
+                                        context,
+                                        "Code does not exist!",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }.addOnFailureListener { exception ->
+                                Toast.makeText(
+                                    context,
+                                    "Error checking code: ${exception.message}",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
 
                     }
 
 
-
-
-
-
-
-                    // Logic to mark attendance
-//                    if (studentCode.isNotBlank()) {
-//                        message = "Attendance marked for student code: $studentCode"
-//                        studentCode = "" // Reset input after submission
-//                    } else {
-//                        message = "Please enter a valid student code."
-//                    }
-
-                },
+            },
                 modifier = Modifier.padding(horizontal = 8.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
             ) {
