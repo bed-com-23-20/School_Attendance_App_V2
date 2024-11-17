@@ -26,27 +26,59 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun AllStudents(result: String) {
 
+
+    val students = result.split("------------------------------------------------------------------------")
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.Start
     ) {
+        Text(text = "All Enrolled Students", fontSize = 20.sp, color = Color.Black)
 
-    Text(
-        text = "Enrolled Students",
-        fontSize = 28.sp,
-        fontFamily = FontFamily.Serif,
-        fontWeight = FontWeight.Bold,
-    )
-    Divider(
-        thickness = 1.dp,
-        color = Color.Black,
-        modifier = Modifier.padding(horizontal = 16.dp)
-    )
+        Spacer(modifier = Modifier.height(8.dp))
 
-        Text(text = result, fontSize = 16.sp, color = Color.Black)
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(students) { student ->
+                Text(
+                    text = student,
+                    fontSize = 16.sp,
+                    color = Color.Black,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                )
+                Divider(color = Color.Gray)
+            }
+        }
     }
+
+//    Column(
+//        modifier = Modifier
+//            .fillMaxSize()
+//            .padding(16.dp),
+//        verticalArrangement = Arrangement.Center,
+//        horizontalAlignment = Alignment.CenterHorizontally
+//    ) {
+//
+//    Text(
+//        text = "Enrolled Students",
+//        fontSize = 28.sp,
+//        fontFamily = FontFamily.Serif,
+//        fontWeight = FontWeight.Bold,
+//    )
+//    Divider(
+//        thickness = 1.dp,
+//        color = Color.Black,
+//        modifier = Modifier.padding(horizontal = 16.dp)
+//    )
+//
+//        Text(text = result, fontSize = 16.sp, color = Color.Black)
+//    }
 }
 
