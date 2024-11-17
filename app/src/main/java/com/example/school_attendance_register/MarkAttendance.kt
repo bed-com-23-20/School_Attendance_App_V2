@@ -1,14 +1,6 @@
 package com.example.school_attendance_register
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
@@ -25,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.school_attendance_register.ui.components.PageWithBackArrow
 
 @Composable
 fun MarkAttendance(navController: NavController) {
@@ -32,82 +25,76 @@ fun MarkAttendance(navController: NavController) {
     var studentCode by remember { mutableStateOf("") }
     var message by remember { mutableStateOf("") }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        // Title
-        Text(
-            text = "Mark Attendance",
-            fontSize = 28.sp,
-            fontWeight = FontWeight.Bold
-        )
-
-        Spacer(modifier = Modifier.height(40.dp))
-
-        // Student Code Input Field
-        OutlinedTextField(
-            value = studentCode,
-            onValueChange = { studentCode = it },
-            label = { Text(text = "Enter student code") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(30.dp))
-
-        // Display feedback message if attendance is marked
-        if (message.isNotEmpty()) {
-            Text(
-                text = message,
-                color = androidx.compose.ui.graphics.Color.Green,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Medium,
-                modifier = Modifier.padding(8.dp)
-            )
-        }
-
-        // Buttons
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
-
+    // Using PageWithBackArrow for consistent navigation
+    PageWithBackArrow(navController = navController, title = "Mark Attendance") { modifier ->
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            Button(
-                onClick = { navController.navigate("Admin_Dash_Board") },
-                modifier = Modifier.padding(horizontal = 8.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
+            // Title
+            Text(
+                text = "Mark Attendance",
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold
+            )
 
-            ) {
-                Text(text = "Cancel")
+            Spacer(modifier = Modifier.height(40.dp))
+
+            // Student Code Input Field
+            OutlinedTextField(
+                value = studentCode,
+                onValueChange = { studentCode = it },
+                label = { Text(text = "Enter student code") },
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(30.dp))
+
+            // Display feedback message if attendance is marked
+            if (message.isNotEmpty()) {
+                Text(
+                    text = message,
+                    color = Color.Green,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(8.dp)
+                )
             }
 
-            Spacer(modifier = Modifier.width(20.dp))
-
-            Button(
-                onClick = {
-                    // Logic to mark attendance
-                    if (studentCode.isNotBlank()) {
-                        message = "Attendance marked for student code: $studentCode"
-                        studentCode = "" // Reset input after submission
-                    } else {
-                        message = "Please enter a valid student code."
-                    }
-                },
-                modifier = Modifier.padding(horizontal = 8.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
+            // Buttons Row
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
             ) {
-                Text(text = "Submit")
+                Button(
+                    onClick = { navController.navigate("Admin_Dash_Board") },
+                    modifier = Modifier.padding(horizontal = 8.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
+                ) {
+                    Text(text = "Cancel", color = Color.White)
+                }
+
+                Spacer(modifier = Modifier.width(20.dp))
+
+                Button(
+                    onClick = {
+                        // Logic to mark attendance
+                        if (studentCode.isNotBlank()) {
+                            message = "Attendance marked for student code: $studentCode"
+                            studentCode = "" // Reset input after submission
+                        } else {
+                            message = "Please enter a valid student code."
+                        }
+                    },
+                    modifier = Modifier.padding(horizontal = 8.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
+                ) {
+                    Text(text = "Submit", color = Color.White)
+                }
             }
         }
     }
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun PreviewMarkAttendance() {
-//    val navController = rememberNavController() // Mock NavController for preview
-//    MarkAttendance(navController = navController, viewModel = null) // Pass null to bypass ViewModel
-//}
