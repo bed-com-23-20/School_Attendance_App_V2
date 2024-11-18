@@ -34,11 +34,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
     buildFeatures {
         compose = true
@@ -56,9 +56,9 @@ composeCompiler {
     reportsDestination = layout.buildDirectory.dir("compose_compiler")
     //stabilityConfigurationFile = rootProject.layout.projectDirectory.file("stability_config.conf")
 }
-
 dependencies {
 
+    // Other dependencies...
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -73,28 +73,52 @@ dependencies {
     implementation(libs.androidx.runtime.livedata)
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.androidx.material3.android)
-    testImplementation(libs.junit)
+    implementation("org.mindrot:jbcrypt:0.4")
+    implementation(libs.androidx.ui.test.junit4.android)
+
+    // Navigation dependencies
+    val nav_version = "2.8.2"
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.navigation.ui)
+    implementation(libs.androidx.navigation.dynamic.features.fragment)
+
+    // JUnit testing dependencies
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
+
+    // Kotlin Test (for Kotlin-specific test helpers)
+    testImplementation("org.jetbrains.kotlin:kotlin-test:1.9.10")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.9.10")
+
+    // Mockito for mocking
+    testImplementation("org.mockito:mockito-core:5.5.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.0.0")
+
+    // Compose UI Testing dependencies
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.5.1")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.5.1")
+
+    // Android Testing
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
-    implementation("org.mindrot:jbcrypt:0.4")
-
-    val nav_version = "2.8.2"
-
-    // Jetpack Compose integration
-    implementation(libs.androidx.navigation.compose)
-
-    // Views/Fragments integration
-    implementation(libs.androidx.navigation.fragment)
-    implementation(libs.androidx.navigation.ui)
-
-    // Feature module support for Fragments
-    implementation(libs.androidx.navigation.dynamic.features.fragment)
-
-    // Testing Navigation
     androidTestImplementation(libs.androidx.navigation.testing)
+
+    // Debug dependencies
+    debugImplementation(libs.androidx.ui.tooling)
+    // For Mockito Core (Java-based mocking framework)
+    testImplementation("org.mockito:mockito-core:5.5.0")
+
+// For Kotlin extensions for Mockito (easier to use with Kotlin)
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.0.0")
+
+// Optional: If you are using Android Instrumented Tests (UI tests)
+    androidTestImplementation("org.mockito:mockito-android:5.5.0")
+    // Compose UI Testing dependencies
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.5.1")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.5.1")
+
 
 }
