@@ -1,6 +1,6 @@
 package com.example.school_attendance_register.plastol_pages
 
-import com.example.school_attendance_register.owen_pages.TopAppBarWithBack
+//import com.example.school_attendance_register.owen_pages.TopAppBarWithBack
 import com.example.school_attendance_register.plastol_pages.data_classes.AdminInfo
 
 import android.annotation.SuppressLint
@@ -18,6 +18,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.school_attendance_register.ui.components.TopAppBarWithBack
 import com.google.firebase.database.FirebaseDatabase
 import java.util.Locale
 
