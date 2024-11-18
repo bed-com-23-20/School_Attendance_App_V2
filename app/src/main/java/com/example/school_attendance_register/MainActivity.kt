@@ -13,6 +13,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.school_attendance_register.chikondi_pages.AdminDashBoard
 import com.example.school_attendance_register.chikondi_pages.EnrollStudent
+import com.example.school_attendance_register.owen_pages.MarkAttendance
 import com.example.school_attendance_register.plastol_pages.AllStudents
 import com.example.school_attendance_register.plastol_pages.AuthViewModel
 import com.example.school_attendance_register.plastol_pages.CreateAccount
@@ -55,9 +56,9 @@ class MainActivity : ComponentActivity() {
                     EnrollStudent(navController)
                 }
 
-//                composable("Register_Staff") {
-//                    RegisterStaff(navController)
-//                }
+                composable("Register_Staff") {
+                    RegisterStaff(navController)
+                }
                 composable("Mark_Attendance"){
                     MarkAttendance(navController)
                 }
