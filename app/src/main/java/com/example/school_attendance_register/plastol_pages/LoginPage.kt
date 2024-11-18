@@ -68,7 +68,7 @@ fun LoginPage(navController: NavController, viewModel: AuthViewModel<Any?>){
 
     Column(
         modifier = Modifier.fillMaxSize()
-        .verticalScroll(scrollState),
+            .verticalScroll(scrollState),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment =  Alignment.CenterHorizontally
 
@@ -87,7 +87,7 @@ fun LoginPage(navController: NavController, viewModel: AuthViewModel<Any?>){
         Spacer(modifier = Modifier.height(10.dp))
 
         Icon(imageVector = ImageVector.vectorResource(id = R.drawable.adminloginvector), contentDescription = "Admin vector"
-            )
+        )
         Spacer(modifier = Modifier.height(10.dp))
 
         OutlinedTextField(
@@ -95,7 +95,7 @@ fun LoginPage(navController: NavController, viewModel: AuthViewModel<Any?>){
             onValueChange = { input ->
                 email = input
                 isEmailError = !emailPattern.matcher(input).matches()
-                            },
+            },
 
 
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
@@ -107,7 +107,7 @@ fun LoginPage(navController: NavController, viewModel: AuthViewModel<Any?>){
                     color = Color.White,
                     shape = RoundedCornerShape(24.dp)
                 ),
-             shape = RoundedCornerShape(24.dp),
+            shape = RoundedCornerShape(24.dp),
             isError = isEmailError
 
         )
@@ -140,55 +140,55 @@ fun LoginPage(navController: NavController, viewModel: AuthViewModel<Any?>){
 
         Spacer(modifier = Modifier.height(15.dp))
 
-            Button(
-                onClick = {
+        Button(
+            onClick = {
 
-                      loading = true
+                loading = true
 
-                      if(password.isEmpty() && email.isEmpty()){
-                          Toast.makeText(context, "Email and Password cant be empty", Toast.LENGTH_SHORT).show()
-                          loading = false
-                      }else {
-                          viewModel.fetchUserCredentials(email) { result ->
-                              result.fold(
-                                  onSuccess = { credentials ->
+                if(password.isEmpty() && email.isEmpty()){
+                    Toast.makeText(context, "Email and Password cant be empty", Toast.LENGTH_SHORT).show()
+                    loading = false
+                }else {
+                    viewModel.fetchUserCredentials(email) { result ->
+                        result.fold(
+                            onSuccess = { credentials ->
 
-                                      password = credentials.second
-                                      navController.navigate("Admin_Dash_Board")
-                                  },
-                                  onFailure = { exception ->
-                                      errorMessage = exception.message
-                                      Toast.makeText(context, "User not found", Toast.LENGTH_SHORT).show()
-                                      Log.e("LoginScreen", "Login error: ${exception.message}")
-                                      loading = false
-                                  }
-                              )
-                          }
-                      }
-                },
+                                password = credentials.second
+                                navController.navigate("Admin_Dash_Board")
+                            },
+                            onFailure = { exception ->
+                                errorMessage = exception.message
+                                Toast.makeText(context, "User not found", Toast.LENGTH_SHORT).show()
+                                Log.e("LoginScreen", "Login error: ${exception.message}")
+                                loading = false
+                            }
+                        )
+                    }
+                }
+            },
 
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 20.dp, end = 20.dp),
-                colors = ButtonDefaults.buttonColors(containerColor  = Color.Black)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 20.dp, end = 20.dp),
+            colors = ButtonDefaults.buttonColors(containerColor  = Color.Black)
 
-            ) {
-                Text(if (loading) "Logging in..." else "Login",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = FontFamily.Serif
-                )
-            }
+        ) {
+            Text(if (loading) "Logging in..." else "Login",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily.Serif
+            )
+        }
 
-            error?.let {
+        error?.let {
             Text("Error: $it", color = Color.Red)
-            }
+        }
 
 
         Spacer(modifier = Modifier.height(5.dp))
 
         Text(
-             text = "Not yet an Admin?, Become one",
+            text = "Not yet an Admin?, Become one",
             fontFamily = FontFamily.Serif,
             fontSize = 20.sp,
             fontStyle = FontStyle.Italic
@@ -239,5 +239,4 @@ fun LoginPage(navController: NavController, viewModel: AuthViewModel<Any?>){
         }
     }
 }
-
 

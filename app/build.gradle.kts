@@ -81,6 +81,13 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation("org.mindrot:jbcrypt:0.4")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.5.0") // Replace with the correct version
+    debugImplementation("androidx.compose.ui:ui-tooling:1.5.0")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.5.0")
+    androidTestImplementation ("androidx.navigation:navigation-testing:2.7.1")
+    androidTestImplementation ("androidx.test:core:1.5.0")
+
+
 
     val nav_version = "2.8.2"
 
