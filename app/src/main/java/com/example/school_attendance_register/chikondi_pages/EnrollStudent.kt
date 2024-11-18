@@ -81,7 +81,7 @@ fun EnrollStudent(navController: NavController) {
                 onValueChange = {
                     fname = it
                     firstNameChar = if (fname.text.isNotEmpty()) fname.text[0].toUpperCase() else null
-                                },
+                },
                 label = { Text("Student Firstname") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -93,7 +93,7 @@ fun EnrollStudent(navController: NavController) {
                 onValueChange = {
                     sname = it
                     surNameChar = if (sname.text.isNotEmpty()) sname.text[0].toUpperCase() else null
-                                },
+                },
                 label = { Text("Student Surname") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -167,23 +167,12 @@ fun EnrollStudent(navController: NavController) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-
-//            OutlinedTextField(
-//                value = idTextF,
-//                onValueChange = {},
-//                label = { Text("Do not Write here") },
-//                modifier = Modifier.fillMaxWidth(),
-//                enabled = false,
-//            )
-
-            //Spacer(modifier = Modifier.height(10.dp))
-
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 2.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
 
                 Button(
@@ -209,7 +198,7 @@ fun EnrollStudent(navController: NavController) {
 
                                 // Create the StudentInfo object with sanitized fields
                                 val studentInfo = StudentInfo(
-                                   sanitizedFName.toUpperCase(Locale.ROOT),
+                                    sanitizedFName.toUpperCase(Locale.ROOT),
                                     sanitizedSName.toUpperCase(Locale.ROOT),
                                     sanitizedGuardianName,
                                     sanitizedGuardianPhone,
@@ -220,7 +209,7 @@ fun EnrollStudent(navController: NavController) {
                                 )
                                 myRefStudent.child(sanitizedFullName).setValue(studentInfo)
                                     .addOnSuccessListener {
-                                       fname = TextFieldValue("")
+                                        fname = TextFieldValue("")
                                         sname = TextFieldValue("")
                                         guardianName = TextFieldValue("")
                                         guardianPhone = TextFieldValue("")
