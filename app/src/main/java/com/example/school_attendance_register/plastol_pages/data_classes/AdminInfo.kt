@@ -1,4 +1,4 @@
-package com.example.school_attendance_register
+package com.example.school_attendance_register.plastol_pages.data_classes
 
 
 data class AdminInfo(val adminFullName : String,

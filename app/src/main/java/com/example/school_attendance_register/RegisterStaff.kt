@@ -25,7 +25,7 @@ import com.example.school_attendance_register.ui.components.PageWithBackArrow
 @Composable
 fun RegisterStaff(
     navController: NavController,
-    viewModel: StaffViewModel? = null // Allow null for preview
+  //  viewModel: StaffViewModel? = null // Allow null for preview
 ) {
     // State variables for input fields
     var name by remember { mutableStateOf("") }
@@ -129,9 +129,4 @@ fun RegisterStaff(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewRegisterStaff() {
-    val navController = rememberNavController() // Mock NavController for preview
-    RegisterStaff(navController = navController, viewModel = null) // Pass null to bypass ViewModel
-}
+//
