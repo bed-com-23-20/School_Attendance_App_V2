@@ -1,7 +1,6 @@
-package com.example.school_attendance_register.plastol_pages
+package com.example.school_attendance_register
 
-import com.example.school_attendance_register.owen_pages.TopAppBarWithBack
-import com.example.school_attendance_register.plastol_pages.data_classes.AdminInfo
+import com.example.school_attendance_register.data_classes.AdminInfo
 
 import android.annotation.SuppressLint
 import android.widget.Toast

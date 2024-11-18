@@ -1,23 +1,10 @@
 
-package com.example.school_attendance_register.plastol_pages
+package com.example.school_attendance_register
 
-import android.content.ContentValues.TAG
 import android.util.Log
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import org.mindrot.jbcrypt.BCrypt
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import com.example.school_attendance_register.chikondi_pages.EnrollStudent
 import com.google.firebase.Firebase
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.database
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await

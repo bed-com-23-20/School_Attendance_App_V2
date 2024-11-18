@@ -1,4 +1,4 @@
-package com.example.school_attendance_register.chikondi_pages
+package com.example.school_attendance_register
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button

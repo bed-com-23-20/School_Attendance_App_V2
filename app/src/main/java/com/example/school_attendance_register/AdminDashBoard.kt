@@ -1,9 +1,10 @@
-package com.example.school_attendance_register.chikondi_pages
+package com.example.school_attendance_register
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,10 +21,21 @@ import androidx.navigation.NavController
 fun AdminDashBoard(navController: NavController) {
 
 
+    Scaffold(
+        topBar = {
+            TopAppBarWithBack(navController = navController, title = "Mark Attendance",
+                backButtonColor = Color.Red,
+                backIconColor = Color.White
+            )
+        }
+    ) {paddingValues ->
+
+
     Column(
         modifier = Modifier
             .fillMaxSize() // Take up full available space
-            .padding(16.dp),
+            .padding(16.dp)
+            .padding(paddingValues),
         verticalArrangement = Arrangement.Top, // Align items to the top
         horizontalAlignment = Alignment.CenterHorizontally // Center horizontally
     ) {
@@ -102,5 +114,6 @@ fun AdminDashBoard(navController: NavController) {
         }
 
         Spacer(modifier = Modifier.weight(1f))
-    }
+
+    }   }
 }
