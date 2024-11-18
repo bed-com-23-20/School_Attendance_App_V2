@@ -1,4 +1,4 @@
-package com.example.school_attendance_register
+package com.example.school_attendance_register.plastol_pages.data_classes
 
 
 data class AdminInfo(val adminFullName : String,
@@ -7,6 +7,8 @@ data class AdminInfo(val adminFullName : String,
                      val phoneNumber : Int,
                      val email : String,
                      val createPass : String,
-                     val confirmPass : String)
+                     val confirmPass : String) {
+
+}
 
 

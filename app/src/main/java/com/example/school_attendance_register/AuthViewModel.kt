@@ -1,85 +1,86 @@
 package com.example.school_attendance_register
 
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-
-sealed class AuthState {
-    object Authenticated : AuthState()
-    data class Error(val message: String) : AuthState()
-    object Unauthenticated : AuthState()
-}
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.auth.AuthState
+import com.google.firebase.database.*
 
 class AuthViewModel : ViewModel() {
 
-    private val _authState = MutableLiveData<AuthState>()
-    val authState: LiveData<AuthState> = _authState
+
+//    private val _authState = MutableLiveData<AuthState>()
+//    val authState: LiveData<AuthState> = _authState
 
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val database: DatabaseReference = FirebaseDatabase.getInstance().getReference("Admin")
 
-    init {
-        checkAuthStatus()
-    }
 
-    // Check if user is authenticated on init
-    private fun checkAuthStatus() {
-        _authState.value = if (auth.currentUser == null) {
-            AuthState.Unauthenticated
-        } else {
-            AuthState.Authenticated
-        }
-    }
+//    init {
+//        checkAuthStatus()
+//    }
+//
+//
+//    fun checkAuthStatus(){
+//        if(auth.currentUser==null){
+//            _authState.value = AuthState.Unauthenticated
+//        }else{
+//            _authState.value = AuthState.Authenticated
+//        }
+//    }
 
-    // Fetch credentials from Firebase Realtime Database
-    fun fetchCredentials() {
+
+
+    // Function to fetch credentials from Firebase Realtime Database
+    fun fetchCredentials(
+        onComplete: (String, String) -> Unit,
+        onError: (String) -> Unit
+    ) {
         database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                var credentialsFound = false
 
                 for (adminSnapshot in snapshot.children) {
-                    val email = adminSnapshot.child("email").value as? String ?: ""
-                    val password = adminSnapshot.child("createPass").value as? String ?: ""
+                    val email = snapshot.child("email").value as? String ?: ""
+                    val password = snapshot.child("createPass").value as? String ?: ""
 
                     if (email.isNotEmpty() && password.isNotEmpty()) {
-                        // Proceed with login using found credentials
-                        login(email, password)
-                        credentialsFound = true
-                        break
+                        onComplete(
+                            email,
+                            password
+                        )  // Pass email and password to the onComplete lambda
+                        return
                     }
                 }
-                if (!credentialsFound) {
-                    _authState.value = AuthState.Error("Email or password not found in the database")
-                }
+                onError("Email or password not found in the database")
+
             }
 
             override fun onCancelled(error: DatabaseError) {
-                _authState.value = AuthState.Error("Error fetching data: ${error.message}")
+                onError("Error fetching data: ${error.message}")  // Pass error message to the onError lambda
             }
         })
     }
 
-    // Log in using Firebase Authentication
-    fun login(email: String, password: String) {
+    // Function to log in using Firebase Authentication
+    fun login(
+        email: String,
+        password: String,
+        onSuccess: () -> Unit,     // Lambda for handling login success
+        onFailure: (String) -> Unit  // Lambda for handling login failure
+    ) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    _authState.value = AuthState.Authenticated
+                    onSuccess()  // Call onSuccess if login succeeds
                 } else {
-                    _authState.value = AuthState.Error(task.exception?.message ?: "Authentication failed")
+                    task.exception?.message?.let { onFailure(it) }  // Pass the error message to onFailure if login fails
                 }
             }
     }
 
-    // Log out function
-    fun logout() {
-        auth.signOut()
-        _authState.value = AuthState.Unauthenticated
-    }
 }
+
