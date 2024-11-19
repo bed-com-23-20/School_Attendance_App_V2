@@ -60,8 +60,8 @@ fun EnrollStudent(navController: NavController) {
 
     Scaffold(
         topBar = {
-            TopAppBarWithBack(navController = navController, title = "Mark Attendance",
-                backButtonColor = Color.Red,
+            TopAppBarWithBack(
+                navController = navController, title = "Enroll Students",
                 backIconColor = Color.White
             )
         }

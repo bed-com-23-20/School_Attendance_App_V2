@@ -23,7 +23,8 @@ fun AdminDashBoard(navController: NavController) {
 
     Scaffold(
         topBar = {
-            TopAppBarWithBack(navController = navController, title = "Mark Attendance",
+            TopAppBarWithBack(
+                navController = navController, title = "Admin Dash Board",
                 backButtonColor = Color.Red,
                 backIconColor = Color.White
             )

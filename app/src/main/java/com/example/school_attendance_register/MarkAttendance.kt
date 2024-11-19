@@ -52,7 +52,8 @@ fun MarkAttendance(navController: NavController) {
 
     Scaffold(
         topBar = {
-            TopAppBarWithBack(navController = navController, title = "Mark Attendance",
+            TopAppBarWithBack(
+                navController = navController, title = "Mark Attendance",
                 backButtonColor = Color.Red,
                 backIconColor = Color.White
                 )
@@ -188,9 +189,10 @@ fun MarkAttendance(navController: NavController) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopAppBarWithBack(navController: NavController, title: String,
-                      backButtonColor: Color = MaterialTheme.colorScheme.primary, // Default color
-                      backIconColor: Color = Color.White
+fun TopAppBarWithBack(
+    navController: NavController, title: String,
+    backButtonColor: Color = MaterialTheme.colorScheme.primary, // Default color
+    backIconColor: Color = Color.White
                       ) {
     TopAppBar(
         title = {

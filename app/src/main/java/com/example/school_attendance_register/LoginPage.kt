@@ -67,7 +67,8 @@ fun LoginPage(navController: NavController, viewModel: AuthViewModel<Any?>){
     var errorMessage by remember { mutableStateOf<String?>(null) }
     Scaffold(
         topBar = {
-            TopAppBarWithBack(navController = navController, title = "Mark Attendance",
+            TopAppBarWithBack(
+                navController = navController, title = "Login",
                 backButtonColor = Color.Red,
                 backIconColor = Color.White
             )

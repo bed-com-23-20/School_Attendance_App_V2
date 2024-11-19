@@ -60,7 +60,7 @@ class MainActivity : ComponentActivity() {
                 }
                 composable("allStudents/{result}") { backStackEntry ->
                     val result = backStackEntry.arguments?.getString("result") ?: ""
-                    AllStudents(result)
+                    AllStudents(result, navController)
                 }
 
 

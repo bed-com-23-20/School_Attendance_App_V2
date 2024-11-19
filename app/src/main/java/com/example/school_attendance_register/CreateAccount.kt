@@ -78,7 +78,8 @@ fun CreateAccount(navController: NavController){
 
     Scaffold(
         topBar = {
-            TopAppBarWithBack(navController = navController, title = "Mark Attendance",
+            TopAppBarWithBack(
+                navController = navController, title = "Create Account",
                 backButtonColor = Color.Red,
                 backIconColor = Color.White
             )
