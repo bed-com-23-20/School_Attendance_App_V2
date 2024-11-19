@@ -63,7 +63,7 @@ class MainActivity : ComponentActivity() {
                     AllStudents(result)
                 }
                 composable("Student_Records") { StudentRecords(navController) }
-                composable("Staff_Records") { StudentRecords(navController) }
+                composable("Staff_Records") { StaffRecords(navController) }
             }
             )
 
