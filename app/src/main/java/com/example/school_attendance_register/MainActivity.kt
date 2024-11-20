@@ -40,14 +40,6 @@ class MainActivity : ComponentActivity() {
                 composable("Admin_Dash_Board"){
                     AdminDashBoard(navController)
                 }
-
-//                composable("Admin_Dash_Board/{result},")
-//                {backStackEntry ->
-//                    val result = backStackEntry.arguments?.getString("result") ?: ""
-//
-//                    AdminDashBoard(navController)
-//                }
-
                 composable("Student_Enroll") {
                     EnrollStudent(navController)
                 }

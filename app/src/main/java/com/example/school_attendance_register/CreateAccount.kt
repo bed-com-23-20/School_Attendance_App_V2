@@ -95,18 +95,6 @@ fun CreateAccount(navController: NavController){
             horizontalAlignment = Alignment.CenterHorizontally
 
         ) {
-//            Text(
-//                text = "Create Account",
-//                fontSize = 28.sp,
-//                fontFamily = FontFamily.Serif,
-//                fontWeight = FontWeight.Bold,
-//            )
-//            Divider(
-//                thickness = 1.dp,
-//                color = Color.Black,
-//                modifier = Modifier.padding(horizontal = 16.dp)
-//            )
-//            Spacer(modifier = Modifier.height(10.dp))
 
             OutlinedTextField(
                 value = adminFullName,
@@ -188,19 +176,6 @@ fun CreateAccount(navController: NavController){
                 )
             }
 
-//
-//        TextField(
-//            value = email,
-//            onValueChange = {email = it},
-//            label = {Text("Email")},
-//            //leadingIcon = {ImageVector.vectorResource(id = R.drawable.password_vector)},
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(start = 20.dp, end = 20.dp)
-//
-//        )
-
-
             Spacer(modifier = Modifier.height(20.dp))
 
             OutlinedTextField(
@@ -226,20 +201,6 @@ fun CreateAccount(navController: NavController){
                     color = MaterialTheme.colorScheme.error
                 )
             }
-
-
-//        TextField(
-//            value = createPass,
-//            visualTransformation = PasswordVisualTransformation(),
-//            onValueChange = { createPass = it },
-//            label = { Text("Create Password") },
-//            //leadingIcon = {ImageVector.vectorResource(id = R.drawable.password_vector)},
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(
-//                    start = 20.dp, end = 20.dp
-//                )
-//        )
 
             Spacer(modifier = Modifier.height(15.dp))
 

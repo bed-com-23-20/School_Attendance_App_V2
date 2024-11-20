@@ -68,15 +68,6 @@ fun MarkAttendance(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            // Title
-//            Text(
-//                text = "MARK ATTENDANCE",
-//                fontSize = 28.sp,
-//                fontWeight = FontWeight.Bold,
-//                fontFamily = FontFamily.Serif
-//            )
-//
-//            Spacer(modifier = Modifier.height(40.dp))
 
             // Student Code Input Field
             OutlinedTextField(
