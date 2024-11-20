@@ -53,7 +53,7 @@ fun MarkAttendance(navController: NavController) {
     Scaffold(
         topBar = {
             TopAppBarWithBack(
-                navController = navController, title = "Mark Attendance",
+                navController = navController, title = " MARK ATTENDANCE",
                 backButtonColor = Color.Red,
                 backIconColor = Color.White
                 )
@@ -69,14 +69,14 @@ fun MarkAttendance(navController: NavController) {
             verticalArrangement = Arrangement.Center
         ) {
             // Title
-            Text(
-                text = "MARK ATTENDANCE",
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = FontFamily.Serif
-            )
-
-            Spacer(modifier = Modifier.height(40.dp))
+//            Text(
+//                text = "MARK ATTENDANCE",
+//                fontSize = 28.sp,
+//                fontWeight = FontWeight.Bold,
+//                fontFamily = FontFamily.Serif
+//            )
+//
+//            Spacer(modifier = Modifier.height(40.dp))
 
             // Student Code Input Field
             OutlinedTextField(

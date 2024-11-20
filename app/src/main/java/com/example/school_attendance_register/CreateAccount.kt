@@ -18,6 +18,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -107,7 +108,7 @@ fun CreateAccount(navController: NavController){
             )
             Spacer(modifier = Modifier.height(10.dp))
 
-            TextField(
+            OutlinedTextField(
                 value = adminFullName,
                 onValueChange = { adminFullName = it },
                 label = { Text("Full Name") },
@@ -121,7 +122,7 @@ fun CreateAccount(navController: NavController){
 
             Spacer(modifier = Modifier.height(15.dp))
 
-            TextField(
+            OutlinedTextField(
                 value = schoolName,
                 onValueChange = { schoolName = it },
                 label = { Text("School Name") },
@@ -135,7 +136,7 @@ fun CreateAccount(navController: NavController){
 
             Spacer(modifier = Modifier.height(15.dp))
 
-            TextField(
+            OutlinedTextField(
                 value = district,
                 onValueChange = { district = it },
                 label = { Text("District ") },
@@ -149,7 +150,7 @@ fun CreateAccount(navController: NavController){
 
             Spacer(modifier = Modifier.height(15.dp))
 
-            TextField(
+            OutlinedTextField(
                 value = phoneNumber,
                 onValueChange = { phoneNumber = it },
                 label = { Text("Phone Number") },
@@ -164,7 +165,7 @@ fun CreateAccount(navController: NavController){
             Spacer(modifier = Modifier.height(15.dp))
 
 
-            TextField(
+            OutlinedTextField(
                 value = email,
                 onValueChange = { input ->
                     email = input
@@ -202,7 +203,7 @@ fun CreateAccount(navController: NavController){
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            TextField(
+            OutlinedTextField(
                 value = createPass,
                 onValueChange = { input ->
                     createPass = input
@@ -242,7 +243,7 @@ fun CreateAccount(navController: NavController){
 
             Spacer(modifier = Modifier.height(15.dp))
 
-            TextField(
+            OutlinedTextField(
                 value = password,
                 visualTransformation = PasswordVisualTransformation(),
                 onValueChange = { password = it },
