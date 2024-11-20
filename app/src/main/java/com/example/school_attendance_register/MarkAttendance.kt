@@ -53,7 +53,7 @@ fun MarkAttendance(navController: NavController) {
     Scaffold(
         topBar = {
             TopAppBarWithBack(
-                navController = navController, title = " MARK ATTENDANCE",
+                navController = navController, title = "MARK ATTENDANCE",
                 backButtonColor = Color.Red,
                 backIconColor = Color.White
                 )

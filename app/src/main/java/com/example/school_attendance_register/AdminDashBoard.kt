@@ -24,7 +24,7 @@ fun AdminDashBoard(navController: NavController) {
     Scaffold(
         topBar = {
             TopAppBarWithBack(
-                navController = navController, title = "Admin Dash Board",
+                navController = navController, title = "ADMIN DASH BOARD",
                 backButtonColor = Color.Red,
                 backIconColor = Color.White
             )
@@ -43,22 +43,20 @@ fun AdminDashBoard(navController: NavController) {
         Spacer(modifier = Modifier.weight(1f))
 
         // Admin Dashboard heading at the top
-        Text(
-            text = "ADMIN DASH BOARD",
-            fontSize = 28.sp, // Set the font size
-            fontFamily = FontFamily.Serif,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(bottom = 8.dp) // Add some space below the heading
-        )
-
-        Divider(
-            thickness = 1.dp,
-            color = Color.Black,
-            modifier = Modifier.padding(horizontal = 16.dp) // Add padding for the divider
-        )
-
-        Spacer(modifier = Modifier.weight(1f)) // Space between the divider and buttons
+//        Text(
+//            text = "ADMIN DASH BOARD",
+//            fontSize = 28.sp, // Set the font size
+//            fontFamily = FontFamily.Serif,
+//            fontWeight = FontWeight.Bold,
+//            textAlign = TextAlign.Center,
+//            modifier = Modifier.padding(bottom = 8.dp) // Add some space below the heading
+//        )
+//
+//        Divider(
+//            thickness = 1.dp,
+//            color = Color.Black,
+//            modifier = Modifier.padding(horizontal = 16.dp) // Add padding for the divider
+//        )
 
         // Buttons centered vertically
         Column(

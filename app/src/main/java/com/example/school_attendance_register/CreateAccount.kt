@@ -80,7 +80,7 @@ fun CreateAccount(navController: NavController){
     Scaffold(
         topBar = {
             TopAppBarWithBack(
-                navController = navController, title = "Create Account",
+                navController = navController, title = "CREATE ACCOUNT",
                 backButtonColor = Color.Red,
                 backIconColor = Color.White
             )
@@ -95,18 +95,18 @@ fun CreateAccount(navController: NavController){
             horizontalAlignment = Alignment.CenterHorizontally
 
         ) {
-            Text(
-                text = "Create Account",
-                fontSize = 28.sp,
-                fontFamily = FontFamily.Serif,
-                fontWeight = FontWeight.Bold,
-            )
-            Divider(
-                thickness = 1.dp,
-                color = Color.Black,
-                modifier = Modifier.padding(horizontal = 16.dp)
-            )
-            Spacer(modifier = Modifier.height(10.dp))
+//            Text(
+//                text = "Create Account",
+//                fontSize = 28.sp,
+//                fontFamily = FontFamily.Serif,
+//                fontWeight = FontWeight.Bold,
+//            )
+//            Divider(
+//                thickness = 1.dp,
+//                color = Color.Black,
+//                modifier = Modifier.padding(horizontal = 16.dp)
+//            )
+//            Spacer(modifier = Modifier.height(10.dp))
 
             OutlinedTextField(
                 value = adminFullName,
