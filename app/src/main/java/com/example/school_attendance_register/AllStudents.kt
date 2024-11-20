@@ -117,16 +117,17 @@ fun AllStudents(result: String, navController: NavController) {
                             Text(
                                 text = "${student.fname} ${student.sname}",
                                 style = MaterialTheme.typography.titleMedium,
+                                fontSize = 24.sp,
                                 color = MaterialTheme.colorScheme.onSurface
                             )
 
                             // Display other student details
-                            Text("Unique Code: ${student.uniqueId}", style = MaterialTheme.typography.bodySmall)
-                            Text("Guardian Name: ${student.guardianName}", style = MaterialTheme.typography.bodySmall)
-                            Text("Guardian Contact: ${student.guardianPhone}", style = MaterialTheme.typography.bodySmall)
-                            Text("Gender: ${student.gender}", style = MaterialTheme.typography.bodySmall)
-                            Text("Date of Birth: ${student.dateOfBirth}", style = MaterialTheme.typography.bodySmall)
-                            Text("Class: ${student.classform}", style = MaterialTheme.typography.bodySmall)
+                            Text("Unique Code: ${student.uniqueId}", style = MaterialTheme.typography.bodySmall, fontSize = 16.sp)
+                            Text("Guardian Name: ${student.guardianName}", style = MaterialTheme.typography.bodySmall, fontSize = 16.sp)
+                            Text("Guardian Contact: ${student.guardianPhone}", style = MaterialTheme.typography.bodySmall, fontSize = 16.sp)
+                            Text("Gender: ${student.gender}", style = MaterialTheme.typography.bodySmall, fontSize = 16.sp)
+                            Text("Date of Birth: ${student.dateOfBirth}", style = MaterialTheme.typography.bodySmall, fontSize = 16.sp)
+                            Text("Class: ${student.classform}", style = MaterialTheme.typography.bodySmall, fontSize = 16.sp)
                         }
                     }
                 }
