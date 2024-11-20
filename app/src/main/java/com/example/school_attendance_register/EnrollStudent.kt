@@ -63,7 +63,8 @@ fun EnrollStudent(navController: NavController) {
         topBar = {
             TopAppBarWithBack(
                 navController = navController, title = "ENROLL STUDENT",
-                backIconColor = Color.White
+                backIconColor = Color.White,
+                backButtonColor = Color.Red
             )
         }
     ) { paddingValues ->

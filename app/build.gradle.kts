@@ -59,17 +59,13 @@ composeCompiler {
 }
 
 dependencies {
-    // Firebase BoM for version alignment
+    // Firebase BoM for consistent versions
     implementation(platform("com.google.firebase:firebase-bom:32.2.2"))
 
-    // Firebase dependencies
+    // Firebase dependencies using the BoM
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-database-ktx")
     implementation("com.google.firebase:firebase-firestore-ktx")
-    implementation("com.google.firebase:firebase-crashlytics-ktx")
-    implementation(platform("com.google.firebase:firebase-bom:32.2.2"))
-    implementation("com.google.firebase:firebase-database-ktx")
-    //implementation(platform("com.google.firebase:firebase-bom:32.2.2"))
     implementation("com.google.firebase:firebase-crashlytics-ktx")
 
     // Compose and UI dependencies
@@ -83,13 +79,12 @@ dependencies {
     implementation(libs.androidx.material3)
 
     // Navigation dependencies
-    //val nav_version = "2.8.2"
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
     implementation(libs.androidx.navigation.dynamic.features.fragment)
 
-    // Security
+    // Security library
     implementation("org.mindrot:jbcrypt:0.4")
 
     // Testing dependencies
@@ -109,7 +104,4 @@ dependencies {
     // Debug dependencies
     debugImplementation("androidx.compose.ui:ui-test-manifest:1.5.1")
     debugImplementation(libs.androidx.ui.tooling)
-
-
-
 }

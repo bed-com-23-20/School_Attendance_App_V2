@@ -16,12 +16,10 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -80,12 +78,15 @@ fun CreateAccount(navController: NavController){
     Scaffold(
         topBar = {
             TopAppBarWithBack(
-                navController = navController, title = "CREATE ACCOUNT",
-                backButtonColor = Color.Red,
-                backIconColor = Color.White
+                navController = navController,
+                title = "MARK ATTENDANCE",
+                backgroundColor = Color.Red, // Set the background color for the top app bar
+                backIconColor = Color.White,
+                backButtonColor = Color.Red // Set the color for the back icon
             )
         }
-    ) { paddingValues ->
+    )
+    { paddingValues ->
 
         Column(
             modifier = Modifier.fillMaxSize()
