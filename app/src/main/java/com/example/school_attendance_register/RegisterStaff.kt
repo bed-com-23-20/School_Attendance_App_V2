@@ -1,5 +1,7 @@
 package com.example.school_attendance_register
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -12,15 +14,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.school_attendance_register.plastol_pages.data_classes.StaffInfo
 import com.example.school_attendance_register.ui.components.PageWithBackArrow
+import com.google.firebase.database.FirebaseDatabase
 
 @Composable
 fun RegisterStaff(
@@ -32,8 +38,12 @@ fun RegisterStaff(
     var email by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
     var className by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    //var password by remember { mutableStateOf("") }
     var message by remember { mutableStateOf("") }
+
+    var context = LocalContext.current
+    val database = FirebaseDatabase.getInstance()
+    val myStaff = database.getReference("Staff")
 
     // Using PageWithBackArrow for consistent navigation
     PageWithBackArrow(navController = navController, title = "Register Staff") { modifier ->
@@ -89,24 +99,30 @@ fun RegisterStaff(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            OutlinedTextField(
-                value = password,
-                onValueChange = { password = it },
-                label = { Text("Password") },
-                visualTransformation = PasswordVisualTransformation(),
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
             Button(
                 onClick = {
-                    // Provide a sample behavior in preview
-                    message = if (name.isNotEmpty() && email.isNotEmpty()) {
-                        "Registration successful!"
-                    } else {
-                        "Please fill out all fields"
+                    if(email.isEmpty() && name.isEmpty() && phone.isEmpty() && className.isEmpty()){
+                        Toast.makeText(context, "The fields can not be empty", Toast.LENGTH_SHORT).show()
+                        Log.d("emptyFields", "The fields are empty")
                     }
+                    else{
+                        var staffInfo = StaffInfo(name, email, phone, className)
+
+                        myStaff.child(name).setValue(staffInfo).addOnSuccessListener {
+                            name=""
+                            email=""
+                            phone=""
+                            className=""
+                            Toast.makeText(context, "The staff has been added", Toast.LENGTH_SHORT).show()
+
+                        }.addOnFailureListener{
+                            Log.d("ErrorTag", "Failed to add")
+                        }
+
+                    }
+
+
+
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {

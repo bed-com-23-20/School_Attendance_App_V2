@@ -17,6 +17,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.school_attendance_register.data_classes.StudentInfo
+import com.example.school_attendance_register.ui.components.TopAppBarWithBack
 import com.google.firebase.database.FirebaseDatabase
 import java.util.*
 import kotlin.random.Random

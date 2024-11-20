@@ -4,7 +4,7 @@ data class StaffInfo(
     var name: String,
     var email: String,
     var phone: String,
-    var plass: String,
-    var password: String
+    var className: String,
+
 
 )

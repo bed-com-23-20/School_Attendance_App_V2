@@ -4,35 +4,28 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.navigation.NavController
+import com.example.school_attendance_register.plastol_pages.AuthViewModel
 import com.example.school_attendance_register.plastol_pages.LoginPage
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mock
-import org.mockito.Mockito.*
-import org.mockito.junit.MockitoJUnit
-import org.mockito.junit.MockitoRule
 import org.mockito.kotlin.*
-
 
 class LoginTest {
 
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    // Using Mockito to mock NavController and AuthViewModel
-    @Mock
     private lateinit var navController: NavController
-
-    private lateinit var authViewModel: AuthViewModel<Any?>
-
-    @get:Rule
-    val mockitoRule: MockitoRule = MockitoJUnit.rule()
+    private lateinit var authViewModel: AuthViewModel<Any?> // Changed to Any? to match LoginPage
 
     @Before
     fun setup() {
-        navController = mock(NavController::class.java)
-        authViewModel = mock(AuthViewModel::class.java)
+        // Mock NavController
+        navController = mock()
+
+        // Mock AuthViewModel with Any?
+        authViewModel = mock()
     }
 
     @Test
@@ -57,8 +50,8 @@ class LoginTest {
         // Click the login button without entering email or password
         composeTestRule.onNodeWithText("Login").performClick()
 
-        // Check if the login button text changes to "Logging in..."
-        composeTestRule.onNodeWithText("Logging in...").assertExists()
+        // Check if "Logging in..." does not appear, indicating the button click was prevented
+        composeTestRule.onNodeWithText("Logging in...").assertDoesNotExist()
     }
 
     @Test
@@ -68,8 +61,9 @@ class LoginTest {
         val loginResult = mutableStateOf(Result.success(Pair(email, password)))
 
         // Mocking ViewModel behavior for successful login
-        whenever(authViewModel.fetchUserCredentials(eq(email), any())).thenAnswer {
-            (it.arguments[1] as (Result<Pair<String, String>>) -> Unit).invoke(loginResult.value)
+        whenever(authViewModel.fetchUserCredentials(eq(email), any())).thenAnswer { invocation: org.mockito.invocation.InvocationOnMock ->
+            val callback = invocation.arguments[1] as (Result<Pair<String, String>>) -> Unit
+            callback.invoke(loginResult.value)
         }
 
         composeTestRule.setContent {
@@ -84,8 +78,7 @@ class LoginTest {
         composeTestRule.onNodeWithText("Login").performClick()
 
         // Verify navigation to Admin Dashboard
-        verify(navController as NavController).navigate("Admin_Dash_Board")
-
+        verify(navController).navigate("Admin_Dash_Board")
     }
 
     @Test
@@ -95,8 +88,9 @@ class LoginTest {
         val loginResult = mutableStateOf(Result.failure<Pair<String, String>>(Throwable("Incorrect password")))
 
         // Mock ViewModel behavior for failed login
-        whenever(authViewModel.fetchUserCredentials(eq(email), any())).thenAnswer {
-            (it.arguments[1] as (Result<Pair<String, String>>) -> Unit).invoke(loginResult.value)
+        whenever(authViewModel.fetchUserCredentials(eq(email), any())).thenAnswer { invocation: org.mockito.invocation.InvocationOnMock ->
+            val callback = invocation.arguments[1] as (Result<Pair<String, String>>) -> Unit
+            callback.invoke(loginResult.value)
         }
 
         composeTestRule.setContent {
