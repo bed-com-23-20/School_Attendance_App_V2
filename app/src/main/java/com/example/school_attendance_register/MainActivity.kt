@@ -16,62 +16,50 @@ class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Enable edge-to-edge UI
         enableEdgeToEdge()
-
-        // Initialize Firebase
         FirebaseApp.initializeApp(this)
-
         setContent {
-            // Set up navigation controller
-            val navController = rememberNavController()
 
-            NavHost(
-                navController = navController,
-                startDestination = "Create_Account_Page"
-            ) {
-                // Landing Page
-                composable("Landing_Page") {
+            val scrollState = rememberScrollState()
+            //Calling the LandingPage function
+            val navController = rememberNavController()
+            NavHost(navController = navController,  startDestination = "Landing_Page", builder = {
+
+
+                composable("Landing_Page"){
                     LandingPage(navController)
                 }
-
-                // Login Page
-                composable("Login_Page") {
+                composable("Login_Page",){
                     LoginPage(navController, AuthViewModel())
                 }
 
-                // Create Account Page
-                composable("Create_Account_Page") {
+                composable("Create_Account_Page",){
                     CreateAccount(navController)
                 }
 
-                // Admin Dashboard
-                composable("Admin_Dash_Board") {
+                composable("Admin_Dash_Board"){
                     AdminDashBoard(navController)
                 }
-
-                // Student Enrollment
                 composable("Student_Enroll") {
                     EnrollStudent(navController)
                 }
 
-                // Staff Registration
                 composable("Register_Staff") {
                     RegisterStaff(navController)
                 }
-
-                // Mark Attendance
-                composable("Mark_Attendance") {
+                composable("Mark_Attendance"){
                     MarkAttendance(navController)
                 }
-
-                // All Students with Result Argument
                 composable("allStudents/{result}") { backStackEntry ->
                     val result = backStackEntry.arguments?.getString("result") ?: ""
-                    AllStudents(result)
+                    AllStudents(result, navController)
                 }
+
+
             }
+            )
+
         }
     }
 }
+

@@ -61,8 +61,8 @@ fun EnrollStudent(navController: NavController) {
 
     Scaffold(
         topBar = {
-            TopAppBarWithBack(navController = navController, title = "Mark Attendance",
-                backButtonColor = Color.Red,
+            TopAppBarWithBack(
+                navController = navController, title = "ENROLL STUDENT",
                 backIconColor = Color.White
             )
         }
@@ -252,22 +252,10 @@ fun EnrollStudent(navController: NavController) {
                                                         data.append("\nFirst Name = " + it.child("fname").value)
                                                         data.append("\nSurname  = " + it.child("sname").value)
                                                         data.append("\nUnique Code  = " + it.child("uniqueId").value)
-                                                        data.append(
-                                                            "\nGuardian Name = " + it.child(
-                                                                "guardianName"
-                                                            ).value
-                                                        )
-                                                        data.append(
-                                                            "\nGuardian Contact = " + it.child(
-                                                                "guardianPhone"
-                                                            ).value
-                                                        )
+                                                        data.append("\nGuardian Name = " + it.child("guardianName").value)
+                                                        data.append("\nGuardian Contact = " + it.child("guardianPhone").value)
                                                         data.append("\nClass = " + it.child("classform").value)
-                                                        data.append(
-                                                            "\nDate of Birth = " + it.child(
-                                                                "dateOfBirth"
-                                                            ).value
-                                                        )
+                                                        data.append("\nDate of Birth = " + it.child("dateOfBirth").value)
                                                         data.append("\nGender = " + it.child("gender").value)
                                                         data.append("\n------------------------------------------------------------------------")
                                                     }

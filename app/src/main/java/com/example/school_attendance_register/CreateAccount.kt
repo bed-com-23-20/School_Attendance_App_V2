@@ -18,6 +18,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -38,7 +39,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.school_attendance_register.data_classes.AdminInfo
-import com.example.school_attendance_register.ui.components.TopAppBarWithBack
 import com.google.firebase.database.FirebaseDatabase
 import java.util.Locale
 import java.util.regex.Pattern
@@ -79,7 +79,8 @@ fun CreateAccount(navController: NavController){
 
     Scaffold(
         topBar = {
-            TopAppBarWithBack(navController = navController, title = "Create Account",
+            TopAppBarWithBack(
+                navController = navController, title = "CREATE ACCOUNT",
                 backButtonColor = Color.Red,
                 backIconColor = Color.White
             )
@@ -94,20 +95,8 @@ fun CreateAccount(navController: NavController){
             horizontalAlignment = Alignment.CenterHorizontally
 
         ) {
-            Text(
-                text = "Create Account",
-                fontSize = 28.sp,
-                fontFamily = FontFamily.Serif,
-                fontWeight = FontWeight.Bold,
-            )
-            Divider(
-                thickness = 1.dp,
-                color = Color.Black,
-                modifier = Modifier.padding(horizontal = 16.dp)
-            )
-            Spacer(modifier = Modifier.height(10.dp))
 
-            TextField(
+            OutlinedTextField(
                 value = adminFullName,
                 onValueChange = { adminFullName = it },
                 label = { Text("Full Name") },
@@ -121,7 +110,7 @@ fun CreateAccount(navController: NavController){
 
             Spacer(modifier = Modifier.height(15.dp))
 
-            TextField(
+            OutlinedTextField(
                 value = schoolName,
                 onValueChange = { schoolName = it },
                 label = { Text("School Name") },
@@ -135,7 +124,7 @@ fun CreateAccount(navController: NavController){
 
             Spacer(modifier = Modifier.height(15.dp))
 
-            TextField(
+            OutlinedTextField(
                 value = district,
                 onValueChange = { district = it },
                 label = { Text("District ") },
@@ -149,7 +138,7 @@ fun CreateAccount(navController: NavController){
 
             Spacer(modifier = Modifier.height(15.dp))
 
-            TextField(
+            OutlinedTextField(
                 value = phoneNumber,
                 onValueChange = { phoneNumber = it },
                 label = { Text("Phone Number") },
@@ -164,7 +153,7 @@ fun CreateAccount(navController: NavController){
             Spacer(modifier = Modifier.height(15.dp))
 
 
-            TextField(
+            OutlinedTextField(
                 value = email,
                 onValueChange = { input ->
                     email = input
@@ -187,22 +176,9 @@ fun CreateAccount(navController: NavController){
                 )
             }
 
-//
-//        TextField(
-//            value = email,
-//            onValueChange = {email = it},
-//            label = {Text("Email")},
-//            //leadingIcon = {ImageVector.vectorResource(id = R.drawable.password_vector)},
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(start = 20.dp, end = 20.dp)
-//
-//        )
-
-
             Spacer(modifier = Modifier.height(20.dp))
 
-            TextField(
+            OutlinedTextField(
                 value = createPass,
                 onValueChange = { input ->
                     createPass = input
@@ -226,23 +202,9 @@ fun CreateAccount(navController: NavController){
                 )
             }
 
-
-//        TextField(
-//            value = createPass,
-//            visualTransformation = PasswordVisualTransformation(),
-//            onValueChange = { createPass = it },
-//            label = { Text("Create Password") },
-//            //leadingIcon = {ImageVector.vectorResource(id = R.drawable.password_vector)},
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(
-//                    start = 20.dp, end = 20.dp
-//                )
-//        )
-
             Spacer(modifier = Modifier.height(15.dp))
 
-            TextField(
+            OutlinedTextField(
                 value = password,
                 visualTransformation = PasswordVisualTransformation(),
                 onValueChange = { password = it },
