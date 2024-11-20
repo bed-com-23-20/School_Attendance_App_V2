@@ -198,7 +198,7 @@ fun TopAppBarWithBack(
         title = {
             Text(
                 text = title,
-                fontSize = 20.sp,
+                fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily.Serif,
 
