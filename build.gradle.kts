@@ -6,5 +6,6 @@ plugins {
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.google.gms.google.services) apply false
     id("org.jetbrains.kotlin.plugin.compose") version "2.0.0"
-  //  id("org.jetbrains.kotlin.plugin.compose") version "2.0.0" // this version matches your Kotlin version
+    id("com.google.firebase.crashlytics") version "2.9.7" apply false
+
 }

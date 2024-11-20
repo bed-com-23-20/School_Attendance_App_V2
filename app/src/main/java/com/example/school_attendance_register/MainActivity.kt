@@ -16,59 +16,62 @@ class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Enable edge-to-edge UI
         enableEdgeToEdge()
+
+        // Initialize Firebase
         FirebaseApp.initializeApp(this)
+
         setContent {
-
-            val scrollState = rememberScrollState()
-            //Calling the LandingPage function
+            // Set up navigation controller
             val navController = rememberNavController()
-            NavHost(navController = navController,  startDestination = "Register_Staff", builder = {
 
-
-                composable("Landing_Page"){
+            NavHost(
+                navController = navController,
+                startDestination = "Create_Account_Page"
+            ) {
+                // Landing Page
+                composable("Landing_Page") {
                     LandingPage(navController)
                 }
-                composable("Login_Page",){
+
+                // Login Page
+                composable("Login_Page") {
                     LoginPage(navController, AuthViewModel())
                 }
 
-                composable("Create_Account_Page",){
+                // Create Account Page
+                composable("Create_Account_Page") {
                     CreateAccount(navController)
                 }
 
-                composable("Admin_Dash_Board"){
+                // Admin Dashboard
+                composable("Admin_Dash_Board") {
                     AdminDashBoard(navController)
                 }
 
-//                composable("Admin_Dash_Board/{result},")
-//                {backStackEntry ->
-//                    val result = backStackEntry.arguments?.getString("result") ?: ""
-//
-//                    AdminDashBoard(navController)
-//                }
-
+                // Student Enrollment
                 composable("Student_Enroll") {
                     EnrollStudent(navController)
                 }
 
+                // Staff Registration
                 composable("Register_Staff") {
                     RegisterStaff(navController)
                 }
-                composable("Mark_Attendance"){
+
+                // Mark Attendance
+                composable("Mark_Attendance") {
                     MarkAttendance(navController)
                 }
+
+                // All Students with Result Argument
                 composable("allStudents/{result}") { backStackEntry ->
                     val result = backStackEntry.arguments?.getString("result") ?: ""
                     AllStudents(result)
                 }
-
-
-
             }
-            )
-
         }
     }
 }
-
