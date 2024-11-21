@@ -6,9 +6,11 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -73,7 +75,19 @@ fun Staffs(navController: NavController) {
                     }
                 }
             )
-        }
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    navController.navigate("Register_Staff") // Navigate to Register Staff screen
+                },
+                containerColor = MaterialTheme.colorScheme.secondary,
+                contentColor = Color.White
+            ) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Add Staff")
+            }
+        },
+        floatingActionButtonPosition = FabPosition.End
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -101,7 +115,7 @@ fun Staffs(navController: NavController) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Total Staff Count
+            // Staff Count
             Text(
                 text = "Total Staffs: ${filteredStaffList.size}",
                 fontSize = 20.sp,
@@ -110,33 +124,16 @@ fun Staffs(navController: NavController) {
             )
 
             // Scrollable Content
-            Box(modifier = Modifier.weight(1f)) { // Allocate remaining space to LazyColumn
-                LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                    contentPadding = PaddingValues(bottom = 16.dp)
-                ) {
-                    items(filteredStaffList) { staff ->
-                        StaffCard(staff)
-                    }
-                }
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // "Add Staff" Button
-            Button(
-                onClick = {
-                    navController.navigate("Register_Staff") // Navigate to Register Staff screen
-                },
-                modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
+            LazyColumn(
+                modifier = Modifier
+                    .weight(1f) // Ensure it takes up remaining space
+                    .fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                contentPadding = PaddingValues(bottom = 16.dp)
             ) {
-                Text(
-                    text = "Add Staff",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
+                items(filteredStaffList) { staff ->
+                    StaffCard(staff)
+                }
             }
         }
     }
