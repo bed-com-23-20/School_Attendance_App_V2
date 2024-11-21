@@ -67,7 +67,8 @@ fun LoginPage(navController: NavController, viewModel: AuthViewModel<Any?>){
     var errorMessage by remember { mutableStateOf<String?>(null) }
     Scaffold(
         topBar = {
-            TopAppBarWithBack(navController = navController, title = "Mark Attendance",
+            TopAppBarWithBack(
+                navController = navController, title = "ADMIN LOGIN ",
                 backButtonColor = Color.Red,
                 backIconColor = Color.White
             )
@@ -82,18 +83,6 @@ fun LoginPage(navController: NavController, viewModel: AuthViewModel<Any?>){
             horizontalAlignment = Alignment.CenterHorizontally
 
         ) {
-            Text(
-                text = "ADMIN LOGIN PAGE",
-                fontSize = 28.sp,
-                fontFamily = FontFamily.Serif,
-                fontWeight = FontWeight.Bold,
-            )
-            Divider(
-                thickness = 1.dp,
-                color = Color.Black,
-                modifier = Modifier.padding(horizontal = 16.dp)
-            )
-            Spacer(modifier = Modifier.height(10.dp))
 
             Icon(
                 imageVector = ImageVector.vectorResource(id = R.drawable.adminloginvector),
@@ -259,5 +248,4 @@ fun LoginPage(navController: NavController, viewModel: AuthViewModel<Any?>){
         }
     }
 }
-
 

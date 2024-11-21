@@ -7,6 +7,7 @@ data class AdminInfo(val adminFullName : String,
                      val phoneNumber : Int,
                      val email : String,
                      val createPass : String,
-                     val confirmPass : String)
+                     val confirmPass : String) {
 
+}
 
