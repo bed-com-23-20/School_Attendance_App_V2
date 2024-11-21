@@ -10,7 +10,12 @@ import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopAppBarWithBack(navController: NavController, title: String) {
+fun TopAppBarWithBack(
+    navController: NavController,
+    title: String,
+    backButtonColor: Color,
+    backIconColor: Color
+) {
     TopAppBar(
         title = { Text(text = title, fontSize = 20.sp, color = Color.White) },
         navigationIcon = {

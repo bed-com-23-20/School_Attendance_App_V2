@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.gms.google.services)
     id("org.jetbrains.kotlin.plugin.compose") version "2.0.0"
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -23,6 +24,9 @@ android {
     }
 
     buildTypes {
+        debug {
+            isDebuggable = true
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -32,30 +36,39 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
     buildFeatures {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1" // This enables the Compose Compiler plugin
+        kotlinCompilerExtensionVersion = "1.5.1"
     }
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            // Add any required exclusions here
         }
     }
 }
 composeCompiler {
     reportsDestination = layout.buildDirectory.dir("compose_compiler")
-    //stabilityConfigurationFile = rootProject.layout.projectDirectory.file("stability_config.conf")
 }
 
 dependencies {
+    // Firebase BoM for consistent versions
+    implementation(platform("com.google.firebase:firebase-bom:32.2.2"))
+
+    // Firebase dependencies using the BoM
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-database-ktx")
+    implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.google.firebase:firebase-crashlytics-ktx")
+
+    // Compose and UI dependencies
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -64,34 +77,31 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.firebase.auth)
-    implementation("com.google.firebase:firebase-firestore:25.1.1")
-    implementation(platform("androidx.compose:compose-bom:2023.01.00"))
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.material3:material3")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-
 
     // Navigation dependencies
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
     implementation(libs.androidx.navigation.dynamic.features.fragment)
-    implementation(libs.firebase.crashlytics.buildtools)
-    implementation(libs.firebase.database.ktx)
-    implementation(libs.androidx.runtime.livedata)
-    androidTestImplementation(libs.androidx.navigation.testing)
-    implementation ("androidx.compose.material3:material3:1.2.0")
-    implementation ("androidx.navigation:navigation-compose:2.7.4")
 
+    // Security library
+    implementation("org.mindrot:jbcrypt:0.4")
 
+    // Testing dependencies
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
+    testImplementation("org.jetbrains.kotlin:kotlin-test:1.9.10")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.9.10")
+    testImplementation("org.mockito:mockito-core:5.5.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.0.0")
 
-    // Testing
-    testImplementation(libs.junit)
+    // Android Testing dependencies
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.5.1")
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
+    androidTestImplementation(libs.androidx.navigation.testing)
+
+    // Debug dependencies
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.5.1")
     debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
 }
