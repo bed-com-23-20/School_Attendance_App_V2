@@ -42,4 +42,3 @@ class AuthViewModel<DatabaseReference> : ViewModel() {
     }
 }
 
-

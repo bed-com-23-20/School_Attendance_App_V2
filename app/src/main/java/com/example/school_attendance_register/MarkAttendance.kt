@@ -52,10 +52,11 @@ fun MarkAttendance(navController: NavController) {
 
     Scaffold(
         topBar = {
-            TopAppBarWithBack(navController = navController, title = "Mark Attendance",
+            TopAppBarWithBack(
+                navController = navController, title = "MARK ATTENDANCE",
                 backButtonColor = Color.Red,
                 backIconColor = Color.White
-                )
+            )
         }
     ) {paddingValues ->
 
@@ -67,15 +68,6 @@ fun MarkAttendance(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            // Title
-            Text(
-                text = "MARK ATTENDANCE",
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = FontFamily.Serif
-            )
-
-            Spacer(modifier = Modifier.height(40.dp))
 
             // Student Code Input Field
             OutlinedTextField(
@@ -188,19 +180,20 @@ fun MarkAttendance(navController: NavController) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopAppBarWithBack(navController: NavController, title: String,
-                      backButtonColor: Color = MaterialTheme.colorScheme.primary, // Default color
-                      backIconColor: Color = Color.White
-                      ) {
+fun TopAppBarWithBack(
+    navController: NavController, title: String,
+    backButtonColor: Color = MaterialTheme.colorScheme.primary, // Default color
+    backIconColor: Color = Color.White
+) {
     TopAppBar(
         title = {
             Text(
                 text = title,
-                fontSize = 20.sp,
+                fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily.Serif,
 
-            )
+                )
         },
         navigationIcon = {
 //            Box(
@@ -221,6 +214,6 @@ fun TopAppBarWithBack(navController: NavController, title: String,
             }
         },
 
-    )
+        )
 
 }

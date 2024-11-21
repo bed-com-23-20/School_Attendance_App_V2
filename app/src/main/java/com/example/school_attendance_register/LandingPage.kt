@@ -78,7 +78,7 @@ fun LandingPage(navController: NavController){
         Spacer(modifier = Modifier.height(40.dp))
 
         Image(painter = painterResource(id = R.drawable.school), contentDescription = "Landing page Image",
-        modifier = Modifier.size(200.dp)
+            modifier = Modifier.size(200.dp)
             //.clip(CircleShape)
         )
 
@@ -103,7 +103,7 @@ fun LandingPage(navController: NavController){
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor  = Color.Black)
+            colors = ButtonDefaults.buttonColors(containerColor  = Color.Black)
 
 
         ) {
@@ -123,9 +123,9 @@ fun LandingPage(navController: NavController){
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor  = Color.Black)
+            colors = ButtonDefaults.buttonColors(containerColor  = Color.Black)
 
-            ) {
+        ) {
             Text(
                 text = "Mark Attendance",
                 fontSize = 20.sp,

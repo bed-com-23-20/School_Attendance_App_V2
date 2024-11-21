@@ -40,14 +40,6 @@ class MainActivity : ComponentActivity() {
                 composable("Admin_Dash_Board"){
                     AdminDashBoard(navController)
                 }
-
-//                composable("Admin_Dash_Board/{result},")
-//                {backStackEntry ->
-//                    val result = backStackEntry.arguments?.getString("result") ?: ""
-//
-//                    AdminDashBoard(navController)
-//                }
-
                 composable("Student_Enroll") {
                     EnrollStudent(navController)
                 }
@@ -60,14 +52,13 @@ class MainActivity : ComponentActivity() {
                 }
                 composable("allStudents/{result}") { backStackEntry ->
                     val result = backStackEntry.arguments?.getString("result") ?: ""
-                    AllStudents(result)
+                    AllStudents(result, navController)
                 }
-                composable("Student_Records") { StudentRecords(navController) }
-                composable("Staff_Records") { StaffRecords(navController) }
+
+
             }
             )
 
         }
     }
 }
-
