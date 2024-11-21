@@ -3,16 +3,14 @@ package com.example.school_attendance_register
 import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -27,6 +25,8 @@ import com.google.firebase.database.ValueEventListener
 @Composable
 fun Staffs(navController: NavController) {
     var staffList by remember { mutableStateOf(listOf<StaffInfo>()) }
+    var searchQuery by remember { mutableStateOf("") }
+    var filteredStaffList by remember { mutableStateOf(listOf<StaffInfo>()) }
 
     // Fetch staff data from Firebase
     LaunchedEffect(Unit) {
@@ -43,6 +43,7 @@ fun Staffs(navController: NavController) {
                     }
                 }
                 staffList = staffData
+                filteredStaffList = staffData
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -54,43 +55,132 @@ fun Staffs(navController: NavController) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Staffs", fontSize = 24.sp, fontWeight = FontWeight.Bold) },
+                title = {
+                    Text(
+                        "STAFFS",
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.White)
+                        Icon(
+                            Icons.Default.ArrowBack,
+                            contentDescription = "Back",
+                            tint = Color.Black
+                        )
                     }
-                },
-                //backgroundColor = MaterialTheme.colorScheme.primary
+                }
             )
         }
     ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
                 .padding(paddingValues)
                 .padding(16.dp)
         ) {
-            staffList.forEach { staff ->
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp)
-                        .clickable {
-                            Log.d("StaffClick", "Clicked on ${staff.name}")
-                        },
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+            // Search Field
+            OutlinedTextField(
+                value = searchQuery,
+                onValueChange = { query ->
+                    searchQuery = query
+                    filteredStaffList = if (query.isBlank()) {
+                        staffList
+                    } else {
+                        staffList.filter {
+                            it.name.contains(query, ignoreCase = true)
+                        }
+                    }
+                },
+                label = { Text("Search Staff by Name") },
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Total Staff Count
+            Text(
+                text = "Total Staffs: ${filteredStaffList.size}",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier.padding(bottom = 16.dp)
+            )
+
+            // Scrollable Content
+            Box(modifier = Modifier.weight(1f)) { // Allocate remaining space to LazyColumn
+                LazyColumn(
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    contentPadding = PaddingValues(bottom = 16.dp)
                 ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text("Name: ${staff.name}", fontSize = 18.sp, fontWeight = FontWeight.Bold)
-                        Text("Email: ${staff.email}", fontSize = 16.sp)
-                        Text("Phone: ${staff.phone}", fontSize = 16.sp)
-                        Text("Class: ${staff.className}", fontSize = 16.sp)
+                    items(filteredStaffList) { staff ->
+                        StaffCard(staff)
                     }
                 }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // "Add Staff" Button
+            Button(
+                onClick = {
+                    navController.navigate("Register_Staff") // Navigate to Register Staff screen
+                },
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
+            ) {
+                Text(
+                    text = "Add Staff",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
+                )
             }
         }
     }
 }
 
-
+@Composable
+fun StaffCard(staff: StaffInfo) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                Log.d("StaffClick", "Clicked on ${staff.name}")
+            },
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth()
+        ) {
+            Text(
+                text = "Name: ${staff.name}",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = "Email: ${staff.email}",
+                fontSize = 16.sp,
+                color = MaterialTheme.colorScheme.primary
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = "Phone: ${staff.phone}",
+                fontSize = 16.sp,
+                color = Color.Gray
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = "Class: ${staff.className}",
+                fontSize = 16.sp,
+                color = MaterialTheme.colorScheme.secondary
+            )
+        }
+    }
+}

@@ -1,44 +1,70 @@
 package com.example.school_attendance_register
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.OutlinedTextField
+import com.example.school_attendance_register.plastol_pages.data_classes.StaffInfo
+import com.google.firebase.database.FirebaseDatabase
 
-
-@Preview(showBackground = true)
 @Composable
 fun RegisterStaff(navController: NavController) {
-    // State variables for inputs
-    var name by remember { mutableStateOf(TextFieldValue("")) }
-    var email by remember { mutableStateOf(TextFieldValue("")) }
-    var phone by remember { mutableStateOf(TextFieldValue("")) }
-    var className by remember { mutableStateOf(TextFieldValue("")) }
-    var password by remember { mutableStateOf(TextFieldValue("")) } // Password state
+    // State variables for input fields
+    var name by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var phone by remember { mutableStateOf("") }
+    var className by remember { mutableStateOf("") }
 
-    // Column layout for input fields
+    val context = LocalContext.current
+    val database = FirebaseDatabase.getInstance()
+    val myStaff = database.getReference("Staff")
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.Start // Align elements to the start
+            .padding(16.dp)
     ) {
-        Text(text = "Register Staff", style = MaterialTheme.typography.headlineSmall)
+        // Top Row with Back Arrow and Title
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            IconButton(onClick = { navController.popBackStack() }) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "Back",
+                    tint = Color.Black
+                )
+            }
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(
+                text = "REGISTER STAFF",
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily.Serif
+            )
+        }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Name Input
-        TextField(
+        OutlinedTextField(
             value = name,
             onValueChange = { name = it },
             label = { Text("Name") },
@@ -47,8 +73,7 @@ fun RegisterStaff(navController: NavController) {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Email Input
-        TextField(
+        OutlinedTextField(
             value = email,
             onValueChange = { email = it },
             label = { Text("Email") },
@@ -57,8 +82,7 @@ fun RegisterStaff(navController: NavController) {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Phone Number Input
-        TextField(
+        OutlinedTextField(
             value = phone,
             onValueChange = { phone = it },
             label = { Text("Phone Number") },
@@ -67,8 +91,7 @@ fun RegisterStaff(navController: NavController) {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Class Input
-        TextField(
+        OutlinedTextField(
             value = className,
             onValueChange = { className = it },
             label = { Text("Class") },
@@ -77,57 +100,40 @@ fun RegisterStaff(navController: NavController) {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Password Input
-        TextField(
-            value = password,
-            onValueChange = { password = it },
-            label = { Text("Password") },
-            visualTransformation = PasswordVisualTransformation(), // Hides the password
-            modifier = Modifier.fillMaxWidth()
-        )
+        Button(
+            onClick = {
+                if (email.isEmpty() || name.isEmpty() || phone.isEmpty() || className.isEmpty()) {
+                    Toast.makeText(context, "The fields cannot be empty", Toast.LENGTH_SHORT).show()
+                } else {
+                    val staffInfo = StaffInfo(name, email, phone, className)
+
+                    myStaff.child(name).setValue(staffInfo).addOnSuccessListener {
+                        name = ""
+                        email = ""
+                        phone = ""
+                        className = ""
+                        Toast.makeText(context, "Staff added successfully", Toast.LENGTH_SHORT).show()
+                    }.addOnFailureListener { exception ->
+                        Toast.makeText(context, "Failed to add staff: ${exception.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            },
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
+        ) {
+            Text(text = "Register", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White)
+        }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Register Button
         Button(
             onClick = {
-                onRegister(name.text, email.text, phone.text, className.text, password.text) // Call registration with input values
+                navController.navigate("Staffs")
             },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
         ) {
-            Text(text = "Register")
-        }
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Back Button
-
-    }
-}
-
-fun onRegister(text: String, text1: String, text2: String, text3: String, text4: String) {
-    TODO("Not yet implemented")
-}
-
-@Composable
-fun RegistrationScreen(onRegister: (String, String, String, String, String) -> Unit) {
-    var name by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var phone by remember { mutableStateOf("") }
-    var className by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-
-    Column(modifier = Modifier.padding(16.dp)) {
-        TextField(value = name, onValueChange = { name = it }, label = { Text("Name") })
-        TextField(value = email, onValueChange = { email = it }, label = { Text("Email") })
-        TextField(value = phone, onValueChange = { phone = it }, label = { Text("Phone") })
-        TextField(value = className, onValueChange = { className = it }, label = { Text("Class Name") })
-        TextField(value = password, onValueChange = { password = it }, label = { Text("Password") }, visualTransformation = PasswordVisualTransformation())
-
-        Button(onClick = {
-            onRegister(name, email, phone, className, password) // Call registration with input values
-        }) {
-            Text("Register")
+            Text(text = "View Staff", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White)
         }
     }
 }

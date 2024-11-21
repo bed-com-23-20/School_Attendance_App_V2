@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
             val scrollState = rememberScrollState()
             //Calling the LandingPage function
             val navController = rememberNavController()
-            NavHost(navController = navController,  startDestination = "Staffs", builder = {
+            NavHost(navController = navController,  startDestination = "Register_Staff", builder = {
 
 
                 composable("Landing_Page"){
