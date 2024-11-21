@@ -10,15 +10,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.school_attendance_register.chikondi_pages.AdminDashBoard
-import com.example.school_attendance_register.chikondi_pages.EnrollStudent
-//import com.example.school_attendance_register.chikondi_pages.RegisterStaff
-//import com.example.school_attendance_register.owen_pages.MarkAttendance
-import com.example.school_attendance_register.plastol_pages.AllStudents
-import com.example.school_attendance_register.plastol_pages.AuthViewModel
-import com.example.school_attendance_register.plastol_pages.CreateAccount
-import com.example.school_attendance_register.plastol_pages.LandingPage
-import com.example.school_attendance_register.plastol_pages.LoginPage
 import com.google.firebase.FirebaseApp
 
 class MainActivity : ComponentActivity() {
@@ -46,12 +37,9 @@ class MainActivity : ComponentActivity() {
                     CreateAccount(navController)
                 }
 
-                composable("Admin_Dash_Board/{result},"){backStackEntry ->
-                    val result = backStackEntry.arguments?.getString("result") ?: ""
-
+                composable("Admin_Dash_Board"){
                     AdminDashBoard(navController)
                 }
-
                 composable("Student_Enroll") {
                     EnrollStudent(navController)
                 }
@@ -64,7 +52,7 @@ class MainActivity : ComponentActivity() {
                 }
                 composable("allStudents/{result}") { backStackEntry ->
                     val result = backStackEntry.arguments?.getString("result") ?: ""
-                    AllStudents(result)
+                    AllStudents(result, navController)
                 }
 
 
