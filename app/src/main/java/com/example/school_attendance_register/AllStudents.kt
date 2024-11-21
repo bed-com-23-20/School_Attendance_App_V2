@@ -16,10 +16,13 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -47,35 +50,55 @@ fun AllStudents(result: String, navController: NavController) {
     Scaffold(
         topBar = {
             TopAppBarWithBack(navController = navController, title = "ALL STUDENTS")
-        }
+        },
+
+                floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    navController.navigate("Student_Enroll")
+                },
+                containerColor = MaterialTheme.colorScheme.secondary,
+                contentColor = Color.White
+            ) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Add Student")
+
+            }
+        },
+        floatingActionButtonPosition = FabPosition.End
+
     ) { innerPadding ->
         var searchQuery by remember { mutableStateOf("") }
 
         // Parse student details from the result
-        val studentList = result.split("------------------------------------------------------------------------")
-            .filter { it.isNotBlank() }
-            .map { entry ->
-                val lines = entry.trim().split("\n")
-                val firstName = lines.getOrNull(0)?.substringAfter("First Name = ")?.trim() ?: ""
-                val surname = lines.getOrNull(1)?.substringAfter("Surname  = ")?.trim() ?: ""
-                val uniqueCode = lines.getOrNull(2)?.substringAfter("Unique Code  = ")?.trim() ?: ""
-                val guardianName = lines.getOrNull(3)?.substringAfter("Guardian Name = ")?.trim() ?: ""
-                val guardianContact = lines.getOrNull(4)?.substringAfter("Guardian Contact = ")?.trim() ?: ""
-                val classGrade = lines.getOrNull(5)?.substringAfter("Class = ")?.trim() ?: ""
-                val dob = lines.getOrNull(6)?.substringAfter("Date of Birth = ")?.trim() ?: ""
-                val gender = lines.getOrNull(7)?.substringAfter("Gender = ")?.trim() ?: ""
+        val studentList =
+            result.split("------------------------------------------------------------------------")
+                .filter { it.isNotBlank() }
+                .map { entry ->
+                    val lines = entry.trim().split("\n")
+                    val firstName =
+                        lines.getOrNull(0)?.substringAfter("First Name = ")?.trim() ?: ""
+                    val surname = lines.getOrNull(1)?.substringAfter("Surname  = ")?.trim() ?: ""
+                    val uniqueCode =
+                        lines.getOrNull(2)?.substringAfter("Unique Code  = ")?.trim() ?: ""
+                    val guardianName =
+                        lines.getOrNull(3)?.substringAfter("Guardian Name = ")?.trim() ?: ""
+                    val guardianContact =
+                        lines.getOrNull(4)?.substringAfter("Guardian Contact = ")?.trim() ?: ""
+                    val classGrade = lines.getOrNull(5)?.substringAfter("Class = ")?.trim() ?: ""
+                    val dob = lines.getOrNull(6)?.substringAfter("Date of Birth = ")?.trim() ?: ""
+                    val gender = lines.getOrNull(7)?.substringAfter("Gender = ")?.trim() ?: ""
 
-                StudentInfo(
-                    fname = firstName,
-                    sname = surname,
-                    uniqueId = uniqueCode,
-                    guardianName = guardianName,
-                    guardianPhone = guardianContact,
-                    classform = classGrade,
-                    dateOfBirth = dob,
-                    gender = gender
-                )
-            }
+                    StudentInfo(
+                        fname = firstName,
+                        sname = surname,
+                        uniqueId = uniqueCode,
+                        guardianName = guardianName,
+                        guardianPhone = guardianContact,
+                        classform = classGrade,
+                        dateOfBirth = dob,
+                        gender = gender
+                    )
+                }
 
         val filteredList = studentList.filter { student ->
             "${student.fname} ${student.sname}".contains(searchQuery, ignoreCase = true) ||
@@ -95,7 +118,11 @@ fun AllStudents(result: String, navController: NavController) {
                 onValueChange = { searchQuery = it },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 8.dp, start = 10.dp, end = 10.dp), // Minimize the gap below the search bar
+                    .padding(
+                        bottom = 8.dp,
+                        start = 10.dp,
+                        end = 10.dp
+                    ), // Minimize the gap below the search bar
                 label = { Text("Search by Name or ID") },
                 singleLine = true
             )
@@ -143,12 +170,36 @@ fun AllStudents(result: String, navController: NavController) {
                                 )
 
                                 // Display other student details
-                                Text("Unique Code: ${student.uniqueId}", style = MaterialTheme.typography.bodySmall, fontSize = 16.sp)
-                                Text("Guardian Name: ${student.guardianName}", style = MaterialTheme.typography.bodySmall, fontSize = 16.sp)
-                                Text("Guardian Contact: ${student.guardianPhone}", style = MaterialTheme.typography.bodySmall, fontSize = 16.sp)
-                                Text("Gender: ${student.gender}", style = MaterialTheme.typography.bodySmall, fontSize = 16.sp)
-                                Text("Date of Birth: ${student.dateOfBirth}", style = MaterialTheme.typography.bodySmall, fontSize = 16.sp)
-                                Text("Class: ${student.classform}", style = MaterialTheme.typography.bodySmall, fontSize = 16.sp)
+                                Text(
+                                    "Unique Code: ${student.uniqueId}",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    fontSize = 16.sp
+                                )
+                                Text(
+                                    "Guardian Name: ${student.guardianName}",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    fontSize = 16.sp
+                                )
+                                Text(
+                                    "Guardian Contact: ${student.guardianPhone}",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    fontSize = 16.sp
+                                )
+                                Text(
+                                    "Gender: ${student.gender}",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    fontSize = 16.sp
+                                )
+                                Text(
+                                    "Date of Birth: ${student.dateOfBirth}",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    fontSize = 16.sp
+                                )
+                                Text(
+                                    "Class: ${student.classform}",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    fontSize = 16.sp
+                                )
                             }
                         }
                     }
@@ -156,158 +207,4 @@ fun AllStudents(result: String, navController: NavController) {
             }
         }
     }
-
-//    Scaffold(
-//        topBar = {
-//            TopAppBarWithBack(navController = navController, title = " ALL STUDENTS")
-//        }
-//    ) { innerPadding ->
-//        var searchQuery by remember { mutableStateOf("") }
-//
-//        // Parse student details from result
-//        val studentList =
-//            result.split("------------------------------------------------------------------------")
-//                .filter { it.isNotBlank() }
-//                .map { entry ->
-//                    val lines = entry.trim().split("\n")
-//                    val firstName =
-//                        lines.getOrNull(0)?.substringAfter("First Name = ")?.trim() ?: ""
-//                    val surname = lines.getOrNull(1)?.substringAfter("Surname  = ")?.trim() ?: ""
-//                    val uniqueCode =
-//                        lines.getOrNull(2)?.substringAfter("Unique Code  = ")?.trim() ?: ""
-//                    val guardianName =
-//                        lines.getOrNull(3)?.substringAfter("Guardian Name = ")?.trim() ?: ""
-//                    val guardianContact =
-//                        lines.getOrNull(4)?.substringAfter("Guardian Contact = ")?.trim() ?: ""
-//                    val classGrade = lines.getOrNull(5)?.substringAfter("Class = ")?.trim() ?: ""
-//                    val dob = lines.getOrNull(6)?.substringAfter("Date of Birth = ")?.trim() ?: ""
-//                    val gender = lines.getOrNull(7)?.substringAfter("Gender = ")?.trim() ?: ""
-//
-//
-//                    StudentInfo(
-//                        fname = firstName,
-//                        sname = surname,
-//                        uniqueId = uniqueCode,
-//                        guardianName = guardianName,
-//                        guardianPhone = guardianContact,
-//                        classform = classGrade,
-//                        dateOfBirth = dob,
-//                        gender = gender
-//                    )
-//                }
-//
-//        val filteredList = studentList.filter { student ->
-//            "${student.fname} ${student.sname}".contains(searchQuery, ignoreCase = true) ||
-//                    student.uniqueId.contains(searchQuery, ignoreCase = true) ||
-//                    student.guardianName.contains(searchQuery, ignoreCase = true) ||
-//                    student.guardianPhone.contains(searchQuery, ignoreCase = true)
-//        }
-//        Column(
-//            modifier = Modifier
-//                .fillMaxSize()
-//                .padding(innerPadding)
-//        ) {
-//            // Search Bar
-//            OutlinedTextField(
-//                value = searchQuery,
-//                onValueChange = { searchQuery = it },
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(vertical = 4.dp),
-//                label = { Text("Search by Name or ID",) },
-//  //              modifier = Modifier
-////                    .fillMaxWidth()
-////                    .padding(vertical = 4.dp),
-//
-//                singleLine = true
-//            )
-//
-//
-//            if (studentList.isEmpty()) {
-//
-//                Box(
-//                    modifier = Modifier
-//                        .fillMaxSize()
-//                        .padding(innerPadding),
-//                    contentAlignment = Alignment.Center
-//                ) {
-//                    Text(
-//                        text = "No students found.",
-//                        style = MaterialTheme.typography.bodyLarge
-//                    )
-//                }
-//            } else {
-//
-//
-//                LazyColumn(
-//                    modifier = Modifier
-//                        .padding(innerPadding)
-//                        .padding(top = 8.dp),
-//                        //.padding(16.dp),
-//                    verticalArrangement = Arrangement.spacedBy(12.dp)
-//                ) {
-//                    items(filteredList) { student ->
-//                        Card(
-//                            modifier = Modifier
-//                                .fillMaxWidth()
-//                                .wrapContentHeight(),
-//                            elevation = CardDefaults.cardElevation(8.dp),
-//                            shape = MaterialTheme.shapes.medium,
-//                            colors = CardDefaults.cardColors(
-//                                containerColor = MaterialTheme.colorScheme.surface
-//                            )
-//                        ) {
-//                            Column(
-//                                modifier = Modifier
-//                                    .fillMaxWidth()
-//                                    .padding(16.dp),
-//                                verticalArrangement = Arrangement.spacedBy(8.dp)
-//                            ) {
-//                                // Display Student Full Name
-//                                Text(
-//                                    text = "${student.fname} ${student.sname}",
-//                                    style = MaterialTheme.typography.titleMedium,
-//                                    fontSize = 24.sp,
-//                                    color = MaterialTheme.colorScheme.onSurface
-//                                )
-//
-//                                // Display other student details
-//                                Text(
-//                                    "Unique Code: ${student.uniqueId}",
-//                                    style = MaterialTheme.typography.bodySmall,
-//                                    fontSize = 16.sp,
-//                                    fontWeight = FontWeight.Bold
-//                                )
-//                                Text(
-//                                    "Guardian Name: ${student.guardianName}",
-//                                    style = MaterialTheme.typography.bodySmall,
-//                                    fontSize = 16.sp
-//                                )
-//                                Text(
-//                                    "Guardian Contact: ${student.guardianPhone}",
-//                                    style = MaterialTheme.typography.bodySmall,
-//                                    fontSize = 16.sp
-//                                )
-//                                Text(
-//                                    "Gender: ${student.gender}",
-//                                    style = MaterialTheme.typography.bodySmall,
-//                                    fontSize = 16.sp
-//                                )
-//                                Text(
-//                                    "Date of Birth: ${student.dateOfBirth}",
-//                                    style = MaterialTheme.typography.bodySmall,
-//                                    fontSize = 16.sp
-//                                )
-//                                Text(
-//                                    "Class: ${student.classform}",
-//                                    style = MaterialTheme.typography.bodySmall,
-//                                    fontSize = 16.sp
-//                                )
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
 }
