@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
             val scrollState = rememberScrollState()
             //Calling the LandingPage function
             val navController = rememberNavController()
-            NavHost(navController = navController,  startDestination = "Landing_Page", builder = {
+            NavHost(navController = navController,  startDestination = "Admin_Dash_Board", builder = {
 
 
                 composable("Landing_Page"){
@@ -53,6 +53,9 @@ class MainActivity : ComponentActivity() {
                 composable("allStudents/{result}") { backStackEntry ->
                     val result = backStackEntry.arguments?.getString("result") ?: ""
                     AllStudents(result, navController)
+                }
+                composable("AllSTD"){
+                    AllSTD(navController)
                 }
 
 
