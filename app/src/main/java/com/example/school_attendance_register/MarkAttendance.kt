@@ -22,6 +22,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -53,12 +54,15 @@ fun MarkAttendance(navController: NavController) {
     Scaffold(
         topBar = {
             TopAppBarWithBack(
-                navController = navController, title = "MARK ATTENDANCE",
-                backButtonColor = Color.Red,
-                backIconColor = Color.White
-                )
+                navController = navController,
+                title = "MARK ATTENDANCE",
+                backgroundColor = Color.Red, // Set the background color for the top app bar
+                backIconColor = Color.White,
+                backButtonColor = Color.Red // Set the color for the back icon
+            )
         }
-    ) {paddingValues ->
+    )
+    {paddingValues ->
 
         Column(
             modifier = Modifier
@@ -181,10 +185,13 @@ fun MarkAttendance(navController: NavController) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopAppBarWithBack(
-    navController: NavController, title: String,
-    backButtonColor: Color = MaterialTheme.colorScheme.primary, // Default color
-    backIconColor: Color = Color.White
-                      ) {
+    navController: NavController,
+    title: String,
+    backgroundColor: Color = MaterialTheme.colorScheme.primary, // Background color for the entire top bar
+    backIconColor: Color = Color.White,
+    titleColor: Color = Color.White,
+    backButtonColor: Color
+) {
     TopAppBar(
         title = {
             Text(
@@ -192,28 +199,22 @@ fun TopAppBarWithBack(
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily.Serif,
-
+                color = titleColor // Set the title text color
             )
         },
         navigationIcon = {
-//            Box(
-//                modifier = Modifier
-//                    .size(40.dp)
-//                    .background(backButtonColor, shape = MaterialTheme.shapes.small)
-//                    .clickable { navController.popBackStack() }, // Back navigation
-//                contentAlignment = Alignment.Center
-//            ) {
             IconButton(onClick = {
                 navController.popBackStack() // Navigates back to the previous screen
             }) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Back"
+                    contentDescription = "Back",
+                    tint = backIconColor // Set the back arrow color
                 )
-
             }
         },
-
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = backgroundColor // Set the background color of the top app bar
+        )
     )
-
 }
