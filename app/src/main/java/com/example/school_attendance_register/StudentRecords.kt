@@ -21,14 +21,12 @@ import com.google.firebase.database.ValueEventListener
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 
-
 @Composable
 fun StudentRecords(navController: NavController) {
     val context = LocalContext.current
     val database = FirebaseDatabase.getInstance()
     val myRefStudent = database.getReference("Students")
 
-    // State for the student list
     var studentList by remember { mutableStateOf<List<StudentInfo>>(emptyList()) }
     var searchQuery by remember { mutableStateOf("") }
 
@@ -36,10 +34,8 @@ fun StudentRecords(navController: NavController) {
     LaunchedEffect(Unit) {
         myRefStudent.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val students = mutableListOf<StudentInfo>()
-                dataSnapshot.children.forEach { snapshot ->
-                    val student = snapshot.getValue(StudentInfo::class.java)
-                    student?.let { students.add(it) }
+                val students = dataSnapshot.children.mapNotNull { snapshot ->
+                    snapshot.getValue(StudentInfo::class.java)
                 }
                 studentList = students
             }
@@ -57,9 +53,7 @@ fun StudentRecords(navController: NavController) {
     }
 
     Scaffold(
-        topBar = {
-            TopAppBarWithBack(navController = navController, title = "Student Records")
-        }
+        topBar = { TopAppBarWithBack(navController = navController, title = "Student Records") }
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -87,16 +81,40 @@ fun StudentRecords(navController: NavController) {
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(8.dp)
-
+                                .padding(vertical = 8.dp)
                         ) {
-                            Column (modifier = Modifier.padding(16.dp)) {
-                                Text(text = "Name: ${student.fname} ${student.sname}")
-                                Text(text = "Guardian: ${student.guardianName}")
-                                Text(text = "Class: ${student.classform}")
-                                Text(text = "DOB: ${student.dateOfBirth}")
-                                Text(text = "Gender: ${student.gender}")
-                                Text(text = "ID: ${student.uniqueId}")
+                            Column(modifier = Modifier.padding(16.dp)) {
+                                Text(
+                                    text = "Name: ${student.fname} ${student.sname}",
+                                    style = MaterialTheme.typography.titleMedium,
+                                    color = Color.Black
+                                )
+                                Spacer(modifier = Modifier.height(8.dp))
+                                Text(
+                                    text = "Guardian: ${student.guardianName}",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = Color.DarkGray
+                                )
+                                Text(
+                                    text = "Class: ${student.classform}",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = Color.DarkGray
+                                )
+                                Text(
+                                    text = "DOB: ${student.dateOfBirth}",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = Color.DarkGray
+                                )
+                                Text(
+                                    text = "Gender: ${student.gender}",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = Color.DarkGray
+                                )
+                                Text(
+                                    text = "ID: ${student.uniqueId}",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = Color.DarkGray
+                                )
                             }
                         }
                     }
