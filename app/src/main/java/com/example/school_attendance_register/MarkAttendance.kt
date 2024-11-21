@@ -56,7 +56,7 @@ fun MarkAttendance(navController: NavController) {
                 navController = navController, title = "MARK ATTENDANCE",
                 backButtonColor = Color.Red,
                 backIconColor = Color.White
-            )
+                )
         }
     ) {paddingValues ->
 
@@ -184,7 +184,7 @@ fun TopAppBarWithBack(
     navController: NavController, title: String,
     backButtonColor: Color = MaterialTheme.colorScheme.primary, // Default color
     backIconColor: Color = Color.White
-) {
+                      ) {
     TopAppBar(
         title = {
             Text(
@@ -193,7 +193,7 @@ fun TopAppBarWithBack(
                 fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily.Serif,
 
-                )
+            )
         },
         navigationIcon = {
 //            Box(
@@ -214,6 +214,6 @@ fun TopAppBarWithBack(
             }
         },
 
-        )
+    )
 
 }
