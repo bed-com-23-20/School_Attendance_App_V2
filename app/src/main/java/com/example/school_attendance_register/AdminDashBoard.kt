@@ -119,7 +119,7 @@ fun AdminDashBoard(navController: NavController) {
                     containerColor = Color.Black, // Set the button's container color to black
                     contentColor = Color.White // Set the text color to white for contrast
                 ),
-                onClick = {},
+                onClick = { navController.navigate("ViewAttendace")},
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 8.dp) // Vertical padding for space between buttons

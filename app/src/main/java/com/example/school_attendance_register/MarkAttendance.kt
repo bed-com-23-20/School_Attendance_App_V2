@@ -143,8 +143,8 @@ fun MarkAttendance(navController: NavController) {
                                         attendanceRef.push().setValue(attendanceRecord)
                                             .addOnSuccessListener {
                                                 Toast.makeText(context, "Attendance saved successfully!", Toast.LENGTH_SHORT).show()
-                                                message = "$studentName has successfully marked present today"
-                                                navController.navigate("ViewAttendance/$studentName/$classGrade")
+                                                //message = "$studentName has successfully marked present today"
+                                                //navController.navigate("ViewAttendance/$studentName/$classGrade")
                                             }
                                     } else {
                                         Toast.makeText(
