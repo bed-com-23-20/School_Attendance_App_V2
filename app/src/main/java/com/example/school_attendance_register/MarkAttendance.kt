@@ -211,13 +211,13 @@ fun MarkAttendance(navController: NavController) {
                         },
                         confirmButton = {
                             TextButton(onClick = { navController.navigate("Landing_Page")}) {
-                                Text(text = "Exit", color = Color.Black)
+                                Text(text = "Exit")
                             }
                             TextButton(onClick = { navController.navigate("ViewAttendace") }) {
-                                Text(text = "View All", color = Color.Black)
+                                Text(text = "View All")
                             }
                             TextButton(onClick = { navController.navigate("Mark_Attendance") }) {
-                                Text(text = "Mark Another", color = Color.Black)
+                                Text(text = "Mark Another")
                             }
                         }
                     )

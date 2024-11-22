@@ -61,7 +61,11 @@ fun AdminDashBoard(navController: NavController) {
                     .fillMaxWidth()
                     .padding(vertical = 8.dp)
             ) {
-                Text(text = "Register Staff")
+                Text(text = "Register Staff",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = FontFamily.Serif
+                )
             }
 
             Button(

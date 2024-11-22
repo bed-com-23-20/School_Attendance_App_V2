@@ -190,7 +190,7 @@ fun EnrollStudent(navController: NavController) {
                         onClick = {
 
                             try {
-                                val randomNumber = Random.nextInt(100000, 1000000)
+                                val randomNumber = Random.nextInt(1000, 10000)
                                 val uniqueId =
                                     "${firstNameChar?.toUpperCase()}${surNameChar?.toUpperCase()}-$randomNumber-${classform.text}"
 
