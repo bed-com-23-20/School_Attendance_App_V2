@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -21,6 +22,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -44,6 +46,11 @@ fun MarkAttendance(navController: NavController) {
     // State to hold the student code input
     var studentCode by remember { mutableStateOf("") }
     var message by remember { mutableStateOf("") }
+
+    var showDialog by remember { mutableStateOf(false) }
+    var dialogStudentName by remember { mutableStateOf("") }
+    var dialogCodeId by remember { mutableStateOf("") }
+    var dialogContent by remember { mutableStateOf("") }
 
     //Firebase instances
     val database = FirebaseDatabase.getInstance()
@@ -145,6 +152,13 @@ fun MarkAttendance(navController: NavController) {
                                                 Toast.makeText(context, "Attendance saved successfully!", Toast.LENGTH_SHORT).show()
                                                 //message = "$studentName has successfully marked present today"
                                                 //navController.navigate("ViewAttendance/$studentName/$classGrade")
+
+
+                                                dialogStudentName = studentName
+                                                dialogCodeId = studentCode
+                                                showDialog = true
+
+                                                studentCode = ""
                                             }
                                     } else {
                                         Toast.makeText(
@@ -167,7 +181,9 @@ fun MarkAttendance(navController: NavController) {
 
 
 
+
                     },
+
                     modifier = Modifier.padding(horizontal = 8.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
                 ) {
@@ -178,6 +194,29 @@ fun MarkAttendance(navController: NavController) {
                         fontFamily = FontFamily.Serif
                     )
 
+                }
+                if (showDialog) {
+                    AlertDialog(
+                        onDismissRequest = { showDialog = false },
+                        title = { Text(text = "Attendance Marked")},
+                        text = {
+                            Column {
+                                Text(text = "Student Name: $dialogStudentName", fontSize = 16.sp)
+                                Text(text = "Code ID: $dialogCodeId", fontSize = 16.sp)
+                            }
+                        },
+                        confirmButton = {
+                            TextButton(onClick = { navController.navigate("Landing_Page")}) {
+                                Text(text = "Exit", color = Color.Black)
+                            }
+                            TextButton(onClick = { navController.navigate("ViewAttendace") }) {
+                                Text(text = "View All", color = Color.Black)
+                            }
+                            TextButton(onClick = { navController.navigate("Mark_Attendance") }) {
+                                Text(text = "Mark Another", color = Color.Black)
+                            }
+                        }
+                    )
                 }
             }
         }
