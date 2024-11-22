@@ -70,7 +70,7 @@ fun AdminDashBoard(navController: NavController) {
                     contentColor = Color.White // Set the text color to white for contrast
                 ),
                 onClick = {
-                    navController.navigate("")
+                    navController.navigate("ViewStaffs")
                 },
                 modifier = Modifier
                     .fillMaxWidth()

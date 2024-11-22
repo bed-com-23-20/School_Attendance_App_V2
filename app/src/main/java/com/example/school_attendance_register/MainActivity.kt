@@ -62,6 +62,10 @@ class MainActivity : ComponentActivity() {
                     ViewAllAttendance(navController)
                 }
 
+                composable("ViewStaffs") {
+                    Staffs(navController)
+                }
+
 //                composable("ViewAttendance/{studentName}/{classGrade}") { backStackEntry ->
 //                    val studentName = backStackEntry.arguments?.getString("studentName")
 //                    val classGrade = backStackEntry.arguments?.getString("classGrade")
