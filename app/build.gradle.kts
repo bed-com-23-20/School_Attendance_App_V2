@@ -51,6 +51,9 @@ android {
 }
 
 dependencies {
+    implementation ("androidx.compose.material3:material3:1.0.1") // Replace with the latest version
+    implementation ("androidx.compose.material:material-icons-core:1.5.0") // Replace with the latest version
+    implementation ("androidx.compose.material:material-icons-extended:1.5.0")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -65,6 +68,10 @@ dependencies {
     implementation(libs.firebase.crashlytics.buildtools)
     implementation(libs.androidx.runtime.livedata)
     implementation(libs.androidx.ui.test.android)
+    implementation(libs.androidx.transition)
+    implementation(libs.androidx.transition)
+    implementation(libs.androidx.transition)
+    implementation(libs.androidx.transition)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

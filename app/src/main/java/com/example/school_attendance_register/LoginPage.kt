@@ -2,6 +2,14 @@
 package com.example.school_attendance_register
 
 import android.util.Log
+//import androidx.compose.foundation.text.PasswordVisualTransformation
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
+
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -15,10 +23,12 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -39,6 +49,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -52,6 +63,7 @@ fun LoginPage(navController: NavController, viewModel: AuthViewModel<Any?>){
     var email by remember { mutableStateOf("") }
     var encodedEmail = encodeEmail(email)
     var password by remember { mutableStateOf("") }
+    var passwordVisible by remember { mutableStateOf(false) }
 
     var isEmailError by remember { mutableStateOf(false) }
     val emailPattern = Pattern.compile(
@@ -102,12 +114,12 @@ fun LoginPage(navController: NavController, viewModel: AuthViewModel<Any?>){
                 label = { Text("Username") },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 20.dp, end = 20.dp)
-                    .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(24.dp)
-                    ),
-                shape = RoundedCornerShape(24.dp),
+                    .padding(start = 20.dp, end = 20.dp),
+//                    .background(
+//                        color = Color.White,
+//                        shape = RoundedCornerShape(24.dp)
+//                    ),
+//                shape = RoundedCornerShape(24.dp),
                 isError = isEmailError
 
             )
@@ -122,19 +134,57 @@ fun LoginPage(navController: NavController, viewModel: AuthViewModel<Any?>){
 
             OutlinedTextField(
                 value = password,
-                visualTransformation = PasswordVisualTransformation(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 onValueChange = { password = it },
                 label = { Text("Password") },
-                modifier = Modifier
-                    .fillMaxWidth()
+                placeholder = { Text("Enter your password") },
+                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                trailingIcon = {
+                    val image = if (passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
+                    val description = if (passwordVisible) "Hide password" else "Show password"
+
+                    IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                        Icon(imageVector = image, contentDescription = description)
+                    }
+                },
+                modifier = Modifier.fillMaxWidth()
                     .padding(start = 20.dp, end = 20.dp)
-                    .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(24.dp)
-                    ),
-                shape = RoundedCornerShape(24.dp)
+
             )
+
+
+
+//            OutlinedTextField(
+//                value = password,
+//                onValueChange = { password = it },
+//                label = { Text("Password") },
+//                placeholder = { Text("Enter your password") },
+//                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+//                trailingIcon = {
+//                    val image = if (passwordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff
+//                    val description = if (passwordVisible) "Hide password" else "Show password"
+//
+//                    IconButton(onClick = { passwordVisible = !passwordVisible }) {
+//                        Icon(imageVector = image, contentDescription = description)
+//                    }
+//                },
+//                modifier = Modifier.fillMaxWidth()
+//            )
+
+//            OutlinedTextField(
+//                value = password,
+//                visualTransformation = PasswordVisualTransformation(),
+//                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+//                onValueChange = { password = it },
+//                label = { Text("Password") },
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(start = 20.dp, end = 20.dp)
+//                    .background(
+//                        color = Color.White,
+//                        shape = RoundedCornerShape(24.dp)
+//                    ),
+//                shape = RoundedCornerShape(24.dp)
+//            )
 
             Spacer(modifier = Modifier.height(15.dp))
 
