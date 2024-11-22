@@ -251,17 +251,11 @@ fun EnrollStudent(navController: NavController) {
                                         ID: ${studentInfo.uniqueId}
                                         Class: ${studentInfo.classform}
                                         Guardian: ${studentInfo.guardianName}
-                                        Contact: ${studentInfo.guardianPhone}
+                                        Guardian Contact: ${studentInfo.guardianPhone}
                                         DOB: ${studentInfo.dateOfBirth}
-                                        Gender: ${studentInfo.gender}
-                                        
-                                        
-                                        
-                                        
-                                        
+                                        Gender: ${studentInfo.gender}  
                                     """.trimIndent()
 
-//Surname: ${studentInfo.sname}
 
                                             val data = StringBuffer()
                                             myRefStudent.get().addOnSuccessListener { it1 ->

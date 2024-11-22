@@ -1,58 +1,65 @@
 package com.example.school_attendance_register
 
-import android.util.Log
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.Card
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.school_attendance_register.data_classes.StudentInfo
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.FirebaseDatabase
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AllStudents(result: String, navController: NavController) {
+fun AllStudents(navController: NavController) {
 
+    val database = FirebaseDatabase.getInstance()
+    val myRefStudent = database.getReference("Students")
+    val context = LocalContext.current
+
+    // State variables
+    var students by remember { mutableStateOf<List<StudentInfo>>(emptyList()) }
+    var searchQuery by remember { mutableStateOf("") }
 
     Scaffold(
         topBar = {
-            TopAppBarWithBack(navController = navController, title = "ALL STUDENTS")
+            TopAppBarWithBack(
+                navController = navController, title = "ALL STUDENT",
+                backIconColor = Color.White
+            )
         },
-
-                floatingActionButton = {
+        floatingActionButton = {
             FloatingActionButton(
                 onClick = {
                     navController.navigate("Student_Enroll")
@@ -65,146 +72,125 @@ fun AllStudents(result: String, navController: NavController) {
             }
         },
         floatingActionButtonPosition = FabPosition.End
+    ) { paddingValues ->
 
-    ) { innerPadding ->
-        var searchQuery by remember { mutableStateOf("") }
-
-        // Parse student details from the result
-        val studentList =
-            result.split("------------------------------------------------------------------------")
-                .filter { it.isNotBlank() }
-                .map { entry ->
-                    val lines = entry.trim().split("\n")
-                    val firstName =
-                        lines.getOrNull(0)?.substringAfter("First Name = ")?.trim() ?: ""
-                    val surname = lines.getOrNull(1)?.substringAfter("Surname  = ")?.trim() ?: ""
-                    val uniqueCode =
-                        lines.getOrNull(2)?.substringAfter("Unique Code  = ")?.trim() ?: ""
-                    val guardianName =
-                        lines.getOrNull(3)?.substringAfter("Guardian Name = ")?.trim() ?: ""
-                    val guardianContact =
-                        lines.getOrNull(4)?.substringAfter("Guardian Contact = ")?.trim() ?: ""
-                    val classGrade = lines.getOrNull(5)?.substringAfter("Class = ")?.trim() ?: ""
-                    val dob = lines.getOrNull(6)?.substringAfter("Date of Birth = ")?.trim() ?: ""
-                    val gender = lines.getOrNull(7)?.substringAfter("Gender = ")?.trim() ?: ""
-
-                    StudentInfo(
-                        fname = firstName,
-                        sname = surname,
-                        uniqueId = uniqueCode,
-                        guardianName = guardianName,
-                        guardianPhone = guardianContact,
-                        classform = classGrade,
-                        dateOfBirth = dob,
-                        gender = gender
-                    )
+        // Fetch data from Firebase
+        LaunchedEffect(Unit) {
+            myRefStudent.get()
+                .addOnSuccessListener { snapshot ->
+                    if (snapshot.exists()) {
+                        val fetchedStudents = snapshot.children.mapNotNull { it.toStudent() }
+                        students = fetchedStudents
+                    } else {
+                        Toast.makeText(context, "No Students found", Toast.LENGTH_SHORT).show()
+                    }
                 }
-
-        val filteredList = studentList.filter { student ->
-            "${student.fname} ${student.sname}".contains(searchQuery, ignoreCase = true) ||
-                    student.uniqueId.contains(searchQuery, ignoreCase = true) ||
-                    student.guardianName.contains(searchQuery, ignoreCase = true) ||
-                    student.guardianPhone.contains(searchQuery, ignoreCase = true)
+                .addOnFailureListener {
+                    Toast.makeText(
+                        context,
+                        "Failed to fetch students: ${it.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
         }
+
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding)
+                .padding(paddingValues)
+                .padding(16.dp)
         ) {
             // Search Bar
             OutlinedTextField(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        bottom = 8.dp,
-                        start = 10.dp,
-                        end = 10.dp
-                    ), // Minimize the gap below the search bar
-                label = { Text("Search by Name or ID") },
+                modifier = Modifier.fillMaxWidth()
+                    .padding(top = 0.dp),
+                label = { Text("Search Students") },
+                leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Search Icon") },
                 singleLine = true
             )
 
-            if (filteredList.isEmpty()) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "No students found.",
-                        style = MaterialTheme.typography.bodyLarge
-                    )
-                }
-            } else {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(horizontal = 16.dp), // Adjust horizontal padding
-                    verticalArrangement = Arrangement.spacedBy(12.dp) // Space between items
-                ) {
-                    items(filteredList) { student ->
-                        Card(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .wrapContentHeight(),
-                            elevation = CardDefaults.cardElevation(8.dp),
-                            shape = MaterialTheme.shapes.medium,
-                            colors = CardDefaults.cardColors(
-                                containerColor = MaterialTheme.colorScheme.surface
-                            )
-                        ) {
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(12.dp), // Adjust padding inside cards
-                                verticalArrangement = Arrangement.spacedBy(4.dp)
-                            ) {
-                                // Display Student Full Name
-                                Text(
-                                    text = "${student.fname} ${student.sname}",
-                                    style = MaterialTheme.typography.titleMedium,
-                                    fontSize = 20.sp,
-                                    color = MaterialTheme.colorScheme.onSurface
-                                )
+            Spacer(modifier = Modifier.height(8.dp))
 
-                                // Display other student details
-                                Text(
-                                    "Unique Code: ${student.uniqueId}",
-                                    style = MaterialTheme.typography.bodySmall,
-                                    fontSize = 16.sp
-                                )
-                                Text(
-                                    "Guardian Name: ${student.guardianName}",
-                                    style = MaterialTheme.typography.bodySmall,
-                                    fontSize = 16.sp
-                                )
-                                Text(
-                                    "Guardian Contact: ${student.guardianPhone}",
-                                    style = MaterialTheme.typography.bodySmall,
-                                    fontSize = 16.sp
-                                )
-                                Text(
-                                    "Gender: ${student.gender}",
-                                    style = MaterialTheme.typography.bodySmall,
-                                    fontSize = 16.sp
-                                )
-                                Text(
-                                    "Date of Birth: ${student.dateOfBirth}",
-                                    style = MaterialTheme.typography.bodySmall,
-                                    fontSize = 16.sp
-                                )
-                                Text(
-                                    "Class: ${student.classform}",
-                                    style = MaterialTheme.typography.bodySmall,
-                                    fontSize = 16.sp
-                                )
-                            }
-                        }
-                    }
+            // Scrollable List of Cards
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
+                val filteredStudents = students.filter {
+                    it.fname.contains(searchQuery, ignoreCase = true) ||
+                            it.sname.contains(searchQuery, ignoreCase = true)
+                }
+
+                items(filteredStudents) { student ->
+                    StudentCard(student, navController)
                 }
             }
         }
+
     }
-}
+    }
+
+    @Composable
+    fun StudentCard(student: StudentInfo, navController: NavController) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp)
+                .clickable { navController.navigate("viewStudent/${student.uniqueId}") },
+            elevation = CardDefaults.cardElevation(8.dp),
+            shape = RoundedCornerShape(8.dp)
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = "Full Name: ${student.fname} ${student.sname}",
+                    style = MaterialTheme.typography.bodySmall,
+                    fontSize = 20.sp
+                )
+                Text(
+                    "Student Code: ${student.uniqueId}",
+                    style = MaterialTheme.typography.bodySmall,
+                    fontSize = 16.sp
+                )
+                Text(
+                    text = "Guardian Name: ${student.guardianName}",
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontSize = 16.sp
+                )
+                Text(
+                    text = "Guardian Contact: ${student.guardianPhone}",
+                    style = MaterialTheme.typography.bodySmall,
+                    fontSize = 16.sp
+                )
+                Text(
+                    "Gender: ${student.gender}",
+                    style = MaterialTheme.typography.bodySmall,
+                    fontSize = 16.sp
+                )
+                Text(
+                    "Date of Birth: ${student.dateOfBirth}",
+                    style = MaterialTheme.typography.bodySmall,
+                    fontSize = 16.sp
+                )
+
+            }
+        }
+    }
+
+
+    // Extension function to parse a student from a Firebase snapshot
+    fun DataSnapshot.toStudent(): StudentInfo? {
+        return try {
+            StudentInfo(
+                fname = child("fname").value?.toString().orEmpty(),
+                sname = child("sname").value?.toString().orEmpty(),
+                uniqueId = child("uniqueId").value?.toString().orEmpty(),
+                guardianName = child("guardianName").value?.toString().orEmpty(),
+                guardianPhone = child("guardianPhone").value?.toString().orEmpty(),
+                classform = child("classform").value?.toString().orEmpty(),
+                dateOfBirth = child("dateOfBirth").value?.toString().orEmpty(),
+                gender = child("gender").value?.toString().orEmpty()
+            )
+        } catch (e: Exception) {
+            null // Return null if parsing fails
+        }
+    }

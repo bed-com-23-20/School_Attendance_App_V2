@@ -123,25 +123,29 @@ fun MarkAttendance(navController: NavController) {
                             myRefStudent.get()
                                 .addOnSuccessListener { snapshot ->
                                     var studentName: String? = null
+                                    var classGrade: String? = null
 
                                     for (child in snapshot.children) {
-                                        val codeId =
-                                            child.child("uniqueId").getValue(String::class.java)
+                                        val codeId = child.child("uniqueId").getValue(String::class.java)
                                         if (codeId == studentCode) {
-                                            studentName =
-                                                child.child("fullName").getValue(String::class.java)
+                                            studentName = child.child("fullName").getValue(String::class.java)
+                                            classGrade = child.child("classform").getValue(String::class.java)
                                             break
                                         }
                                     }
-                                    if (studentName != null) {
-                                        Toast.makeText(
-                                            context,
-                                            "Code exists! Student Name: $studentName",
-                                            Toast.LENGTH_LONG
-                                        ).show()
-                                        message =
-                                            "$studentName has successfully marked present today"
-                                        studentCode = ""
+                                    if (studentName != null && classGrade != null) {
+                                        val attendanceRef = database.getReference("Attendance")
+                                                                val attendanceRecord = mapOf(
+                                                                    "studentName" to studentName,
+                                                                    "classGrade" to classGrade,
+                                                                    "timestamp" to System.currentTimeMillis() // Optional for record keeping
+                                                                )
+                                        attendanceRef.push().setValue(attendanceRecord)
+                                            .addOnSuccessListener {
+                                                Toast.makeText(context, "Attendance saved successfully!", Toast.LENGTH_SHORT).show()
+                                                message = "$studentName has successfully marked present today"
+                                                navController.navigate("ViewAttendance/$studentName/$classGrade")
+                                            }
                                     } else {
                                         Toast.makeText(
                                             context,
@@ -158,7 +162,9 @@ fun MarkAttendance(navController: NavController) {
                                     ).show()
                                 }
 
+
                         }
+
 
 
                     },
@@ -182,7 +188,7 @@ fun MarkAttendance(navController: NavController) {
 @Composable
 fun TopAppBarWithBack(
     navController: NavController, title: String,
-    backButtonColor: Color = MaterialTheme.colorScheme.primary, // Default color
+    backButtonColor: Color = MaterialTheme.colorScheme.primary,
     backIconColor: Color = Color.White
                       ) {
     TopAppBar(
@@ -196,15 +202,9 @@ fun TopAppBarWithBack(
             )
         },
         navigationIcon = {
-//            Box(
-//                modifier = Modifier
-//                    .size(40.dp)
-//                    .background(backButtonColor, shape = MaterialTheme.shapes.small)
-//                    .clickable { navController.popBackStack() }, // Back navigation
-//                contentAlignment = Alignment.Center
-//            ) {
+
             IconButton(onClick = {
-                navController.popBackStack() // Navigates back to the previous screen
+                navController.popBackStack()
             }) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,

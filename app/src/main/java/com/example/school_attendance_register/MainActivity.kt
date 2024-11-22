@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
             val scrollState = rememberScrollState()
             //Calling the LandingPage function
             val navController = rememberNavController()
-            NavHost(navController = navController,  startDestination = "Admin_Dash_Board", builder = {
+            NavHost(navController = navController,  startDestination = "Landing_Page", builder = {
 
 
                 composable("Landing_Page"){
@@ -50,12 +50,18 @@ class MainActivity : ComponentActivity() {
                 composable("Mark_Attendance"){
                     MarkAttendance(navController)
                 }
-                composable("allStudents/{result}") { backStackEntry ->
-                    val result = backStackEntry.arguments?.getString("result") ?: ""
-                    AllStudents(result, navController)
-                }
+//                composable("allStudents/{result}") { backStackEntry ->
+//                    val result = backStackEntry.arguments?.getString("result") ?: ""
+//                    AllStudents(result, navController)
+//                }
                 composable("AllSTD"){
-                    AllSTD(navController)
+                    AllStudents(navController)
+                }
+
+                composable("ViewAttendance/{studentName}/{classGrade}") { backStackEntry ->
+                    val studentName = backStackEntry.arguments?.getString("studentName")
+                    val classGrade = backStackEntry.arguments?.getString("classGrade")
+                    ViewAttendance(studentName = studentName, classGrade = classGrade, navController)
                 }
 
 
