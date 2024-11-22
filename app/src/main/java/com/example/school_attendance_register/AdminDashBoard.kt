@@ -80,7 +80,11 @@ fun AdminDashBoard(navController: NavController) {
                     .fillMaxWidth()
                     .padding(vertical = 8.dp)
             ) {
-                Text(text = "View All Staffs")
+                Text(text = "View All Staffs",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = FontFamily.Serif
+                )
             }
 
 
@@ -98,7 +102,11 @@ fun AdminDashBoard(navController: NavController) {
                     .fillMaxWidth()
                     .padding(vertical = 8.dp)
             ) {
-                Text(text = "Enroll Student")
+                Text(text = "Enroll Student",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = FontFamily.Serif
+                    )
             }
 
             Button(
@@ -113,7 +121,11 @@ fun AdminDashBoard(navController: NavController) {
                     .fillMaxWidth()
                     .padding(vertical = 8.dp)
             ) {
-                Text(text = "View All Student")
+                Text(text = "View All Student",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = FontFamily.Serif
+                    )
             }
 
 
@@ -128,7 +140,11 @@ fun AdminDashBoard(navController: NavController) {
                     .fillMaxWidth()
                     .padding(vertical = 8.dp)
             ) {
-                Text(text = "View Attendance")
+                Text(text = "View Attendance",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = FontFamily.Serif
+                    )
             }
         }
 
