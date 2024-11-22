@@ -44,27 +44,6 @@ import com.google.firebase.database.FirebaseDatabase
 @Composable
 fun AllSTD(navController: NavController) {
 
-//    Scaffold(
-//        topBar = {
-//            TopAppBarWithBack(navController = navController, title = "ALL STUDENTS")
-//        },
-//
-//        floatingActionButton = {
-//            FloatingActionButton(
-//                onClick = {
-//                    navController.navigate("Student_Enroll")
-//                },
-//                containerColor = MaterialTheme.colorScheme.secondary,
-//                contentColor = Color.White
-//            ) {
-//                Icon(imageVector = Icons.Default.Add, contentDescription = "Add Student")
-//
-//            }
-//        },
-//        floatingActionButtonPosition = FabPosition.End
-//
-//    ) { innerPadding ->
-    // Firebase database reference
     val database = FirebaseDatabase.getInstance()
     val myRefStudent = database.getReference("Students")
     val context = LocalContext.current
@@ -79,7 +58,20 @@ fun AllSTD(navController: NavController) {
                 navController = navController, title = "ALL STUDENT",
                 backIconColor = Color.White
             )
-        }
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    navController.navigate("Student_Enroll")
+                },
+                containerColor = MaterialTheme.colorScheme.secondary,
+                contentColor = Color.White
+            ) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Add Student")
+
+            }
+        },
+        floatingActionButtonPosition = FabPosition.End
     ) { paddingValues ->
 
         // Fetch data from Firebase
@@ -102,7 +94,7 @@ fun AllSTD(navController: NavController) {
                 }
         }
 
-        // UI Layout
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -113,7 +105,8 @@ fun AllSTD(navController: NavController) {
             OutlinedTextField(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth()
+                    .padding(top = 0.dp),
                 label = { Text("Search Students") },
                 leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Search Icon") },
                 singleLine = true
@@ -201,367 +194,3 @@ fun AllSTD(navController: NavController) {
             null // Return null if parsing fails
         }
     }
-
-
-
-
-
-
-
-
-
-//    val database = FirebaseDatabase.getInstance()
-//    val myRefStudent = database.getReference("Students") //.child(encodeEmail).child("Students")
-//    val context = LocalContext.current
-//
-//    var result by remember { mutableStateOf("") }
-//    var check by remember { mutableStateOf<Boolean>(false) }
-//
-//    Column(
-//        modifier = Modifier
-//            .fillMaxSize()
-//            .padding(16.dp),
-//            //.padding(paddingValues),
-//        horizontalAlignment = Alignment.CenterHorizontally,
-//        verticalArrangement = Arrangement.Center
-//    ) {
-//
-//        val data = StringBuffer()
-//        myRefStudent.get().addOnSuccessListener { it1 ->
-//            if (it1.exists()) {
-//                it1.children.forEach {
-//                    data.append("\nFirst Name = " + it.child("fname").value)
-//                    data.append("\nSurname  = " + it.child("sname").value)
-//                    data.append("\nUnique Code  = " + it.child("uniqueId").value)
-//                    data.append("\nGuardian Name = " + it.child("guardianName").value)
-//                    data.append("\nGuardian Contact = " + it.child("guardianPhone").value)
-//                    data.append("\nClass = " + it.child("classform").value)
-//                    data.append("\nDate of Birth = " + it.child("dateOfBirth").value)
-//                    data.append("\nGender = " + it.child("gender").value)
-//                    data.append("\n------------------------------------------------------------------------")
-//                }
-//                check = true
-//                result = data.toString()
-//
-//                // navController.navigate("allStudents/$result")
-//            }
-//
-//        }.addOnFailureListener {
-//            Toast.makeText(
-//                context,
-//                "No Students found",
-//                Toast.LENGTH_SHORT
-//            ).show()
-//        }
-//
-//    }
-//    AnimatedVisibility(visible = check, Modifier.fillMaxWidth())
-//            {
-//                Text(text = result, fontSize = 15.sp, color = Color.Black)
-//            }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//                var studentList by remember { mutableStateOf(listOf<StudentInfo>()) }
-//                var searchQuery by remember { mutableStateOf("") }
-//                var filteredStudentList by remember { mutableStateOf(listOf<StudentInfo>()) }
-//
-//                // Fetch staff data from Firebase
-//                LaunchedEffect(Unit) {
-//                    val database = FirebaseDatabase.getInstance()
-//                    val myRefStudent = database.getReference("Students")
-//
-//                    myRefStudent.addValueEventListener(object : ValueEventListener {
-//                        override fun onDataChange(snapshot: DataSnapshot) {
-//                            val studentData = mutableListOf<StudentInfo>()
-//                            snapshot.children.forEach { child ->
-//                                val student = child.getValue(StudentInfo::class.java)
-//                                if (student != null) {
-//                                    studentData.add(student)
-//                                }
-//                            }
-//                            studentList = studentData
-//                            filteredStudentList = studentData
-//                        }
-//
-//                        override fun onCancelled(error: DatabaseError) {
-//                            Log.e("FirebaseError", "Failed to fetch staff: ${error.message}")
-//                        }
-//                    })
-//                }
-//
-//                Scaffold(
-//                    topBar = {
-//                        TopAppBar(
-//                            title = {
-//                                Text(
-//                                    "STAFFS",
-//                                    fontSize = 24.sp,
-//                                    fontWeight = FontWeight.Bold,
-//                                    color = Color.Black
-//                                )
-//                            },
-//                            navigationIcon = {
-//                                IconButton(onClick = { navController.popBackStack() }) {
-//                                    Icon(
-//                                        Icons.Default.ArrowBack,
-//                                        contentDescription = "Back",
-//                                        tint = Color.Black
-//                                    )
-//                                }
-//                            }
-//                        )
-//                    },
-//                    floatingActionButton = {
-//
-//                        FloatingActionButton(
-//                            onClick = {
-//                                navController.navigate("Register_Staff") // Navigate to Register Staff screen
-//                            },
-//                            containerColor = MaterialTheme.colorScheme.secondary,
-//                            contentColor = Color.White
-//                        ) {
-//                            Icon(imageVector = Icons.Default.Add, contentDescription = "Add Staff")
-//                        }
-//                    },
-//                    floatingActionButtonPosition = FabPosition.End
-//                ) { paddingValues ->
-//                    Column(
-//                        modifier = Modifier
-//                            .fillMaxSize()
-//                            .padding(paddingValues)
-//                            .padding(16.dp)
-//                    ) {
-//                        // Search Field
-//                        OutlinedTextField(
-//                            value = searchQuery,
-//                            onValueChange = { query ->
-//                                searchQuery = query
-//                                filteredStudentList = if (query.isBlank()) {
-//                                    studentList
-//                                } else {
-//                                    studentList.filter {
-//                                        it.fname.contains(query, ignoreCase = true)
-//                                    }
-//                                }
-//                            },
-//                            label = { Text("Search Staff by Name") },
-//                            modifier = Modifier.fillMaxWidth(),
-//                            singleLine = true
-//                        )
-//
-//                        Spacer(modifier = Modifier.height(16.dp))
-//
-//                        // Staff Count
-//                        Text(
-//                            text = "Total Staffs: ${filteredStudentList.size}",
-//                            fontSize = 20.sp,
-//                            fontWeight = FontWeight.SemiBold,
-//                            modifier = Modifier.padding(bottom = 16.dp)
-//                        )
-//
-//                        // Scrollable Content
-//                        LazyColumn(
-//                            modifier = Modifier
-//                                .weight(1f) // Ensure it takes up remaining space
-//                                .fillMaxWidth(),
-//                            verticalArrangement = Arrangement.spacedBy(8.dp),
-//                            contentPadding = PaddingValues(bottom = 16.dp)
-//                        ) {
-//                            items(filteredStudentList) { student ->
-//                                StudentCard(student)
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//
-//    @Composable
-//    fun StudentCard(student: StudentInfo) {
-//        Card(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .clickable {
-//                    Log.d("StaffClick", "Clicked on ${student.fname}")
-//                },
-//            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-//            elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp)
-//        ) {
-//            Column(
-//                modifier = Modifier
-//                    .padding(16.dp)
-//                    .fillMaxWidth()
-//            ) {
-//                Text(
-//                    text = "Fist Name: ${student.fname }",
-//                    fontSize = 18.sp,
-//                    fontWeight = FontWeight.Bold
-//                )
-//
-//                Spacer(modifier = Modifier.height(4.dp))
-//                Text(
-//                    text = "Surname: ${student.sname}",
-//                    fontSize = 16.sp,
-//                    color = MaterialTheme.colorScheme.primary
-//                )
-//                Spacer(modifier = Modifier.height(4.dp))
-//                Text(
-//                    text = "ID: ${student.uniqueId}",
-//                    fontSize = 16.sp,
-//                    color = Color.Gray
-//                )
-//                Spacer(modifier = Modifier.height(4.dp))
-//                Text(
-//                    text = "Class: ${student.classform}",
-//                    fontSize = 16.sp,
-//                    color = MaterialTheme.colorScheme.secondary
-//                )
-//                Spacer(modifier = Modifier.height(4.dp))
-//                Text(
-//                    text = "Parent Name: ${student.guardianName}",
-//                    fontSize = 16.sp,
-//                    color = MaterialTheme.colorScheme.secondary
-//                )
-//                Spacer(modifier = Modifier.height(4.dp))
-//                Text(
-//                    text = "Parent Number: ${student.guardianPhone}",
-//                    fontSize = 16.sp,
-//                    color = MaterialTheme.colorScheme.secondary
-//                )
-//                Spacer(modifier = Modifier.height(4.dp))
-//                Text(
-//                    text = "Date of Birth: ${student.dateOfBirth}",
-//                    fontSize = 16.sp,
-//                    color = MaterialTheme.colorScheme.secondary
-//                )
-//                Spacer(modifier = Modifier.height(4.dp))
-//                Text(
-//                    text = "Gender: ${student.gender}",
-//                    fontSize = 16.sp,
-//                    color = MaterialTheme.colorScheme.secondary
-//                )
-//            }
-//        }
-//    }
-//    val students = remember { mutableStateOf<List<StudentInfo>>(emptyList()) }
-//
-//    // Fetch data from Firebase
-//    LaunchedEffect(Unit) {
-//        fetchAllStudents { fetchedStudents ->
-//            students.value = fetchedStudents
-//        }
-//    }
-//
-//    Scaffold(
-//        topBar = {
-//            TopAppBarWithBack(navController = navController, title = "All Students")
-//        }
-//    ) { innerPadding ->
-//        Column(
-//            modifier = Modifier
-//                .fillMaxSize()
-//                .padding(innerPadding)
-//        ) {
-//            if (students.value.isEmpty()) {
-//                // Show a loading or empty message
-//                Box(
-//                    modifier = Modifier.fillMaxSize(),
-//                    contentAlignment = Alignment.Center
-//                ) {
-//                    Text("No students found.")
-//                }
-//            } else {
-//                // Show list of students
-//                LazyColumn(
-//                    modifier = Modifier
-//                        .fillMaxSize()
-//                        .padding(16.dp),
-//                    verticalArrangement = Arrangement.spacedBy(12.dp)
-//                ) {
-//                    items(students.value) { student ->
-//                        Card(
-//                            modifier = Modifier
-//                                .fillMaxWidth()
-//                                .wrapContentHeight(),
-//                            elevation = CardDefaults.cardElevation(8.dp),
-//                            shape = MaterialTheme.shapes.medium,
-//                            colors = CardDefaults.cardColors(
-//                                containerColor = MaterialTheme.colorScheme.surface
-//                            )
-//                        ) {
-//                            Column(
-//                                modifier = Modifier
-//                                    .fillMaxWidth()
-//                                    .padding(16.dp),
-//                                verticalArrangement = Arrangement.spacedBy(8.dp)
-//                            ) {
-//                                Text(
-//                                    text = "${student.fname} ${student.sname}",
-//                                    style = MaterialTheme.typography.titleMedium,
-//                                    color = MaterialTheme.colorScheme.onSurface
-//                                )
-//                                Text("Unique Code: ${student.uniqueId}")
-//                                Text("Guardian Name: ${student.guardianName}")
-//                                Text("Guardian Contact: ${student.guardianPhone}")
-//                                Text("Gender: ${student.gender}")
-//                                Text("Date of Birth: ${student.dateOfBirth}")
-//                                Text("Class: ${student.classform}")
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
-//}
-
-// Function to fetch all students from Firebase
-//fun fetchAllStudents(onResult: (List<StudentInfo>) -> Unit) {
-//    val database = Firebase.database
-//    val studentRef = database.getReference("Students")
-//
-//    studentRef.get().addOnCompleteListener { task ->
-//        if (task.isSuccessful) {
-//            val snapshot = task.result
-//            val studentList = mutableListOf<StudentInfo>()
-//            snapshot?.children?.forEach { studentSnapshot ->
-//                val student = studentSnapshot.getValue(StudentInfo::class.java)
-//                if (student != null) {
-//                    studentList.add(student)
-//                }
-//            }
-//            onResult(studentList)
-//        } else {
-//            Log.e("FirebaseError", "Error fetching students", task.exception)
-//        }
-//    }
-//}

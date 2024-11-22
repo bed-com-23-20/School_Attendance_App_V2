@@ -40,6 +40,8 @@ fun EnrollStudent(navController: NavController) {
     val database = FirebaseDatabase.getInstance()
     val myRefStudent = database.getReference("Students") //.child(encodeEmail).child("Students")
     val context = LocalContext.current
+    var showDialog by remember { mutableStateOf(false) }
+    var dialogContent by remember { mutableStateOf("") }
 
     var result by remember { mutableStateOf("") }
     var check by remember { mutableStateOf<Boolean>(false) }
@@ -242,7 +244,20 @@ fun EnrollStudent(navController: NavController) {
                                             ).show()
                                             //navController.navigate("Admin_Dash_Board")
                                             Log.d("Successful", "Student info saved successfully")
-                                            //Displaying the Students Data
+
+                                            showDialog = true
+                                            dialogContent = """
+                                        First Name: ${studentInfo.fname}
+                                        Surname: ${studentInfo.sname}
+                                        Guardian: ${studentInfo.guardianName}
+                                        Contact: ${studentInfo.guardianPhone}
+                                        Class: ${studentInfo.classform}
+                                        DOB: ${studentInfo.dateOfBirth}
+                                        Gender: ${studentInfo.gender}
+                                        ID: ${studentInfo.uniqueId}
+                                    """.trimIndent()
+
+
 
                                             val data = StringBuffer()
                                             myRefStudent.get().addOnSuccessListener { it1 ->
@@ -261,8 +276,9 @@ fun EnrollStudent(navController: NavController) {
                                                     check = true
                                                     result = data.toString()
 
-                                                    navController.navigate("allStudents/$result")
+                                                    //navController.navigate("allStudents/$result")
                                                 }
+
 
                                             }.addOnFailureListener {
                                                 Toast.makeText(
@@ -271,6 +287,7 @@ fun EnrollStudent(navController: NavController) {
                                                     Toast.LENGTH_SHORT
                                                 ).show()
                                             }
+
 
 
                                         }.addOnFailureListener { e ->
@@ -296,17 +313,28 @@ fun EnrollStudent(navController: NavController) {
                                 }
 
 
+
+
                             } catch (e: Exception) {
                                 Log.d("FirebaseError", "Error saving student info: ${e.message}")
                             }
 
 
+
+
+
                         },
+
                         colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
 
 
+
+
                         modifier = Modifier.fillMaxWidth()
-                    ) {
+                    )
+
+
+                    {
                         Text("Submit")
                     }
 
@@ -317,6 +345,25 @@ fun EnrollStudent(navController: NavController) {
 //            {
 //                Text(text = result, fontSize = 15.sp, color = Color.Black)
 //            }
+
+            }
+            if (showDialog) {
+                AlertDialog(
+                    onDismissRequest = { showDialog = false },
+                    title = { Text(text = "Student Details") },
+                    text = { Text(text = dialogContent) },
+                    confirmButton = {
+                        TextButton(onClick = { navController.navigate("Admin_Dash_Board")}) {
+                            Text("Exit")
+                        }
+                        TextButton(onClick = { navController.navigate("AllSTD") }) {
+                            Text("View All")
+                        }
+                        TextButton(onClick = { navController.navigate("Student_Enroll") }) {
+                            Text("Enroll Another")
+                        }
+                    }
+                )
             }
         }
     }
