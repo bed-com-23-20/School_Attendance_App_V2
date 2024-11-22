@@ -55,7 +55,11 @@ fun ViewAllAttendance(navController: NavController) {
             for (child in snapshot.children) {
                 val studentName = child.child("studentName").getValue(String::class.java) ?: ""
                 val classGrade = child.child("classGrade").getValue(String::class.java) ?: ""
-                fetchedList.add(mapOf("studentName" to studentName, "classGrade" to classGrade))
+
+                if (studentName.isNotEmpty() && classGrade.isNotEmpty()) {
+                    fetchedList.add(mapOf("studentName" to studentName, "classGrade" to classGrade))
+                }
+                //fetchedList.add(mapOf("studentName" to studentName, "classGrade" to classGrade))
             }
             attendanceList = fetchedList
         }.addOnFailureListener { exception ->
@@ -66,7 +70,7 @@ fun ViewAllAttendance(navController: NavController) {
     Scaffold(
         topBar = {
             TopAppBarWithBack(
-                navController = navController, title = "   ADMIN",
+                navController = navController, title = "ATTENDANCE",
                 backButtonColor = Color.Red,
                 backIconColor = Color.White
             )
@@ -81,7 +85,7 @@ fun ViewAllAttendance(navController: NavController) {
             OutlinedTextField(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
-                label = { Text("Search by Student Name") },
+                label = { Text("Search by Name or class. eg 3") },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
@@ -91,10 +95,11 @@ fun ViewAllAttendance(navController: NavController) {
 
             // Filtered list based on search query
             val filteredList = attendanceList.filter {
-                it["studentName"]?.contains(searchQuery, ignoreCase = true) == true
+                it["studentName"]?.contains(searchQuery, ignoreCase = true) == true ||
+                        it["classGrade"]?.contains(searchQuery, ignoreCase = true) == true
             }
 
-            // Scrollable List
+
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(filteredList) { student ->
                     AttendanceCard(studentName = student["studentName"] ?: "", classGrade = student["classGrade"] ?: "")
@@ -122,46 +127,3 @@ fun AttendanceCard(studentName: String, classGrade: String) {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-//fun ViewAttendance(studentName: String?, classGrade: String?, navController: NavController) {
-//    Scaffold(
-//        topBar = {
-//            TopAppBarWithBack(
-//                navController = navController, title = "VIEW ATTENDANCE ",
-//                backButtonColor = Color.Red,
-//                backIconColor = Color.White
-//            )
-//        }
-//    )  { paddingValues ->
-//        Column(
-//            modifier = Modifier
-//                .fillMaxSize()
-//                .padding(16.dp)
-//                .padding(paddingValues),
-//            horizontalAlignment = Alignment.CenterHorizontally,
-//            verticalArrangement = Arrangement.Center
-//        ) {
-//            Text(
-//                text = "Student Name: ${studentName ?: "Unknown"}",
-//                fontSize = 20.sp,
-//                fontWeight = FontWeight.Bold
-//            )
-//            Spacer(modifier = Modifier.height(16.dp))
-//            Text(
-//                text = "Class Grade: ${classGrade ?: "Unknown"}",
-//                fontSize = 20.sp,
-//                fontWeight = FontWeight.Bold
-//            )
-//        }
-//    }
-//}
