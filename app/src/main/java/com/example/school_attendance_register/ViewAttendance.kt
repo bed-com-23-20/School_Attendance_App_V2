@@ -68,7 +68,7 @@ fun ViewAllAttendance(navController: NavController) {
                 groupedData[date] = records
             }
             groupedAttendance = groupedData
-            filteredGroupedAttendance = groupedData // Initialize filtered data
+            filteredGroupedAttendance = groupedData
         }.addOnFailureListener { exception ->
             Toast.makeText(context, "Failed to load data: ${exception.message}", Toast.LENGTH_SHORT).show()
         }
@@ -109,7 +109,8 @@ fun ViewAllAttendance(navController: NavController) {
             OutlinedTextField(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
-                label = { Text("Search by Name or Class Grade") },
+                label = { Text("Search Student") },
+                placeholder = {Text("Search by Name or Class Grade e.g 3")},
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 8.dp) // Reduced vertical padding
@@ -148,7 +149,7 @@ fun AttendanceCard(studentName: String, classGrade: String) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 4.dp), // Adjusted padding for compactness
+            .padding(horizontal = 16.dp, vertical = 4.dp),
         elevation = CardDefaults.cardElevation(4.dp),
         shape = RoundedCornerShape(8.dp)
     ) {

@@ -116,11 +116,6 @@ fun LoginPage(navController: NavController, viewModel: AuthViewModel<Any?>){
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 20.dp, end = 20.dp),
-//                    .background(
-//                        color = Color.White,
-//                        shape = RoundedCornerShape(24.dp)
-//                    ),
-//                shape = RoundedCornerShape(24.dp),
                 isError = isEmailError
 
             )
@@ -152,41 +147,6 @@ fun LoginPage(navController: NavController, viewModel: AuthViewModel<Any?>){
                     .padding(start = 20.dp, end = 20.dp)
 
             )
-
-
-
-//            OutlinedTextField(
-//                value = password,
-//                onValueChange = { password = it },
-//                label = { Text("Password") },
-//                placeholder = { Text("Enter your password") },
-//                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-//                trailingIcon = {
-//                    val image = if (passwordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff
-//                    val description = if (passwordVisible) "Hide password" else "Show password"
-//
-//                    IconButton(onClick = { passwordVisible = !passwordVisible }) {
-//                        Icon(imageVector = image, contentDescription = description)
-//                    }
-//                },
-//                modifier = Modifier.fillMaxWidth()
-//            )
-
-//            OutlinedTextField(
-//                value = password,
-//                visualTransformation = PasswordVisualTransformation(),
-//                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-//                onValueChange = { password = it },
-//                label = { Text("Password") },
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(start = 20.dp, end = 20.dp)
-//                    .background(
-//                        color = Color.White,
-//                        shape = RoundedCornerShape(24.dp)
-//                    ),
-//                shape = RoundedCornerShape(24.dp)
-//            )
 
             Spacer(modifier = Modifier.height(15.dp))
 

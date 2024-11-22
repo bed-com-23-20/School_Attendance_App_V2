@@ -46,7 +46,7 @@ import java.util.Locale
 @SuppressLint("SuspiciousIndentation")
 @Composable
 fun MarkAttendance(navController: NavController) {
-    // State to hold the student code input
+
     var studentCode by remember { mutableStateOf("") }
     var message by remember { mutableStateOf("") }
 
@@ -149,14 +149,11 @@ fun MarkAttendance(navController: NavController) {
                                                                 val attendanceRecord = mapOf(
                                                                     "studentName" to studentName,
                                                                     "classGrade" to classGrade,
-                                                                    "timestamp" to System.currentTimeMillis() // Optional for record keeping
+                                                                    "timestamp" to System.currentTimeMillis()
                                                                 )
                                         attendanceRef.push().setValue(attendanceRecord)
                                             .addOnSuccessListener {
                                                 Toast.makeText(context, "Attendance saved successfully!", Toast.LENGTH_SHORT).show()
-                                                //message = "$studentName has successfully marked present today"
-                                                //navController.navigate("ViewAttendance/$studentName/$classGrade")
-
 
                                                 dialogStudentName = studentName
                                                 dialogCodeId = studentCode
