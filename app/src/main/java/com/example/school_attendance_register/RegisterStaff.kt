@@ -3,6 +3,7 @@ package com.example.school_attendance_register
 import com.example.school_attendance_register.data_classes.StaffInfo
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -20,9 +21,11 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-
+import androidx.compose.ui.text.input.KeyboardType
 import com.google.firebase.database.FirebaseDatabase
+import java.util.regex.Pattern
 
 @Composable
 fun RegisterStaff(navController: NavController) {
@@ -35,6 +38,11 @@ fun RegisterStaff(navController: NavController) {
     val context = LocalContext.current
     val database = FirebaseDatabase.getInstance()
     val myStaff = database.getReference("Staff")
+
+    var isEmailError by remember { mutableStateOf(false) }
+    val emailPattern = Pattern.compile(
+        "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"
+    )
 
     Column(
         modifier = Modifier
@@ -56,6 +64,8 @@ fun RegisterStaff(navController: NavController) {
             Spacer(modifier = Modifier.width(8.dp))
             Text(
                 text = "REGISTER STAFF",
+                modifier = Modifier
+                    .padding(top = 10.dp),
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily.Serif
@@ -75,10 +85,22 @@ fun RegisterStaff(navController: NavController) {
 
         OutlinedTextField(
             value = email,
-            onValueChange = { email = it },
+            onValueChange = { input ->
+                email = input
+                isEmailError = !emailPattern.matcher(input).matches()
+                            },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             label = { Text("Email") },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+
+                    isError = isEmailError
         )
+        if (isEmailError) {
+            Text(
+                text = "Please enter a valid email address",
+                color = MaterialTheme.colorScheme.error
+            )
+        }
 
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -86,6 +108,7 @@ fun RegisterStaff(navController: NavController) {
             value = phone,
             onValueChange = { phone = it },
             label = { Text("Phone Number") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -95,6 +118,7 @@ fun RegisterStaff(navController: NavController) {
             value = className,
             onValueChange = { className = it },
             label = { Text("Class") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -128,12 +152,12 @@ fun RegisterStaff(navController: NavController) {
 
         Button(
             onClick = {
-                navController.navigate("Staffs")
+                navController.navigate("ViewStaffs")
             },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
         ) {
-            Text(text = "View Staff", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White)
+            Text(text = "View All", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White)
         }
     }
 }
