@@ -247,17 +247,21 @@ fun EnrollStudent(navController: NavController) {
 
                                             showDialog = true
                                             dialogContent = """
-                                        First Name: ${studentInfo.fname}
-                                        Surname: ${studentInfo.sname}
+                                        Full Name: ${studentInfo.fname} ${studentInfo.sname} 
+                                        ID: ${studentInfo.uniqueId}
+                                        Class: ${studentInfo.classform}
                                         Guardian: ${studentInfo.guardianName}
                                         Contact: ${studentInfo.guardianPhone}
-                                        Class: ${studentInfo.classform}
                                         DOB: ${studentInfo.dateOfBirth}
                                         Gender: ${studentInfo.gender}
-                                        ID: ${studentInfo.uniqueId}
+                                        
+                                        
+                                        
+                                        
+                                        
                                     """.trimIndent()
 
-
+//Surname: ${studentInfo.sname}
 
                                             val data = StringBuffer()
                                             myRefStudent.get().addOnSuccessListener { it1 ->
