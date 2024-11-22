@@ -106,13 +106,13 @@ fun AdminDashBoard(navController: NavController) {
                     contentColor = Color.White // Set the text color to white for contrast
                 ),
                 onClick = {
-                    navController.navigate("Staff_Records")
+                    navController.navigate("Staffs")
                 },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 8.dp) // Vertical padding for space between buttons
             ) {
-                Text(text = "Staff Records")
+                Text(text = "Staffs")
             }
 
             // Button to create a teacher account
@@ -122,13 +122,13 @@ fun AdminDashBoard(navController: NavController) {
                     contentColor = Color.White // Set the text color to white for contrast
                 ),
                 onClick = {
-                    navController.navigate("Student_Records")
+                    navController.navigate("allStudents")
                 },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 8.dp) // Vertical padding for space between buttons
             ) {
-                Text(text = "Student Records")
+                Text(text = "All Students")
             }
 
             // Button to view attendance records

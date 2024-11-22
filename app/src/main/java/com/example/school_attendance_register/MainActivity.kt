@@ -54,13 +54,12 @@ class MainActivity : ComponentActivity() {
                     val result = backStackEntry.arguments?.getString("result") ?: ""
                     AllStudents(result, navController)
                 }
-                composable("Staff_Records") {
-                    StaffRecords(navController)
+                composable("Staffs") {
+                    Staffs(navController)
 
                 }
-                composable("Student_Records") {
-                    StudentRecords(navController)
-                }
+
+
             }
             )
 
