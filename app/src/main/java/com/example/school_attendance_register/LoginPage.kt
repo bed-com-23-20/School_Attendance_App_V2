@@ -112,6 +112,7 @@ fun LoginPage(navController: NavController, viewModel: AuthViewModel<Any?>){
 
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                 label = { Text("Username") },
+                placeholder = { Text("Enter your Username or Email") },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 20.dp, end = 20.dp),
@@ -137,6 +138,7 @@ fun LoginPage(navController: NavController, viewModel: AuthViewModel<Any?>){
                 onValueChange = { password = it },
                 label = { Text("Password") },
                 placeholder = { Text("Enter your password") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 trailingIcon = {
                     val image = if (passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
