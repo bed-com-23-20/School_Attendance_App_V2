@@ -34,57 +34,57 @@ fun AdminDashBoard(navController: NavController) {
 
     Column(
         modifier = Modifier
-            .fillMaxSize() // Take up full available space
+            .fillMaxSize()
             .padding(16.dp)
             .padding(paddingValues),
-        verticalArrangement = Arrangement.Top, // Align items to the top
-        horizontalAlignment = Alignment.CenterHorizontally // Center horizontally
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.weight(1f))
 
 
         Column(
             modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.Center, // Center items vertically
-            horizontalAlignment = Alignment.CenterHorizontally // Center items horizontally
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Button to create a teacher account
             Button(
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Black, // Set the button's container color to black
-                    contentColor = Color.White // Set the text color to white for contrast
+                    containerColor = Color.Black,
+                    contentColor = Color.White
                 ),
                 onClick = {
                     navController.navigate("Register_Staff")
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 8.dp) // Vertical padding for space between buttons
+                    .padding(vertical = 8.dp)
             ) {
                 Text(text = "Register Staff")
             }
 
             Button(
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Black, // Set the button's container color to black
-                    contentColor = Color.White // Set the text color to white for contrast
+                    containerColor = Color.Black,
+                    contentColor = Color.White
                 ),
                 onClick = {
                     navController.navigate("ViewStaffs")
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 8.dp) // Vertical padding for space between buttons
+                    .padding(vertical = 8.dp)
             ) {
                 Text(text = "View All Staffs")
             }
 
 
-            // Button to create student account
+
             Button(
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Black,  // Set the button's container color to black
-                    contentColor = Color.White     // Set the text color to white for contrast
+                    containerColor = Color.Black,
+                    contentColor = Color.White
                 ),
                 onClick = {
                     navController.navigate("Student_Enroll")
@@ -92,22 +92,22 @@ fun AdminDashBoard(navController: NavController) {
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 8.dp) // Vertical padding for space between buttons
+                    .padding(vertical = 8.dp)
             ) {
                 Text(text = "Enroll Student")
             }
 
             Button(
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Black, // Set the button's container color to black
-                    contentColor = Color.White // Set the text color to white for contrast
+                    containerColor = Color.Black,
+                    contentColor = Color.White
                 ),
                 onClick = {
                     navController.navigate("AllSTD")
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 8.dp) // Vertical padding for space between buttons
+                    .padding(vertical = 8.dp)
             ) {
                 Text(text = "View All Student")
             }
@@ -116,13 +116,13 @@ fun AdminDashBoard(navController: NavController) {
             // Button to view attendance records
             Button(
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Black, // Set the button's container color to black
-                    contentColor = Color.White // Set the text color to white for contrast
+                    containerColor = Color.Black,
+                    contentColor = Color.White
                 ),
                 onClick = { navController.navigate("ViewAttendace")},
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 8.dp) // Vertical padding for space between buttons
+                    .padding(vertical = 8.dp)
             ) {
                 Text(text = "View Attendance")
             }

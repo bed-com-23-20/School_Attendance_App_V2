@@ -39,6 +39,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.google.firebase.database.FirebaseDatabase
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
@@ -141,7 +144,8 @@ fun MarkAttendance(navController: NavController) {
                                         }
                                     }
                                     if (studentName != null && classGrade != null) {
-                                        val attendanceRef = database.getReference("Attendance")
+                                        val currentDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
+                                        val attendanceRef = database.getReference("Attendance").child(currentDate)
                                                                 val attendanceRecord = mapOf(
                                                                     "studentName" to studentName,
                                                                     "classGrade" to classGrade,

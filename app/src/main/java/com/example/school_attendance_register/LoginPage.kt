@@ -134,8 +134,6 @@ fun LoginPage(navController: NavController, viewModel: AuthViewModel<Any?>){
                         shape = RoundedCornerShape(24.dp)
                     ),
                 shape = RoundedCornerShape(24.dp)
-
-
             )
 
             Spacer(modifier = Modifier.height(15.dp))
